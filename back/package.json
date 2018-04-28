@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-docker",
+  "version": "1.0.0",
+  "description": "NodeJS server to be run in a docker container",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thiagoelg/nodejs-docker.git"
+  },
+  "author": "thiagoelg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thiagoelg/nodejs-docker/issues"
+  },
+  "homepage": "https://github.com/thiagoelg/nodejs-docker#readme",
+  "devDependencies": {
+    "nodemon": "^1.17.2"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "start": "nodemon server.js"
+}

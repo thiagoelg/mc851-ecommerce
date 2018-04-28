@@ -2,78 +2,86 @@ version: '3.5'
 
 services:
 
-  react_learning:
-    container_name: react_learning
+  front:
+    container_name: front
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       - './front:/usr/src/app'
       - '/usr/src/app/node_modules'
+    labels:
+      - 'traefik.backend=front'
+      - 'traefik.port=3000'
+      - 'traefik.frontend.rule=Host:front.localhost'
     ports:
-      - '3000:3000'
+      - 3000
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
+    networks:
+      mc851:
+        aliases:
+          - front.localhost
 
-    nodejs:
-      container_name: nodejs
-      image: node:9
-      user: node
-      working_dir: /home/node
-      environment:
-        - NODE_ENV=production
-      volumes:
-        - ./back:/home/node/
-      command: ./back/run.sh
-      labels:
-        - 'traefik.backend=node'
-        - 'traefik.port=7777'
-        - 'traefik.frontend.rule=Host:node.localhost'
-      ports:
-        - 7777
-      depends_on:
-        - "mariadb"
-      networks:
-        node-internal:
-          aliases:
-            - node.localhost
+  back:
+    container_name: back
+    image: node:9
+    user: node
+    working_dir: /home/node
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./back:/home/node/
+    command: /home/node/run.sh
+    labels:
+      - 'traefik.backend=back'
+      - 'traefik.port=3001'
+      - 'traefik.frontend.rule=Host:back.localhost'
+    ports:
+      - 3001
+    depends_on:
+      - "db"
+    networks:
+      mc851:
+        aliases:
+          - back.localhost
 
-    mariadb:
-      container_name: mariadb
-      image: mariadb
-      environment:
-        MYSQL_ROOT_PASSWORD: P4ssword!
-      networks:
-        node-internal:
-      
-    phpmyadmin:
-      image: phpmyadmin/phpmyadmin
-      environment:
-        PMA_HOST: mariadb
-        PMA_ARBITRARY: 1
-        PHP_UPLOAD_MAX_FILESIZE: 1G
-        PHP_MAX_INPUT_VARS: 1G
-      labels:
-        - 'traefik.backend=pma'
-        - 'traefik.port=80'
-        - 'traefik.frontend.rule=Host:pma.localhost'
-      networks:
-        node-internal:
+  db:
+    container_name: db
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: P4ssword!
+    networks:
+      mc851:
+    
+  pma:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      PMA_ARBITRARY: 1
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      PHP_MAX_INPUT_VARS: 1G
+    labels:
+      - 'traefik.backend=pma'
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:pma.localhost'
+    networks:
+      mc851:
 
-    traefik:
-      image: traefik
-      command: -c /dev/null --web --docker --logLevel=INFO
-      ports:
-        - '80:80'
-        - '8080:8080' # Dashboard
-      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
-      networks:
-        node-internal:
+  traefik:
+    image: traefik
+    command: -c /dev/null --web --docker --logLevel=INFO
+    ports:
+      - '80:80'
+      - '8080:8080' # Dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      mc851:
 
-  networks:
-    node-internal:
-      external:
-        name: mc851
+networks:
+  mc851:
+    external:
+      name: mc851
 
