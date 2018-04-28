@@ -7,9 +7,9 @@ docker-compose up
 ```
 
 ## URLs
- -  https://front.localhost
- -  https://back.localhost
- -  https://pma.localhost
+ -  http://front.localhost
+ -  http://back.localhost
+ -  http://pma.localhost
 
 ## phpMyAdmin login:
  -  server:   db
