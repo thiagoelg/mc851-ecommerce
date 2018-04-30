@@ -1,3 +1,7 @@
+back/.babel.json
+back/.config/
+back/.v8flags.*
+
 # Logs
 logs
 *.log
@@ -57,3 +61,8 @@ typings/
 # dotenv environment variables file
 .env
 
+# WebStorm
+.idea/
+
+# Package lock
+package-lock.json

@@ -4,7 +4,7 @@
   "description": "NodeJS server to be run in a docker container",
   "main": "server.js",
   "scripts": {
-    "test": "test"
+    "start": "nodemon src/server.js --exec babel-node --presets babel-preset-env"
   },
   "repository": {
     "type": "git",
@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/thiagoelg/nodejs-docker#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "nodemon": "^1.17.2"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.3"
-  },
-  "start": "nodemon server.js"
+  }
 }
