@@ -3,6 +3,7 @@ import './App.css';
 import Body from '../Body/Body';
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
+import Destaques from '../Destaques/Destaques'
 import {Grid} from "material-ui";
 import MuiThemeProvider from "material-ui/es/styles/MuiThemeProvider";
 import {createMuiTheme} from "material-ui/styles/index";

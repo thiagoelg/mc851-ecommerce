@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Grid from "material-ui/es/Grid/Grid";
+import Destaques from "../Destaques/Destaques";
 import Typography from "material-ui/es/Typography/Typography";
 
 class Body extends Component {
@@ -7,9 +8,7 @@ class Body extends Component {
         return (
             <Grid container xs={12} style={{marginTop: 75, padding: 20}}>
                 <Grid item xs={12}>
-                    <Typography variant="title" color="inherit">
-                        Destaques
-                    </Typography>
+                    <Destaques/>
                 </Grid>
             </Grid>
         );
