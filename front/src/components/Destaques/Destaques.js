@@ -6,6 +6,15 @@ import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 
+
+const styleGridList = {
+  gridList: {
+    margin: 50,
+    overflowY: 'auto',
+  },
+};
+
+
 class Destaques extends Component {
   constructor() {
     super();
@@ -27,7 +36,7 @@ class Destaques extends Component {
 
     return (
       <div className="destaques">
-        <GridList cellHeight={280} cellWidth={280} cols={4}>
+        <GridList cellHeight={280} cellWidth={280} cols={4} style={styleGridList.gridList}>
           <GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
             <Subheader component="div">Produtos em Destaque</Subheader>
           </GridListTile>
