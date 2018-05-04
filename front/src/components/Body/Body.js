@@ -6,7 +6,7 @@ import Typography from "material-ui/es/Typography/Typography";
 class Body extends Component {
     render() {
         return (
-            <Grid container xs={12} style={{marginTop: 75, padding: 20}}>
+            <Grid container xs={12} style={{marginTop: 150, padding: 20}}>
                 <Grid item xs={12}>
                     <Destaques />
                 </Grid>
