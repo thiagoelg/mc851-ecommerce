@@ -1,10 +1,9 @@
 import express from "express"
 import bodyParser from "body-parser"
-import axios from "axios"
+import ProductClient from "./service/produtos_client"
 
 var app  = express(),
-    port = process.env.PORT || 3001,
-    produtosURL = "https://ftt-catalog.herokuapp.com";
+    port = process.env.PORT || 3001;
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -13,27 +12,40 @@ app.get('/ping', (req, res) => {
     res.send('pong\n')
 })
 
-app.get('/products', (req, res) => {
+app.get('/products', async (req, res) => {
 
-    let page           = req.query.page           || 1
-    let highlight      = req.query.highlight      || false
-    let brand          = req.query.brand          || ""
-    let category_id    = req.query.category_id    || ""
-    let max_price      = req.query.max_price      || ""
-    let min_price      = req.query.min_price      || ""
-    let name           = req.query.name           || ""
-    let parent_product = req.query.parent_product || ""
+    let params = {
+        page: req.query.page                        || 1,
+        highlight: req.query.highlight              || true,
+    }
+    
+    if (req.params.brand) {
+        params.brand = req.params.brand
+    }
 
-    axios.get(produtosURL + "/products", {
-        params: {
-          page: 1 //TODO: {page}
-        }
-    })  .then(response => {
-            res.send(response.data)
-        })
-        .catch(error => {
-            console.error(error)
-        })
+    if (req.params.category_id) {
+        params.category_id = req.params.category_id
+    }
+
+    if (req.params.max_price) {
+        params.max_price = req.params.max_price
+    }
+
+    if (req.params.min_price) {
+        params.min_price = req.params.min_price
+    }
+
+    if (req.params.name) {
+        params.name = req.params.name
+    }
+
+    if (req.params.parent_product) {
+        params.parent_product = req.params.parent_product
+    }
+
+    let products = await ProductClient.getProducts(params)
+
+    return res.json(products)
 })
 
 app.listen(port,() => {
