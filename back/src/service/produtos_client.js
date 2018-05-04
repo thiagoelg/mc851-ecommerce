@@ -14,6 +14,18 @@ export const getProducts = (params) => {
     })
 }
 
+export const getCategories = (params) => {
+
+    return axios.get(PRODUTOS_URL + "/categories", {
+        params
+    }).then(response => {
+        return response.data
+    }).catch(error => {
+        console.error(error)
+    })
+}
+
 export default {
-    getProducts
+    getProducts,
+    getCategories,
 }
