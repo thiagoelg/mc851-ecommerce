@@ -1,9 +1,12 @@
 import express from "express"
+import cors from "cors"
 import bodyParser from "body-parser"
 import ProductClient from "./service/produtos_client"
 
 var app  = express(),
     port = process.env.PORT || 3001;
+
+app.use(cors())
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
