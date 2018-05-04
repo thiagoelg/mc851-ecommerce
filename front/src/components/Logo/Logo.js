@@ -5,7 +5,7 @@ class Logo extends Component {
     render() {
         return (
             <Typography variant="title" color="inherit">
-                E-commerce
+                ToppenStore
             </Typography>
         );
     }
