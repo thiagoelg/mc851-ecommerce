@@ -8,7 +8,7 @@ class Body extends Component {
         return (
             <Grid container xs={12} style={{marginTop: 75, padding: 20}}>
                 <Grid item xs={12}>
-                    <Destaques/>
+                    <Destaques cols={4}/>
                 </Grid>
             </Grid>
         );

@@ -41,16 +41,17 @@ const styles = theme => ({
  * ];
  */
 function Destaques(props) {
+  console.log(props);
   const { classes } = props;
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={280} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+      <GridList cellHeight={280} cellWidth={280} cols={4} className={classes.gridList}>
+        <GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
           <Subheader component="div">Produtos em Destaque</Subheader>
         </GridListTile>
         {tileData.map(tile => (
-          <GridListTile key={tile.img}>
+          <GridListTile key={tile.img} cols={1}>
             <img src={require(`${tile.img}`)} alt={tile.title} />
             <GridListTileBar
               title={tile.title}
