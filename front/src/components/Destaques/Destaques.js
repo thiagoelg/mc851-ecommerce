@@ -9,11 +9,13 @@ import InfoIcon from '@material-ui/icons/Info';
 
 const styleGridList = {
   gridList: {
-    margin: 50,
+    width: '80%',
     overflowY: 'auto',
   },
 };
 
+var height = 280;
+var width = 280;
 
 class Destaques extends Component {
   constructor() {
@@ -23,8 +25,9 @@ class Destaques extends Component {
     }
   };
   
+  
   componentDidMount() {
-    fetch('http://back.localhost/products')
+    fetch('http://back.localhost/products?highlight=true')
       .then(results => {
         return results.json();
       }).then(data => {
@@ -35,14 +38,14 @@ class Destaques extends Component {
   render() {
 
     return (
-      <div className="destaques">
-        <GridList cellHeight={280} cellWidth={280} cols={4} style={styleGridList.gridList}>
+      <div className="destaques" justify='center'>
+        <GridList cellHeight={height} cellWidth={width} cols={4}>
           <GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
             <Subheader component="div">Produtos em Destaque</Subheader>
           </GridListTile>
           {this.state.tileData.map(tile => (
             <GridListTile key={tile.imageUrl} cols={1}>
-              <img src={tile.imageUrl} alt={tile.name} />
+              <img src={tile.imageUrl} alt={tile.name} height={height * 0.6} width={width * 0.6}/>
               <GridListTileBar
                 title={tile.name}
                 subtitle={<span>{tile.description} por {tile.price}</span>}

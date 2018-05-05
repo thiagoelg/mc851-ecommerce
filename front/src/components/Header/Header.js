@@ -79,6 +79,11 @@ class Header extends Component {
                                 </Grid>
                                 <Grid item xs={2} alignContent="center" justify="center">
                                     <Button color='#212121'>
+                                        Copa do Mundo
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={2} alignContent="center" justify="center">
+                                    <Button color='#212121'>
                                         Oferta do dia
                                     </Button>
                                 </Grid>
