@@ -3,6 +3,7 @@ import cors from "cors"
 import bodyParser from "body-parser"
 import ProductClient from "./service/produtos_client"
 import LogisticClient from "./service/logistica_client"
+import AddressClient from "./service/endereco_client"
 
 var app  = express(),
     port = process.env.PORT || 3001;
@@ -60,11 +61,11 @@ app.get('/shipping', async (req, res) => {
         tipoEntrega  : req.query.tipoEntrega,
         cepOrigem    : req.query.cepOrigem    || cepUnicamp,
         cepDestino   : req.query.cepDestino,
-        peso         : req.query.peso,
-        tipoPacote   : req.query.tipoPacote,
-        comprimento  : req.query.comprimento,
-        altura       : req.query.altura,
-        largura      : req.query.largura,
+        peso         : req.query.peso         || 0,
+        tipoPacote   : req.query.tipoPacote   || "Caixa",
+        comprimento  : req.query.comprimento  || 0,
+        altura       : req.query.altura       || 0,
+        largura      : req.query.largura      || 0,
     }
 
     if (!params.tipoEntrega ||
@@ -74,11 +75,12 @@ app.get('/shipping', async (req, res) => {
         !params.tipoPacote ||
         !params.comprimento ||
         !params.altura ||
-        !params.largura) {
-        res.sendStatus(400)
+        !params.largura ) {
+        return res.sendStatus(400)
     }
 
-    // TODO: check if CEP is valid
+    //let validOrigem = await AddressClient.isCepValid(params.cepOrigem)
+    //let validDestino = await AddressClient.isCepValid(params.cepDestino)
 
     let shipping = await LogisticClient.getShipping(params)
     return res.json(shipping)
