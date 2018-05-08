@@ -24,7 +24,7 @@ export const ticketByPurchase = async (clientId, purchaseId) => {
     }
 }
 
-export const getTicket = async (clientId, ticketId) => {
+export const ticketByClient = async (clientId, ticketId) => {
     try {
         const response = await axios.get(`${ATENDIMENTO_URL}/tickets/${SITE_ID}/${clientId}/ticket/${ticketId}`)
         
@@ -81,6 +81,11 @@ export const changeStatus = async (clientId, ticketId, statusCode) => {
 }
 
 export default {
-    getScore,
-    addPayment
+    ticketsByClient,
+    ticketByPurchase,
+    ticketByClient,
+    addTicket,
+    addTicketByPurchase,
+    updateTicket,
+    changeStatus
 }
