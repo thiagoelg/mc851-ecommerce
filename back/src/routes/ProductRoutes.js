@@ -46,63 +46,85 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res) => {
 
-    if (!req.params.id) {
-        res.sendStatus(400)
-        return
-    }
+    try {
+        let id = req.params.id
 
-    let category = await ProductClient.getProduct(id)
-    return res.json(category)
+        if (!id) {
+            res.sendStatus(400)
+            return
+        }
+
+        let product = await ProductClient.getProduct(id)
+        return res.json(product)
+    } catch (e) {
+        next(e)
+    }
 })
 
 router.get('/categories', async (req, res) => {
 
-    let params = {
-        page: req.query.page || 1,
-    }
+    try {
+        let params = {
+            page: req.query.page || 1,
+        }
 
-    if (req.params.name) {
-        params.name = req.params.name
-    }
-    if (req.params.parent_category) {
-        params.parent_category = req.params.parent_category
-    }
+        if (req.params.name) {
+            params.name = req.params.name
+        }
+        if (req.params.parent_category) {
+            params.parent_category = req.params.parent_category
+        }
 
-    let categories = await ProductClient.getCategories(params)
-    return res.json(categories)
+        let categories = await ProductClient.getCategories(params)
+        return res.json(categories)
+    } catch (e) {
+        next(e)
+    }
 })
 
 router.get('/categories/:id', async (req, res) => {
 
-    if (!req.params.id) {
-        res.sendStatus(400)
-        return
-    }
+    try{
+        if (!req.params.id) {
+            res.sendStatus(400)
+            return
+        }
 
-    let category = await ProductClient.getCategory(id)
-    return res.json(category)
+        let category = await ProductClient.getCategory(id)
+        return res.json(category)
+    } catch (e) {
+        next(e)
+    }
 })
 
 router.get('/reserve/:id', async (req, res) => {
 
-    if (!req.params.id  || !req.params.amount) {
-        res.sendStatus(400)
-        return
-    }
+    try{
+        if (!req.params.id  || !req.params.amount) {
+            res.sendStatus(400)
+            return
+        }
 
-    let category = await ProductClient.reserveProduct(id, amount)
-    return res.json(category)
+        let category = await ProductClient.reserveProduct(id, amount)
+        return res.json(category)
+    } catch (e) {
+        next(e)
+    }
 })
 
 router.get('/release/:id', async (req, res) => {
+    
+    try{
+        if (!req.params.id || !req.params.amount) {
+            res.sendStatus(400)
+            return
+        }
 
-    if (!req.params.id || !req.params.amount) {
-        res.sendStatus(400)
-        return
+        let category = await ProductClient.releaseProduct(id, amount)
+        return res.json(category)
+    } catch (e) {
+        next(e)
     }
-
-    let category = await ProductClient.releaseProduct(id, amount)
-    return res.json(category)
 })
 
 export default router

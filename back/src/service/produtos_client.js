@@ -6,7 +6,7 @@ const PRODUTOS_URL = "https://ftt-catalog.herokuapp.com"
 export const getProducts = async (params) => {
 
     try {
-        const response = await axios.get(PRODUTOS_URL + "/products", {
+        const response = await axios.get(`${PRODUTOS_URL}/products`, {
             params
         })
 
@@ -16,7 +16,7 @@ export const getProducts = async (params) => {
     }
 }
 
-export const getProduct = async (params) => {
+export const getProduct = async (id) => {
 
     try {
         const response = await axios.get(`${PRODUTOS_URL}/products/${id}`)
@@ -30,7 +30,7 @@ export const getProduct = async (params) => {
 export const getCategories = async (params) => {
 
     try {
-        const response = await axios.get(PRODUTOS_URL + "/categories", {
+        const response = await axios.get(`${PRODUTOS_URL}/categories`, {
             params
         })
 
