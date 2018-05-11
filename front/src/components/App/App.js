@@ -8,6 +8,7 @@ import {Grid} from "material-ui";
 import MuiThemeProvider from "material-ui/es/styles/MuiThemeProvider";
 import {createMuiTheme} from "material-ui/styles/index";
 
+
 class App extends Component {
     render() {
         const theme = createMuiTheme({
@@ -24,6 +25,7 @@ class App extends Component {
                     dark: '#494949',
                     contrastText: '#fff',
                 },
+            
             },
         });
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {AppBar, Button, Grid, Toolbar, Drawer, ListItem} from "material-ui";
+import {AppBar, Button, Grid, Toolbar, Drawer, ListItem, Badge} from "material-ui";
 import SearchInput from '../SearchInput/SearchInput'
 import Logo from "../Logo/Logo";
 import AccountCircle from "@material-ui/icons/es/AccountCircle";
@@ -9,11 +9,15 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import List from 'material-ui/List';
 import Divider from 'material-ui/Divider';
+import { withStyles, MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import green from 'material-ui/colors/green';
 
 const toolBarBottonHeader = {
     backgroundColor: '#F5F5F5',
     height: 20
-}
+};
+
+
 
 class Header extends Component {
 
@@ -54,10 +58,12 @@ class Header extends Component {
                                     </Button>
                                 </Grid>
                                 <Grid item xs={6} sm={4} alignContent="center" justify="center">
-                                    <Button color="inherit">
-                                        <ShoppingCart/>
-                                        Carrinho
-                                    </Button>
+                                    <Badge badgeContent={0} color="error">
+                                        <Button color="inherit">
+                                            <ShoppingCart/>
+                                            Carrinho
+                                        </Button>
+                                    </Badge>
                                 </Grid>
                                 <Grid item xs={0} sm={1} alignContent="center" justify="center"/>
                             </Grid>
