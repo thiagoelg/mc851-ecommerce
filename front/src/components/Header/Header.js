@@ -73,7 +73,19 @@ class Header extends Component {
                                         <IconButton className="menuButton" color="#212121" onClick={() => this.toggleDrawer()}>
                                             <MenuIcon />
                                         </IconButton>
-                                        
+                                        <Drawer open={this.state.drawerOpened} onClose={() => this.toggleDrawer()}>
+                                             <List>
+                                                <ListItem button>Eletrodomésticos</ListItem>
+                                                <ListItem button>Smartphones</ListItem>
+                                                <ListItem button>Informática</ListItem>
+                                            </List>
+                                            <Divider />
+                                            <List>
+                                                <ListItem button>Souveniers</ListItem>
+                                                <ListItem button>Livros</ListItem>
+                                                <ListItem button>Beleza</ListItem>
+                                            </List>
+                                        </Drawer>
                                     </div>
                                 </Grid>
                                 <Grid item xs={2} alignContent="center" justify="center">
