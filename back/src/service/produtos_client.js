@@ -3,15 +3,17 @@ import axios from 'axios'
 const REQUEST_TIMEOUT = 30000
 const PRODUTOS_URL = "https://ftt-catalog.herokuapp.com"
 
-export const getProducts = (params) => {
+export const getProducts = async (params) => {
 
-    return axios.get(PRODUTOS_URL + "/products", {
-        params
-    }).then(response => {
+    try {
+        const response = await axios.get(PRODUTOS_URL + "/products", {
+            params
+        })
+
         return response.data
-    }).catch(error => {
-        console.error(error)
-    })
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 export default {
