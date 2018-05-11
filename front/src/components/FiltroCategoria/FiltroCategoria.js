@@ -48,7 +48,7 @@ const styleGridList = {
 var height = 280;
 var width = 280;
 
-class FiltroCategoria extends React.Component {
+class FiltroCategoria extends Component {
     state = {
         tileData: [],
     }
