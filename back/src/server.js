@@ -4,6 +4,7 @@ import bodyParser from "body-parser"
 
 import ProductRoutes from './routes/ProductRoutes'
 import CreditRoutes from './routes/CreditRoutes'
+import LogisticRoutes from './routes/LogisticRoutes'
 
 var app  = express(),
     port = process.env.PORT || 3001;
@@ -19,6 +20,7 @@ app.get('/ping', (req, res) => {
 
 app.use('/products', ProductRoutes)
 app.use('/credit', CreditRoutes)
+app.use('/logistic', LogisticRoutes)
 
 app.listen(port, () => {
     console.log("Listening on port " + port)
