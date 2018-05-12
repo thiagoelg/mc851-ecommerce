@@ -45,7 +45,7 @@ class Destaques extends Component {
           </GridListTile>
           {this.state.tileData.map(tile => (
             <GridListTile key={tile.imageUrl} cols={1}>
-              <img src={tile.imageUrl} alt={tile.name} height={height * 0.6} width={width * 0.6}/>
+              <img src={tile.imageUrl} alt={tile.name} style={{height:'100%', width:'auto', margin:'0 auto', display:'block'}}/>
               <GridListTileBar
                 title={tile.name}
                 subtitle={<span>{tile.description} por {tile.price}</span>}
