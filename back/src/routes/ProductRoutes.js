@@ -4,6 +4,42 @@ import ProductClient from '../service/produtos_client'
 
 const router = express.Router()
 
+router.get('/categories/', async (req, res, next) => {
+
+    try {
+        let params = {
+            page: req.query.page || 1,
+        }
+
+        if (req.params.name) {
+            params.name = req.params.name
+        }
+        if (req.params.parent_category) {
+            params.parent_category = req.params.parent_category
+        }
+
+        let categories = await ProductClient.getCategories(params)
+        return res.json(categories)
+    } catch (e) {
+        next(e)
+    }
+})
+
+router.get('/categories/:id', async (req, res, next) => {
+
+    try{
+        if (!req.params.id) {
+            res.sendStatus(400)
+            return
+        }
+
+        let category = await ProductClient.getCategory(id)
+        return res.json(category)
+    } catch (e) {
+        next(e)
+    }
+})
+
 router.get('/', async (req, res, next) => {
 
     try {
@@ -44,7 +80,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
 
     try {
         let id = req.params.id
@@ -61,43 +97,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.get('/categories', async (req, res) => {
-
-    try {
-        let params = {
-            page: req.query.page || 1,
-        }
-
-        if (req.params.name) {
-            params.name = req.params.name
-        }
-        if (req.params.parent_category) {
-            params.parent_category = req.params.parent_category
-        }
-
-        let categories = await ProductClient.getCategories(params)
-        return res.json(categories)
-    } catch (e) {
-        next(e)
-    }
-})
-
-router.get('/categories/:id', async (req, res) => {
-
-    try{
-        if (!req.params.id) {
-            res.sendStatus(400)
-            return
-        }
-
-        let category = await ProductClient.getCategory(id)
-        return res.json(category)
-    } catch (e) {
-        next(e)
-    }
-})
-
-router.get('/reserve/:id', async (req, res) => {
+router.get('/reserve/:id', async (req, res, next) => {
 
     try{
         if (!req.params.id  || !req.params.amount) {
@@ -112,7 +112,7 @@ router.get('/reserve/:id', async (req, res) => {
     }
 })
 
-router.get('/release/:id', async (req, res) => {
+router.get('/release/:id', async (req, res, next) => {
     
     try{
         if (!req.params.id || !req.params.amount) {
