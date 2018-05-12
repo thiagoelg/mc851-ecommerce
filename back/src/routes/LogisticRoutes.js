@@ -7,34 +7,36 @@ const router = express.Router()
 const cepUnicamp = 13083970
 
 router.get('/shipping', async (req, res) => {
+    try {
 
-    let params = {
-        tipoEntrega  : req.query.tipoEntrega,
-        cepOrigem    : req.query.cepOrigem    || cepUnicamp,
-        cepDestino   : req.query.cepDestino,
-        peso         : req.query.peso         || 0,
-        tipoPacote   : req.query.tipoPacote   || "Caixa",
-        comprimento  : req.query.comprimento  || 0,
-        altura       : req.query.altura       || 0,
-        largura      : req.query.largura      || 0,
+        let params = {
+            tipoEntrega  : req.query.tipoEntrega  || "PAC",
+            cepOrigem    : req.query.cepOrigem    || cepUnicamp,
+            cepDestino   : req.query.cepDestino,
+            peso         : req.query.peso         || 1000,
+            tipoPacote   : req.query.tipoPacote   || "Caixa",
+            comprimento  : req.query.comprimento  || 10,
+            altura       : req.query.altura       || 10,
+            largura      : req.query.largura      || 10,
+        }
+        
+        if (!params.tipoEntrega ||
+            !params.cepOrigem ||
+            !params.cepDestino ||
+            !params.peso ||
+            !params.tipoPacote ||
+            !params.comprimento ||
+            !params.altura ||
+            !params.largura ) {
+            return res.sendStatus(400)
+        }
+
+        let shipping = await LogisticClient.getShipment(params)
+        return res.json(shipping)
+
+    } catch(e) {
+        next(e)
     }
-
-    if (!params.tipoEntrega ||
-        !params.cepOrigem ||
-        !params.cepDestino ||
-        !params.peso ||
-        !params.tipoPacote ||
-        !params.comprimento ||
-        !params.altura ||
-        !params.largura ) {
-        return res.sendStatus(400)
-    }
-
-    //let validOrigem = await AddressClient.isCepValid(params.cepOrigem)
-    //let validDestino = await AddressClient.isCepValid(params.cepDestino)
-
-    let shipping = await LogisticClient.getShipping(params)
-    return res.json(shipping)
 })
 
 export default router
