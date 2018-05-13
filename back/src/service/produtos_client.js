@@ -10,7 +10,7 @@ export const getProducts = async (params) => {
             params
         })
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -21,7 +21,7 @@ export const getProduct = async (id) => {
     try {
         const response = await axios.get(`${PRODUTOS_URL}/products/${id}`)
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -34,7 +34,7 @@ export const getCategories = async (params) => {
             params
         })
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -45,7 +45,7 @@ export const getCategory = async (id) => {
     try {
         const response = await axios.get(`${PRODUTOS_URL}/categories/${id}`)
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -61,9 +61,7 @@ export const reserveProduct = async (id, amount) => {
             data: amount
         })
 
-        if (response.status === 204)
-            return true
-        return false
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -79,9 +77,7 @@ export const releaseProduct = async (id, amount) => {
             data: amount
         })
 
-        if (response.status === 204)
-            return true
-        return false
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }

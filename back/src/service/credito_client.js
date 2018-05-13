@@ -9,7 +9,7 @@ export const getScore = async (cpf) => {
         const response = await axios.get(`${CREDITO_URL}/score/${cpf}`, {
             headers
         })
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -20,7 +20,7 @@ export const addPayment = async (cpf, payment) => {
         const response = await axios.post(`${CREDITO_URL}/payment/${cpf}`, payment, {
             headers
         })
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }

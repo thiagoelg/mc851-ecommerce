@@ -9,18 +9,7 @@ export const getCEP = async (cep) => {
         const response = await axios.get(URL + `/paises/br/cep/${cep}`, {
             headers,
         })
-        return response.data
-    } catch (error) {
-        console.error(error)
-    }
-}
-
-export const isCepValid = async (cep) => {
-    try {
-        const response = await axios.get(URL + `/paises/br/cep/${cep}`,{
-            headers,
-        })
-        console.log(response) // TODO: return responde.status == 200
+        return {data : response.data, status: response.status}
     } catch (error) {
         console.error(error)
     }
@@ -32,7 +21,7 @@ export const getCities = async (uf, params) => {
             headers,
             params,
         })
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (error) {
         console.error(error)
     }
@@ -43,7 +32,7 @@ export const getStates = async () => {
         const response = await axios.get(URL + `/paises/br/estados`, {
             headers,
         })
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (error) {
         console.error(error)
     }
@@ -51,7 +40,6 @@ export const getStates = async () => {
 
 export default {
     getCEP,
-    isCepValid,
     getCities,
     getStates,
 }
