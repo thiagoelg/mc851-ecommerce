@@ -1,6 +1,6 @@
 import express from 'express'
 
-import ProductClient from '../service/produtos_client'
+import ProductController from '../controller/ProductController'
 
 const router = express.Router()
 
@@ -18,7 +18,7 @@ router.get('/categories/', async (req, res, next) => {
             params.parent_category = req.params.parent_category
         }
 
-        let categories = await ProductClient.getCategories(params)
+        let categories = await ProductController.getCategories(params)
         return res.json(categories)
     } catch (e) {
         next(e)
@@ -33,7 +33,7 @@ router.get('/categories/:id', async (req, res, next) => {
             return
         }
 
-        let category = await ProductClient.getCategory(id)
+        let category = await ProductController.getCategory(id)
         return res.json(category)
     } catch (e) {
         next(e)
@@ -71,8 +71,8 @@ router.get('/', async (req, res, next) => {
         if (req.params.parent_product) {
             params.parent_product = req.params.parent_product
         }
-    
-        let products = await ProductClient.getProducts(params)
+
+        let products = await ProductController.getProducts(params)
     
         return res.json(products)
     } catch (e) {
@@ -90,7 +90,7 @@ router.get('/:id', async (req, res, next) => {
             return
         }
 
-        let product = await ProductClient.getProduct(id)
+        let product = await ProductController.getProduct(id)
         return res.json(product)
     } catch (e) {
         next(e)
@@ -105,8 +105,8 @@ router.get('/reserve/:id', async (req, res, next) => {
             return
         }
 
-        let category = await ProductClient.reserveProduct(id, amount)
-        return res.json(category)
+        let response = await ProductController.reserveProduct(id, amount)
+        return res.json(response)
     } catch (e) {
         next(e)
     }
@@ -120,8 +120,8 @@ router.get('/release/:id', async (req, res, next) => {
             return
         }
 
-        let category = await ProductClient.releaseProduct(id, amount)
-        return res.json(category)
+        let response = await ProductController.releaseProduct(id, amount)
+        return res.json(response)
     } catch (e) {
         next(e)
     }
