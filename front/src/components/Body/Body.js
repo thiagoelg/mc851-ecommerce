@@ -4,7 +4,6 @@ import {Route, Switch} from 'react-router-dom'
 import Destaques from "../Destaques/Destaques";
 import FiltroCategoria from "../FiltroCategoria/Filtro";
 import Carrinho from "../Carrinho/Carrinho";
-import Typography from "material-ui/es/Typography/Typography";
 import Product from "../Products/Product";
 
 
