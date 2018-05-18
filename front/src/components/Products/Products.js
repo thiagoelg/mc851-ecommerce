@@ -12,11 +12,14 @@ class Products extends Component {
     render() {
         let cols = this.props.cols
         if(cols === undefined)
-            cols = 4
+            cols = 3
 
         return (
             <div className="destaques" justify='center'>
                 <GridList cellHeight={200} cols={cols}>
+                    <GridListTile key="Subheader" cols={3} style={{height: 'auto'}}>
+                        <Subheader component="div">Produtos em Destaque</Subheader>
+                    </GridListTile>
                     {this.props.products.map(tile => (
                         <GridListTile key={tile.imageUrl} cols={1}>
                             <a href={"/products/" + tile.id}>
