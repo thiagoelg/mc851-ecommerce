@@ -1,17 +1,11 @@
 import React, {Component} from 'react';
 
-import {AppBar, Badge, Button, Drawer, Grid, ListItem, Toolbar} from "material-ui";
+import {AppBar, Badge, Button, Grid, Toolbar} from "material-ui";
 import SearchInput from '../SearchInput/SearchInput'
 import Logo from "../Logo/Logo";
 import AccountCircle from "@material-ui/icons/es/AccountCircle";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import List from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import { withStyles, MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import green from 'material-ui/colors/green';
-import { withRouter } from 'react-router-dom';
+import {withStyles} from 'material-ui/styles';
 import NavigateButton from "../NavigateButton/NavigateButton";
 
 const toolBarBottonHeader = {
@@ -21,15 +15,15 @@ const toolBarBottonHeader = {
 
 const styles = theme => ({
     root: {
-      flexGrow: 1,
-      height: 430,
-      zIndex: 1,
-      overflow: 'hidden',
-      position: 'relative',
-      display: 'flex',
+        flexGrow: 1,
+        height: 430,
+        zIndex: 1,
+        overflow: 'hidden',
+        position: 'relative',
+        display: 'flex',
     },
     appBar: {
-      zIndex: theme.zIndex.drawer + 1,
+        zIndex: theme.zIndex.drawer + 1,
     },
     toolbar: theme.mixins.toolbar,
 });
@@ -56,9 +50,9 @@ class Header extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         return (
-            <AppBar position="fixed" >
+            <AppBar position="fixed">
                 <Toolbar>
                     <Grid container spacing={0} alignItems="center" justify="center">
                         <Grid item xs={12} sm={3} alignContent="center">
@@ -95,31 +89,16 @@ class Header extends Component {
                     <Grid container spacing={0} alignItems="center" justify="center">
                         <Grid item xs={12} alignContent="center" justify="center">
                             <Grid container spacing={2} alignItems="center">
-                                <Grid item xs={2} alignContent="center" justify="center">
-                                    <Button color='#212121'>
-                                        Promoções
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={2} alignContent="center" justify="center">
-                                    <Button color='#212121'>
-                                        Dia das mães
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={2} alignContent="center" justify="center">
-                                    <Button color='#212121'>
-                                        Dia dos Namorados
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={2} alignContent="center" justify="center">
-                                    <Button color='#212121'>
-                                        Copa do Mundo
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={2} alignContent="center" justify="center">
-                                    <Button color='#212121'>
-                                        Oferta do dia
-                                    </Button>
-                                </Grid>
+                                {
+                                    this.state.categories.map((category) =>
+                                        <Grid item xs={2} alignContent="center" justify="center">
+                                            <NavigateButton color='default'
+                                                            href={`/categorias/${category.id}`}>
+                                                {category.name}
+                                            </NavigateButton>
+                                        </Grid>
+                                    )
+                                }
                             </Grid>
                         </Grid>
                     </Grid>

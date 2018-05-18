@@ -3,7 +3,6 @@ import Grid from "material-ui/es/Grid/Grid";
 import TextField from "material-ui/es/TextField/TextField";
 import Button from "material-ui/es/Button/Button";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
-import Freight from "../Freight/Freight";
 
 class Product extends Component {
 
@@ -100,7 +99,7 @@ class Product extends Component {
                         <b>Categoria:</b> {category.name}
                     </p>
                     <p>
-                        <b>Dimensões:</b> {product.height} x {product.width} x {product.length}
+                        <b>Dimensões:</b> {product.height} cm x {product.width} cm x {product.length} cm
                     </p>
                 </Grid>
             </Grid>
