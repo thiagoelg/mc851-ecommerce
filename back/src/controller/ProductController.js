@@ -7,6 +7,9 @@ export const getProducts = async (params) => {
     if (!response || response.status != 200) {
         return []
     }
+    else {
+        console.error("getProducts error - status: " + response.status)
+    }
 
     return response.data
 }
@@ -16,6 +19,9 @@ export const getCategories = async (params) => {
 
     if (!response || response.status != 200) {
         return []
+    }
+    else {
+        console.error("getCategories error - status: " + response.status)
     }
 
     return response.data
@@ -27,6 +33,9 @@ export const getCategory = async (id) => {
     if (!response || response.status != 200) {
         return {}
     }
+    else {
+        console.error("getCategory error - status: " + response.status)
+    }
 
     return response.data
 }
@@ -36,6 +45,9 @@ export const getProduct = async (id) => {
 
     if (!response || response.status != 200) {
         return {}
+    }
+    else {
+        console.error("getProduct error - status: " + response.status)
     }
 
     return response.data
@@ -47,6 +59,9 @@ export const reserveProduct = async (id, amount) => {
     if (!response || response.status != 200) {
         return {}
     }
+    else {
+        console.error("reserveProduct error - status: " + response.status)
+    }
 
     return response.data
 }
@@ -57,6 +72,9 @@ export const releaseProduct = async (id, amount) => {
 
     if (!response || response.status != 200) {
         return {}
+    }
+    else {
+        console.error("releaseProduct error - status: " + response.status)
     }
 
     return response.data
