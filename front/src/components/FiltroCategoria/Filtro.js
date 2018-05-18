@@ -1,17 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
-import List from 'material-ui/List';
-import Typography from 'material-ui/Typography';
-import Divider from 'material-ui/Divider';
-import GridList, {GridListTile, GridListTileBar} from 'material-ui/GridList';
-import Subheader from 'material-ui/List/ListSubheader';
-import IconButton from 'material-ui/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-import {AppBar, Button, Grid, Toolbar, Drawer, ListItem, Badge} from "material-ui";
+import {Drawer} from "material-ui";
 import CheckboxesGroup from '../FiltroCategoria/CheckboxesGroup'
-import Product from "../Products/Product";
 import Products from "../Products/Products";
+import Divider from "material-ui/es/Divider/Divider";
+import Grid from "material-ui/es/Grid/Grid";
+import FormLabel from "material-ui/es/Form/FormLabel";
+import TextField from "material-ui/es/TextField/TextField";
 
 const drawerWidth = 240;
 
@@ -40,17 +36,21 @@ const styles = theme => ({
     toolbar: theme.mixins.toolbar,
 });
 
-class FiltroCategoria extends Component {
+class Filtro extends Component {
     constructor(props) {
         super(props);
         this.state = {
             products: [],
-            categories: []
-        }
+            categories: [],
+
+            minPrice: 0.0,
+            maxPrice: 1000.0
+        };
+        this.handleChange = this.handleChange.bind(this);
     };
 
     componentDidMount() {
-        fetch('http://back.localhost/products?highlight=' + this.props.highlights)
+        fetch(`http://back.localhost/products?highlight=${this.props.highlights}`)
             .then(results => {
                 //TODO check if status ok
                 return results.json();
@@ -69,6 +69,11 @@ class FiltroCategoria extends Component {
             })
     }
 
+    handleChange(event) {
+        const target = event.target;
+        this.setState({[target.name]: target.value});
+    }
+
     render() {
         const {classes} = this.props;
 
@@ -79,8 +84,29 @@ class FiltroCategoria extends Component {
                     classes={{
                         paper: classes.drawerPaper,
                     }}>
+
                     <div className={classes.toolbar}/>
-                    <CheckboxesGroup label="Categorias" content={this.state.categories}/>
+
+                    <CheckboxesGroup label="Categorias" items={this.state.categories}/>
+                    <Divider/>
+                    <br/>
+
+                    <CheckboxesGroup label="Marcas" content={["Toppen"]}/>
+                    <Divider/>
+                    <br/>
+
+                    <Grid container>
+                        <Grid item xs={4} style={{marginTop: 25}}>
+                            <FormLabel component="legend">Preço: </FormLabel>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <TextField name="minPrice" value={this.state.minPrice} label="min" fullWidth/>
+                        </Grid>
+                        <Grid item xs={1}/>
+                        <Grid item xs={3}>
+                            <TextField name="maxPrice" value={this.state.maxPrice} label="max" fullWidth/>
+                        </Grid>
+                    </Grid>
                 </Drawer>
                 <main className={classes.content}>
                     <Products cols={3} products={this.state.products}/>
@@ -90,8 +116,8 @@ class FiltroCategoria extends Component {
     }
 }
 
-FiltroCategoria.propTypes = {
+Filtro.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(FiltroCategoria);
+export default withStyles(styles)(Filtro);

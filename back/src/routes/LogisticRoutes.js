@@ -1,12 +1,10 @@
 import express from 'express'
-
-import LogisticClient from "../service/logistica_client"
-import AddressClient from "../service/endereco_client"
+import LogisticController from '../controller/LogistcController';
 
 const router = express.Router()
 const cepUnicamp = 13083970
 
-router.get('/shipping', async (req, res) => {
+router.get('/shipping', async (req, res, next) => {
     try {
 
         let params = {
@@ -31,7 +29,7 @@ router.get('/shipping', async (req, res) => {
             return res.sendStatus(400)
         }
 
-        let shipping = await LogisticClient.getShipment(params)
+        let shipping = await LogisticController.getShipment(params)
         return res.json(shipping)
 
     } catch(e) {

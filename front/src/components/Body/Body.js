@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Grid from "material-ui/es/Grid/Grid";
 import {Route, Switch} from 'react-router-dom'
 import Destaques from "../Destaques/Destaques";
-import FiltroCategoria from "../FiltroCategoria/FiltroCategoria";
+import FiltroCategoria from "../FiltroCategoria/Filtro";
 import Product from "../Products/Product";
 
 
