@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
+import React, {Component} from 'react';
+import GridList, {GridListTile, GridListTileBar} from 'material-ui/GridList';
 import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
@@ -45,16 +43,18 @@ class Destaques extends Component {
           </GridListTile>
           {this.state.tileData.map(tile => (
             <GridListTile key={tile.imageUrl} cols={1}>
-              <img src={tile.imageUrl} alt={tile.name} style={{height:'100%', width:'auto', margin:'0 auto', display:'block'}}/>
-              <GridListTileBar
-                title={tile.name}
-                subtitle={<span>{tile.description} por {tile.price}</span>}
-                actionIcon={
-                  <IconButton>
-                    <InfoIcon />
-                  </IconButton>
-                }
-              />
+              <a href={"/products/" + tile.id}>
+                <img src={tile.imageUrl} alt={tile.name} style={{height:'100%', width:'auto', margin:'0 auto', display:'block'}}/>
+                <GridListTileBar
+                  title={tile.name}
+                  subtitle={<span>{tile.description} por {tile.price}</span>}
+                  actionIcon={
+                    <IconButton>
+                      <InfoIcon />
+                    </IconButton>
+                  }
+                />
+              </a>
             </GridListTile>
           ))}
         </GridList>
