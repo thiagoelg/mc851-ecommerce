@@ -24,7 +24,7 @@ class Destaques extends Component {
 
     render() {
         return (
-            <Products products={this.state.products}/>
+            <Products products={this.state.products} cols={4} />
         );
     }
 
