@@ -6,6 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   root: {
@@ -14,36 +15,33 @@ const styles = theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 700,
+    minWidth: 'auto',
   },
 });
 
 let id = 0;
-function createData(name, calories, fat, carbs, protein) {
+function createData(produto, qtd, preco) {
   id += 1;
-  return { id, name, calories, fat, carbs, protein };
+  return { id, produto, qtd, preco };
 }
 
 const data = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Abajur Lhama', 1, 70.0),
+  createData('Abajur Esquilo', 1, 70.0),
+  createData('Abajur Baleia', 1, 70.0),
 ];
 
 function SimpleTable(props) {
   const { classes } = props;
 
   return (
+    
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell numeric>Calories</TableCell>
-            <TableCell numeric>Fat (g)</TableCell>
-            <TableCell numeric>Carbs (g)</TableCell>
-            <TableCell numeric>Protein (g)</TableCell>
+            <TableCell>Produto</TableCell>
+            <TableCell numeric>Quantidade</TableCell>
+            <TableCell numeric>Preço</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -51,17 +49,16 @@ function SimpleTable(props) {
             return (
               <TableRow key={n.id}>
                 <TableCell component="th" scope="row">
-                  {n.name}
+                  {n.produto}
                 </TableCell>
-                <TableCell numeric>{n.calories}</TableCell>
-                <TableCell numeric>{n.fat}</TableCell>
-                <TableCell numeric>{n.carbs}</TableCell>
-                <TableCell numeric>{n.protein}</TableCell>
+                <TableCell numeric>{n.qtd}</TableCell>
+                <TableCell numeric>{n.preco}</TableCell>
               </TableRow>
             );
           })}
         </TableBody>
       </Table>
+   
   );
 }
 
