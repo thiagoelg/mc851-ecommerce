@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import GridList, {GridListTile, GridListTileBar} from 'material-ui/GridList';
-import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 
@@ -13,12 +12,12 @@ class Products extends Component {
     render() {
         let cols = this.props.cols
         if(cols === undefined)
-            cols = 4
+            cols = 3
 
         return (
             <div className="destaques" justify='center'>
                 <GridList cellHeight={200} cols={cols}>
-                    <GridListTile key="Subheader" cols={4} style={{height: 'auto'}}>
+                    <GridListTile key="Subheader" cols={3} style={{height: 'auto'}}>
                         <Subheader component="div">Produtos em Destaque</Subheader>
                     </GridListTile>
                     {this.props.products.map(tile => (

@@ -7,7 +7,7 @@ export const paymentByCreditCard = async (payment) => {
     try {
         const response = await axios.post(`${PAGAMENTO_URL}/payments/creditCard`, payment)
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -17,7 +17,7 @@ export const getCreditCardInstallments = async (info) => {
     try {
         const response = await axios.post(`${PAGAMENTO_URL}/payments/creditCard/installments`, info)
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -27,7 +27,7 @@ export const paymentByBankTicket = async (payment) => {
     try {
         const response = await axios.post(`${PAGAMENTO_URL}/payments/bankTicket`, payment)
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -38,7 +38,7 @@ export const getBankTicketStatus = async (bankTicketId) => {
     try {
         const response = await axios.get(`${PAGAMENTO_URL}/bankTicket/${bankTicketId}`)
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -47,13 +47,9 @@ export const getBankTicketStatus = async (bankTicketId) => {
 
 export const generateInvoice = async (info) => {
     try {
-        const params = {
-            params: info
-        }
-
         const response = await axios.post(`${PAGAMENTO_URL}/invoice`, info)
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }

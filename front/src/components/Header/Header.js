@@ -9,6 +9,8 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import List from 'material-ui/List';
 import Divider from 'material-ui/Divider';
+import { withStyles, MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import green from 'material-ui/colors/green';
 import { withRouter } from 'react-router-dom';
 import NavigateButton from "../NavigateButton/NavigateButton";
 
@@ -17,6 +19,20 @@ const toolBarBottonHeader = {
     height: 20
 };
 
+const styles = theme => ({
+    root: {
+      flexGrow: 1,
+      height: 430,
+      zIndex: 1,
+      overflow: 'hidden',
+      position: 'relative',
+      display: 'flex',
+    },
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1,
+    },
+    toolbar: theme.mixins.toolbar,
+});
 
 class Header extends Component {
 
@@ -24,7 +40,6 @@ class Header extends Component {
         super(props);
 
         this.state = {
-            drawerOpened: false,
             categories: []
         };
     }
@@ -40,15 +55,10 @@ class Header extends Component {
             })
     }
 
-    toggleDrawer() {
-        this.setState({
-            drawerOpened: !this.state.drawerOpened
-        });
-    };
-
     render() {
+        const { classes } = this.props;
         return (
-            <AppBar position="fixed">
+            <AppBar position="fixed" >
                 <Toolbar>
                     <Grid container spacing={0} alignItems="center" justify="center">
                         <Grid item xs={12} sm={3} alignContent="center">
@@ -85,37 +95,31 @@ class Header extends Component {
                     <Grid container spacing={0} alignItems="center" justify="center">
                         <Grid item xs={12} alignContent="center" justify="center">
                             <Grid container spacing={2} alignItems="center">
-                                <Grid item xs={1} alignContent="center" justify="center">
-                                    <div>
-                                        <IconButton className="menuButton" color="#212121"
-                                                    onClick={() => this.toggleDrawer()}>
-                                            <MenuIcon/>
-                                        </IconButton>
-                                        <Drawer open={this.state.drawerOpened} onClose={() => this.toggleDrawer()}>
-                                            <List>
-                                                <ListItem button>Eletrodomésticos</ListItem>
-                                                <ListItem button>Smartphones</ListItem>
-                                                <ListItem button>Informática</ListItem>
-                                            </List>
-                                            <Divider/>
-                                            <List>
-                                                <ListItem button>Souveniers</ListItem>
-                                                <ListItem button>Livros</ListItem>
-                                                <ListItem button>Beleza</ListItem>
-                                            </List>
-                                        </Drawer>
-                                    </div>
+                                <Grid item xs={2} alignContent="center" justify="center">
+                                    <Button color='#212121'>
+                                        Promoções
+                                    </Button>
                                 </Grid>
-                                {
-                                    this.state.categories.map((category) =>
-                                        <Grid item xs={2} alignContent="center" justify="center">
-                                            <NavigateButton color='#212121'
-                                                    href={`/categorias/${category.id}`}>
-                                                {category.name}
-                                            </NavigateButton>
-                                        </Grid>
-                                    )
-                                }
+                                <Grid item xs={2} alignContent="center" justify="center">
+                                    <Button color='#212121'>
+                                        Dia das mães
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={2} alignContent="center" justify="center">
+                                    <Button color='#212121'>
+                                        Dia dos Namorados
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={2} alignContent="center" justify="center">
+                                    <Button color='#212121'>
+                                        Copa do Mundo
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={2} alignContent="center" justify="center">
+                                    <Button color='#212121'>
+                                        Oferta do dia
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -125,4 +129,4 @@ class Header extends Component {
     }
 }
 
-export default withRouter(Header);
+export default withStyles(styles)(Header);

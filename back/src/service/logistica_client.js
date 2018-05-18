@@ -10,7 +10,7 @@ export const getShipment = async (params) => {
             params
         })
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -23,7 +23,7 @@ export const getTracking = async (params, codRastreio) => {
             params
         })
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -34,7 +34,7 @@ export const postShipment = async (info) => {
     try {
         const response = await axios.post(`${LOGISTICA_URL}/calculafrete`, info)
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }

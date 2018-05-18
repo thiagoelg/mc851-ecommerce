@@ -1,50 +1,53 @@
 import React from 'react';
-import {
-  FormLabel,
-  FormControl,
-  FormGroup,
-  FormControlLabel,
-  FormHelperText,
-} from 'material-ui/Form';
+import {FormControl, FormControlLabel, FormGroup, FormLabel,} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
-import Divider from 'material-ui/Divider';
 
 class CheckboxesGroup extends React.Component {
-  state = {
-    Samsung: true,
-    LG: false,
-    Apple: true,
-  };
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
-  };
+    constructor(props) {
+        super(props)
+        this.state = {}
+    }
 
-  render() {
-    return (
-      <FormControl component="fieldset">
-        <FormLabel component="legend">{this.props.label}</FormLabel>
-        <FormGroup>
-            {
-                this.props.content.map((item) => (
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={this.state[item.id]}
-                                name={item.id}
-                                onChange={this.handleChange}
-                                value={item.id}
+    handleChange = name => event => {
+        this.setState({[name]: event.target.checked});
+    };
+
+    render() {
+
+        let items = this.props.items;
+        if (items === undefined) {
+            items = this.props.content.map((itemName) => {
+                return {
+                    name: itemName,
+                    id: itemName
+                }
+            })
+        }
+
+        return (
+            <FormControl component="fieldset">
+                <FormLabel component="legend">{this.props.label}</FormLabel>
+                <FormGroup>
+                    {
+                        items.map((item) => (
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={this.state[item.id]}
+                                        name={item.id}
+                                        onChange={this.handleChange}
+                                        value={item.id}
+                                    />
+                                }
+                                label={item.name}
                             />
-                        }
-                        label={item.name}
-                    />
-                ))
-            }
-        </FormGroup>
-        <Divider />
-      </FormControl>
-    );
-  }
+                        ))
+                    }
+                </FormGroup>
+            </FormControl>
+        );
+    }
 }
 
 export default CheckboxesGroup;

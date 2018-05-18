@@ -6,14 +6,14 @@ const headers = {
     'api_key': 'abc'
 }
 
-export const register = async (params) => {
+export const register = async (info) => {
 
     try {
-        const response = await axios.post(CLIENTE_URL + "/register", params, {
+        const response = await axios.post(CLIENTE_URL + "/register", info, {
             headers
         })
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -26,7 +26,7 @@ export const getClients = async () => {
             headers
         })
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -39,33 +39,33 @@ export const getClient = async (id) => {
             headers
         })
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
 }
 
-export const updateUser = async (id, params) => {
+export const updateUser = async (id, info) => {
 
     try {
-        const response = await axios.put(`${CLIENTE_URL}/update/${id}`, params, {
+        const response = await axios.put(`${CLIENTE_URL}/update/${id}`, info, {
             headers
         })
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
 }
 
-export const changePassword = async (id, params) => {
+export const changePassword = async (id, info) => {
 
     try {
-        const response = await axios.put(`${CLIENTE_URL}/changePass/${id}`, params, {
+        const response = await axios.put(`${CLIENTE_URL}/changePass/${id}`, info, {
             headers
         })
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
@@ -78,21 +78,23 @@ export const deleteUser = async (id) => {
             headers
         })
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
 }
 
 export const login = async (params) => {
+    
+    // Concatenate params to headers
+    Object.assign(headers, params)
 
     try {
         const response = await axios.get(`${CLIENTE_URL}/login}`, {
             headers,
-            data: params
         })
 
-        return response.data
+        return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
