@@ -50,7 +50,7 @@ var width = 280;
 
 class FiltroCategoria extends Component {
     state = {
-        tileData: [],
+        products: [],
     }
 
     componentDidMount() {
@@ -58,7 +58,7 @@ class FiltroCategoria extends Component {
         .then(results => {
             return results.json();
         }).then(data => {
-            this.setState({tileData: data});
+            this.setState({products: data});
         })
     }
 
@@ -80,7 +80,7 @@ class FiltroCategoria extends Component {
                     <GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
                         <Subheader component="div">Categoria Escolhida</Subheader>
                     </GridListTile>
-                    {this.state.tileData.map(tile => (
+                    {this.state.products.map(tile => (
                         <GridListTile key={tile.imageUrl} cols={1}>
                         <img src={tile.imageUrl} alt={tile.name} style={{height:'100%', width:'auto', margin:'0 auto', display:'block'}}/>
                         <GridListTileBar

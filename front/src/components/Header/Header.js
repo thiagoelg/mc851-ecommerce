@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {AppBar, Button, Grid, Toolbar, Drawer, ListItem, Badge} from "material-ui";
+import {AppBar, Badge, Button, Drawer, Grid, ListItem, Toolbar} from "material-ui";
 import SearchInput from '../SearchInput/SearchInput'
 import Logo from "../Logo/Logo";
 import AccountCircle from "@material-ui/icons/es/AccountCircle";
@@ -9,14 +9,11 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import List from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import { withStyles, MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import green from 'material-ui/colors/green';
 
 const toolBarBottonHeader = {
     backgroundColor: '#F5F5F5',
     height: 20
 };
-
 
 
 class Header extends Component {
@@ -25,11 +22,23 @@ class Header extends Component {
         super(props);
 
         this.state = {
-            drawerOpened: false
+            drawerOpened: false,
+            categories: []
         };
     }
 
-    toggleDrawer () {
+    componentDidMount() {
+        fetch('http://back.localhost/products/categories')
+            .then(results => {
+                //TODO check if status ok
+                return results.json();
+            })
+            .then(data => {
+                this.setState({categories: data});
+            })
+    }
+
+    toggleDrawer() {
         this.setState({
             drawerOpened: !this.state.drawerOpened
         });
@@ -76,16 +85,17 @@ class Header extends Component {
                             <Grid container spacing={2} alignItems="center">
                                 <Grid item xs={1} alignContent="center" justify="center">
                                     <div>
-                                        <IconButton className="menuButton" color="#212121" onClick={() => this.toggleDrawer()}>
-                                            <MenuIcon />
+                                        <IconButton className="menuButton" color="#212121"
+                                                    onClick={() => this.toggleDrawer()}>
+                                            <MenuIcon/>
                                         </IconButton>
                                         <Drawer open={this.state.drawerOpened} onClose={() => this.toggleDrawer()}>
-                                             <List>
+                                            <List>
                                                 <ListItem button>Eletrodomésticos</ListItem>
                                                 <ListItem button>Smartphones</ListItem>
                                                 <ListItem button>Informática</ListItem>
                                             </List>
-                                            <Divider />
+                                            <Divider/>
                                             <List>
                                                 <ListItem button>Souveniers</ListItem>
                                                 <ListItem button>Livros</ListItem>
@@ -94,31 +104,15 @@ class Header extends Component {
                                         </Drawer>
                                     </div>
                                 </Grid>
-                                <Grid item xs={2} alignContent="center" justify="center">
-                                    <Button color='#212121'>
-                                        Promoções
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={2} alignContent="center" justify="center">
-                                    <Button color='#212121'>
-                                        Dia das mães
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={2} alignContent="center" justify="center">
-                                    <Button color='#212121'>
-                                        Dia dos Namorados
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={2} alignContent="center" justify="center">
-                                    <Button color='#212121'>
-                                        Copa do Mundo
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={2} alignContent="center" justify="center">
-                                    <Button color='#212121'>
-                                        Oferta do dia
-                                    </Button>
-                                </Grid>
+                                {
+                                    this.state.categories.map((category) =>
+                                        <Grid item xs={2} alignContent="center" justify="center">
+                                            <Button color='#212121'>
+                                                {category.name}
+                                            </Button>
+                                        </Grid>
+                                    )
+                                }
                             </Grid>
                         </Grid>
                     </Grid>

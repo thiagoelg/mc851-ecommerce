@@ -3,7 +3,7 @@ import Grid from "material-ui/es/Grid/Grid";
 import {Route, Switch} from 'react-router-dom'
 import Destaques from "../Destaques/Destaques";
 import FiltroCategoria from "../FiltroCategoria/FiltroCategoria";
-import Product from "../Product/Product";
+import Product from "../Products/Product";
 
 
 // Para <FiltroCategoria /> dentro do grid, tirar o style do grid:
