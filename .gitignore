@@ -66,3 +66,6 @@ typings/
 
 # Package lock
 package-lock.json
+
+# Bash trash
+.bash_history
