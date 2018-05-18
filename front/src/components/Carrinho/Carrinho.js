@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import Input, { InputLabel } from 'material-ui/Input';
-import { MenuItem } from 'material-ui/Menu';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Select from 'material-ui/Select';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 const styles = theme => ({
   root: {
@@ -15,34 +14,36 @@ const styles = theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 'auto',
+    minWidth: 700,
   },
 });
 
 let id = 0;
-function createData(prod, qtd, preco) {
+function createData(name, calories, fat, carbs, protein) {
   id += 1;
-  return { id, prod, qtd, preco };
+  return { id, name, calories, fat, carbs, protein };
 }
 
 const data = [
-  createData('Televisão', 1, 289.99),
-  createData('Smartphone', 1, 699.00),
-  createData('Caneca it', 1, 30.00),
-  createData('Box DVD', 2, 100.00),
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
 function SimpleTable(props) {
   const { classes } = props;
 
   return (
-    <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>Product</TableCell>
-            <TableCell numeric>Quantidades</TableCell>
-            <TableCell numeric>Preço</TableCell>
+            <TableCell>Dessert (100g serving)</TableCell>
+            <TableCell numeric>Calories</TableCell>
+            <TableCell numeric>Fat (g)</TableCell>
+            <TableCell numeric>Carbs (g)</TableCell>
+            <TableCell numeric>Protein (g)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -50,28 +51,17 @@ function SimpleTable(props) {
             return (
               <TableRow key={n.id}>
                 <TableCell component="th" scope="row">
-                  {n.prod}
+                  {n.name}
                 </TableCell>
-                <TableCell>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="age-simple">Age</InputLabel>
-                    <Select value={this.state.age} onChange={this.handleChange} inputProps={{name: 'age', id: 'age-simple',}}>
-                      <MenuItem value="">
-                        {<em>0</em>}
-                      </MenuItem>
-                      <MenuItem value={1}>1</MenuItem>
-                      <MenuItem value={2}>2</MenuItem>
-                      <MenuItem value={3}>3</MenuItem>
-                    </Select>
-                  </FormControl>
-                </TableCell>
-                <TableCell numeric>{n.preco}</TableCell>
+                <TableCell numeric>{n.calories}</TableCell>
+                <TableCell numeric>{n.fat}</TableCell>
+                <TableCell numeric>{n.carbs}</TableCell>
+                <TableCell numeric>{n.protein}</TableCell>
               </TableRow>
             );
           })}
         </TableBody>
       </Table>
-    </Paper>
   );
 }
 
@@ -79,4 +69,4 @@ SimpleTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTable)
+export default withStyles(styles)(SimpleTable);

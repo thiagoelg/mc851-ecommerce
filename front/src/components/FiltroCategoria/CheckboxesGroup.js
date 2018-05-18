@@ -23,38 +23,23 @@ class CheckboxesGroup extends React.Component {
   render() {
     return (
       <FormControl component="fieldset">
-        <FormLabel component="legend">Marcas</FormLabel>
+        <FormLabel component="legend">{this.props.label}</FormLabel>
         <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.gilad}
-                onChange={this.handleChange('Samsung')}
-                value="Samsung"
-              />
+            {
+                this.props.content.map((item) => (
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={this.state[item.id]}
+                                name={item.id}
+                                onChange={this.handleChange}
+                                value={item.id}
+                            />
+                        }
+                        label={item.name}
+                    />
+                ))
             }
-            label="Samsung"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.jason}
-                onChange={this.handleChange('LG')}
-                value="LG"
-              />
-            }
-            label="LG"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.antoine}
-                onChange={this.handleChange('Apple')}
-                value="Apple"
-              />
-            }
-            label="Apple"
-          />
         </FormGroup>
         <Divider />
       </FormControl>

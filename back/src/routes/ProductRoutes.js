@@ -28,7 +28,8 @@ router.get('/categories/', async (req, res, next) => {
 router.get('/categories/:id', async (req, res, next) => {
 
     try{
-        if (!req.params.id) {
+        let id = req.params.id
+        if (!id) {
             res.sendStatus(400)
             return
         }
