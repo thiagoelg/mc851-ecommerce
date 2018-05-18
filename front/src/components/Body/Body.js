@@ -3,6 +3,7 @@ import Grid from "material-ui/es/Grid/Grid";
 import { Switch, Route } from 'react-router-dom'
 import Destaques from "../Destaques/Destaques";
 import FiltroCategoria from "../FiltroCategoria/FiltroCategoria";
+import Carrinho from "../Carrinho/Carrinho";
 import Typography from "material-ui/es/Typography/Typography";
 
 
@@ -17,7 +18,7 @@ class Body extends Component {
                 <Switch>
                     <Route exact path='/' render={() => 
                         <Grid item xs={12} justify='center' style={{paddingLeft: '10%', paddingRight: '10%'}}>
-                            <Destaques />
+                            <Carrinho />
                         </Grid>
                     } />
                     <Route exact path='/categorias' component={FiltroCategoria}/>
