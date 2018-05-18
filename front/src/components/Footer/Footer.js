@@ -11,7 +11,7 @@ import List from "material-ui/es/List/List";
 class Footer extends Component {
     render() {
         return (
-            <AppBar position="relative" color="default" style={{top: '80%', bottom: '0%', padding: 20}}>
+            <AppBar position="static" color="default" style={{top: '80%', bottom: '0%', padding: 20}}>
                 <Toolbar>
                     <Grid container spacing={8} alignItems="center" justify="center">
                         <Grid item xs={12} sm={4} alignContent="center">

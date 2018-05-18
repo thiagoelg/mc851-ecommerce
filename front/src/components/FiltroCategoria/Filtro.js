@@ -72,6 +72,8 @@ class Filtro extends Component {
     handleChange(event) {
         const target = event.target;
         this.setState({[target.name]: target.value});
+        console.log(this.state.minPrice);
+        console.log(this.state.maxPrice);
     }
 
     render() {
@@ -100,11 +102,11 @@ class Filtro extends Component {
                             <FormLabel component="legend">Preço: </FormLabel>
                         </Grid>
                         <Grid item xs={3}>
-                            <TextField name="minPrice" value={this.state.minPrice} label="min" fullWidth/>
+                            <TextField name="minPrice" onChange={this.handleChange} value={this.state.minPrice} label="min" fullWidth/>
                         </Grid>
                         <Grid item xs={1}/>
                         <Grid item xs={3}>
-                            <TextField name="maxPrice" value={this.state.maxPrice} label="max" fullWidth/>
+                            <TextField name="maxPrice" onChange={this.handleChange} value={this.state.maxPrice} label="max" fullWidth/>
                         </Grid>
                     </Grid>
                 </Drawer>
