@@ -19,6 +19,7 @@ class Body extends Component {
                     <Route exact path='/' component={Destaques}/>
                     <Route exact path='/categorias' component={FiltroCategoria}/>
                     <Route path='/products/:id' component={Product}/>
+                    <Route path='/categorias/:id' component={FiltroCategoria}/>
                 </Switch>
                 </Grid>
             </Grid>

@@ -9,6 +9,8 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import List from 'material-ui/List';
 import Divider from 'material-ui/Divider';
+import { withRouter } from 'react-router-dom';
+import NavigateButton from "../NavigateButton/NavigateButton";
 
 const toolBarBottonHeader = {
     backgroundColor: '#F5F5F5',
@@ -107,9 +109,10 @@ class Header extends Component {
                                 {
                                     this.state.categories.map((category) =>
                                         <Grid item xs={2} alignContent="center" justify="center">
-                                            <Button color='#212121'>
+                                            <NavigateButton color='#212121'
+                                                    href={`/categorias/${category.id}`}>
                                                 {category.name}
-                                            </Button>
+                                            </NavigateButton>
                                         </Grid>
                                     )
                                 }
@@ -122,4 +125,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default withRouter(Header);
