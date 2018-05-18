@@ -1,15 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import {withStyles} from 'material-ui/styles';
 import List from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
-import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
+import GridList, {GridListTile, GridListTileBar} from 'material-ui/GridList';
 import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import {AppBar, Button, Grid, Toolbar, Drawer, ListItem, Badge} from "material-ui";
 import CheckboxesGroup from '../FiltroCategoria/CheckboxesGroup'
+import Product from "../Products/Product";
+import Products from "../Products/Products";
 
 const drawerWidth = 240;
 
@@ -38,71 +40,58 @@ const styles = theme => ({
     toolbar: theme.mixins.toolbar,
 });
 
-const styleGridList = {
-    gridList: {
-      width: '80%',
-      overflowY: 'auto',
-    },
-};
-  
-var height = 280;
-var width = 280;
-
 class FiltroCategoria extends Component {
-    state = {
-        tileData: [],
-    }
+    constructor(props) {
+        super(props);
+        this.state = {
+            products: [],
+            categories: []
+        }
+    };
 
     componentDidMount() {
-        fetch('http://back.localhost/products?highlight=true')
-        .then(results => {
-            return results.json();
-        }).then(data => {
-            this.setState({tileData: data});
-        })
+        fetch('http://back.localhost/products?highlight=' + this.props.highlights)
+            .then(results => {
+                //TODO check if status ok
+                return results.json();
+            })
+            .then(data => {
+                this.setState({products: data});
+            })
+
+        fetch('http://back.localhost/products/categories')
+            .then(results => {
+                //TODO check if status ok
+                return results.json();
+            })
+            .then(data => {
+                this.setState({categories: data});
+            })
     }
 
-  render() {
-    const { classes } = this.props;
+    render() {
+        const {classes} = this.props;
 
-    return (
-        <div className={classes.root}>
-            <Drawer
-                variant="permanent"
-                classes={{
-                paper: classes.drawerPaper,
-                }} >
-                <div className={classes.toolbar} />
-                <CheckboxesGroup/>
-            </Drawer>
-            <main className={classes.content}>
-                <GridList cellHeight={height} cellWidth={width} cols={4} style={styleGridList}>
-                    <GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
-                        <Subheader component="div">Categoria Escolhida</Subheader>
-                    </GridListTile>
-                    {this.state.tileData.map(tile => (
-                        <GridListTile key={tile.imageUrl} cols={1}>
-                        <img src={tile.imageUrl} alt={tile.name} style={{height:'100%', width:'auto', margin:'0 auto', display:'block'}}/>
-                        <GridListTileBar
-                            title={tile.name}
-                            subtitle={<span>{tile.description} por {tile.price}</span>}
-                            actionIcon={
-                            <IconButton>
-                                <InfoIcon />
-                            </IconButton>
-                            }
-                        />
-                        </GridListTile>
-                    ))}
-                </GridList>
-            </main>
-        </div>
-    );
-  }
+        return (
+            <div className={classes.root}>
+                <Drawer
+                    variant="permanent"
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}>
+                    <div className={classes.toolbar}/>
+                    <CheckboxesGroup label="Categorias" content={this.state.categories}/>
+                </Drawer>
+                <main className={classes.content}>
+                    <Products cols={3} products={this.state.products}/>
+                </main>
+            </div>
+        );
+    }
 }
 
 FiltroCategoria.propTypes = {
-  classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(FiltroCategoria);

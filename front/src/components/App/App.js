@@ -3,7 +3,6 @@ import './App.css';
 import Body from '../Body/Body';
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
-import Destaques from '../Destaques/Destaques'
 import {Grid} from "material-ui";
 import MuiThemeProvider from "material-ui/es/styles/MuiThemeProvider";
 import {createMuiTheme} from "material-ui/styles/index";
@@ -14,18 +13,18 @@ class App extends Component {
         const theme = createMuiTheme({
             palette: {
                 primary: {
-                    light: '#534bae',
-                    main: '#1a237e',
-                    dark: '#000051',
+                    light: '#5f5fc4',
+                    main: '#283593',
+                    dark: '#001064',
                     contrastText: '#fff',
                 },
                 secondary: {
-                    light: '#a4a4a4',
-                    main: '#757575',
-                    dark: '#494949',
+                    light: '#ff4081',
+                    main: '#ff4081',
+                    dark: '#ff4081',
                     contrastText: '#fff',
                 },
-            
+
             },
         });
 

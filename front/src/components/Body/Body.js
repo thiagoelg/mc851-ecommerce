@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Grid from "material-ui/es/Grid/Grid";
-import { Switch, Route } from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import Destaques from "../Destaques/Destaques";
 import FiltroCategoria from "../FiltroCategoria/FiltroCategoria";
-import Typography from "material-ui/es/Typography/Typography";
+import Product from "../Products/Product";
 
 
 // Para <FiltroCategoria /> dentro do grid, tirar o style do grid:
@@ -14,14 +14,14 @@ class Body extends Component {
     render() {
         return (
             <Grid container xs={12} style={{marginTop: 130, padding: 20}}>
+                <Grid item xs={12} justify='center' style={{paddingLeft: '10%', paddingRight: '10%'}}>
                 <Switch>
-                    <Route exact path='/' render={() => 
-                        <Grid item xs={12} justify='center' style={{paddingLeft: '10%', paddingRight: '10%'}}>
-                            <Destaques />
-                        </Grid>
-                    } />
+                    <Route exact path='/' component={Destaques}/>
                     <Route exact path='/categorias' component={FiltroCategoria}/>
+                    <Route path='/products/:id' component={Product}/>
+                    <Route path='/categorias/:id' component={FiltroCategoria}/>
                 </Switch>
+                </Grid>
             </Grid>
         );
     }
