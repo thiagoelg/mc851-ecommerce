@@ -1,5 +1,5 @@
 import express from 'express'
-import LogisticController from '../controller/LogistcController';
+import LogisticController from '../controller/LogisticController';
 
 const router = express.Router()
 const cepUnicamp = 13083970

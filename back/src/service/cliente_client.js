@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const REQUEST_TIMEOUT = 30000
-const CLIENTE_URL = "http://us-central1-first-try-18f38.cloudfunctions.net/clientsAPI/"
+const CLIENTE_URL = "http://us-central1-first-try-18f38.cloudfunctions.net/clientsAPI"
 const headers = {
     'api_key': 'abc'
 }
