@@ -9,7 +9,8 @@ class NavigateButton extends Component {
         return (
             <Button
                 onClick={() => this.props.history.push(this.props.href)}
-                color={this.props.color}>
+                color={this.props.color}
+                variant={this.props.variant}>
                 {this.props.children}
             </Button>
         );
