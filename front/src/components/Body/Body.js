@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import Grid from "material-ui/es/Grid/Grid";
 import {Route, Switch} from 'react-router-dom'
 import Destaques from "../Produtos/Destaques";
-import Filtro from "../Filtro/Filtro";
+import ProductFilter from "../Produtos/ProductFilter";
 import Carrinho from "../Carrinho/Carrinho";
 import Produto from "../Produtos/Produto";
 
 
-// Para <Filtro /> dentro do grid, tirar o style do grid:
+// Para <ProductFilter /> dentro do grid, tirar o style do grid:
 // style={{paddingLeft: '10%', paddingRight: '10%'}}
 // e mudar o marginTop e padding do grid pai para style={{marginTop: 100, padding: 10}}
 
@@ -19,9 +19,9 @@ class Body extends Component {
                 <Switch>
                     
                     <Route exact path='/' component={Destaques}/>
-                    <Route exact path='/busca' component={Filtro}/>
+                    <Route exact path='/busca' component={ProductFilter}/>
                     <Route path='/products/:id' component={Produto}/>
-                    <Route path='/busca/categorias/:categoryId' component={Filtro}/>
+                    <Route path='/busca/categorias/:categoryId' component={ProductFilter}/>
                     <Route path='/carrinho' component={Carrinho}/>
                 </Switch>
                 </Grid>

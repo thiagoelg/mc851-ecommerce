@@ -2,15 +2,28 @@ import React from 'react';
 import {FormControl, FormControlLabel, FormGroup, FormLabel,} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 
-class CheckboxesGroup extends React.Component {
+class MultiSelectionCheckboxes extends React.Component {
 
     constructor(props) {
         super(props);
+
+        const checkedItems = this.props.value;
+
         this.state = {
-            checkedItems: []
+            checkedItems: checkedItems ? checkedItems : []
         };
 
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        const checkedItems = nextProps.value;
+
+        this.setState({
+            checkedItems: checkedItems ? checkedItems : []
+        });
+
     }
 
     callback() {
@@ -72,7 +85,7 @@ class CheckboxesGroup extends React.Component {
                                 key={item.id}
                                 control={
                                     <Checkbox
-                                        checked={this.props.value.indexOf(item.id) >= 0}
+                                        checked={this.state.checkedItems.indexOf(item.id) >= 0}
                                         name={item.id}
                                         onChange={this.handleChange}
                                         value={item.name}
@@ -88,4 +101,4 @@ class CheckboxesGroup extends React.Component {
     }
 }
 
-export default CheckboxesGroup;
+export default MultiSelectionCheckboxes;
