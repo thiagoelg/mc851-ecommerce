@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Products from "./Products";
+import Products from "./Produtos";
 import {getProducts} from "../../clients/ProductsClient";
 
 

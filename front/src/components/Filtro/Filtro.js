@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import {Drawer} from "material-ui";
 import CheckboxesGroup from './/CheckboxesGroup'
-import Products from "../Products/Products";
+import Products from "../Produtos/Produtos";
 import Divider from "material-ui/es/Divider/Divider";
 import Grid from "material-ui/es/Grid/Grid";
 import FormLabel from "material-ui/es/Form/FormLabel";
