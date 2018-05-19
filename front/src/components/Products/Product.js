@@ -4,7 +4,7 @@ import TextField from "material-ui/es/TextField/TextField";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
 import NavigateButton from "../NavigateButton/NavigateButton";
 
-class Produto extends Component {
+class Product extends Component {
 
     constructor(props) {
         super(props);
@@ -107,4 +107,4 @@ class Produto extends Component {
     }
 }
 
-export default Produto;
+export default Product;

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import Products from "./Produtos";
+import Products from "./Products";
 import {getProducts} from "../../clients/ProductsClient";
 
 
-class Destaques extends Component {
+class Highlights extends Component {
 
     constructor(props) {
         super(props);
@@ -34,4 +34,4 @@ class Destaques extends Component {
 
 }
 
-export default Destaques;
+export default Highlights;

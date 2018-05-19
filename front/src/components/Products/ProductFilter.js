@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
-import Products from "./Produtos";
+import Products from "./Products";
 import {getProducts} from "../../clients/ProductsClient";
-import FiltroProduto from "./ProductFilterFields";
+import ProductFilterFields from "./ProductFilterFields";
 
 const styles = theme => ({
     root: {
@@ -50,7 +50,7 @@ class ProductFilter extends Component {
 
         return (
             <div className={classes.root}>
-                <FiltroProduto onFilter={this.handleOnFilter} defaultCategory={this.props.match.params.categoryId}/>
+                <ProductFilterFields onFilter={this.handleOnFilter} defaultCategory={this.props.match.params.categoryId}/>
                 <main className={classes.content}>
                     <Products cols={3} products={this.state.products}/>
                 </main>

@@ -5,7 +5,7 @@ import IconButton from 'material-ui/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import Typography from "material-ui/es/Typography/Typography";
 
-class Produtos extends Component {
+class Products extends Component {
 
     empty(products) {
         return products != null && products.length > 0;
@@ -52,4 +52,4 @@ class Produtos extends Component {
 
 }
 
-export default withRouter(Produtos);
+export default withRouter(Products);

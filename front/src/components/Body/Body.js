@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import Grid from "material-ui/es/Grid/Grid";
 import {Route, Switch} from 'react-router-dom'
-import Destaques from "../Produtos/Destaques";
-import ProductFilter from "../Produtos/ProductFilter";
+import Highlights from "../Products/Highlights";
+import ProductFilter from "../Products/ProductFilter";
 import Carrinho from "../Carrinho/Carrinho";
-import Produto from "../Produtos/Produto";
+import Product from "../Products/Product";
 
 
 // Para <ProductFilter /> dentro do grid, tirar o style do grid:
@@ -18,9 +18,9 @@ class Body extends Component {
                 <Grid item xs={12} style={{paddingLeft: '10%', paddingRight: '10%'}}>
                 <Switch>
                     
-                    <Route exact path='/' component={Destaques}/>
+                    <Route exact path='/' component={Highlights}/>
                     <Route exact path='/busca' component={ProductFilter}/>
-                    <Route path='/products/:id' component={Produto}/>
+                    <Route path='/products/:id' component={Product}/>
                     <Route path='/busca/categorias/:categoryId' component={ProductFilter}/>
                     <Route path='/carrinho' component={Carrinho}/>
                 </Switch>
