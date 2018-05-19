@@ -92,7 +92,7 @@ class Header extends Component {
                                     this.state.categories.map((category) =>
                                         <Grid key={category.id} item xs={2}  >
                                             <NavigateButton color='default'
-                                                            href={`/categorias/${category.id}`}>
+                                                            href={`/busca/categorias/${category.id}`}>
                                                 {category.name}
                                             </NavigateButton>
                                         </Grid>
