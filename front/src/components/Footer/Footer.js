@@ -14,10 +14,10 @@ class Footer extends Component {
             <AppBar position="static" color="default" style={{top: '80%', bottom: '0%', padding: 20}}>
                 <Toolbar>
                     <Grid container spacing={8} alignItems="center" justify="center">
-                        <Grid item xs={12} sm={4} alignContent="center">
+                        <Grid item xs={12} sm={4} >
                             <Logo/>
                         </Grid>
-                        <Grid item xs={12} sm={4} alignContent="center">
+                        <Grid item xs={12} sm={4} >
                             <Typography variant="title" color="inherit">
                                 Institucional
                             </Typography>
@@ -32,7 +32,7 @@ class Footer extends Component {
                                 </List>
                             </div>
                         </Grid>
-                        <Grid item xs={12} sm={4} alignContent="center">
+                        <Grid item xs={12} sm={4} >
                             <Typography variant="title" color="inherit">
                                 Políticas
                             </Typography>

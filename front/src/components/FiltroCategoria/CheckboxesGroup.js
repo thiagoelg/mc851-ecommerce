@@ -9,10 +9,6 @@ class CheckboxesGroup extends React.Component {
         this.state = {}
     }
 
-    handleChange = name => event => {
-        this.setState({[name]: event.target.checked});
-    };
-
     render() {
 
         let items = this.props.items;
@@ -32,11 +28,12 @@ class CheckboxesGroup extends React.Component {
                     {
                         items.map((item) => (
                             <FormControlLabel
+                                key={item.id}
                                 control={
                                     <Checkbox
                                         checked={this.state[item.id]}
                                         name={item.id}
-                                        onChange={this.handleChange}
+                                        onChange={this.props.onChange}
                                         value={item.id}
                                     />
                                 }

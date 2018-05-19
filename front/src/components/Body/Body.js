@@ -4,7 +4,6 @@ import {Route, Switch} from 'react-router-dom'
 import Destaques from "../Destaques/Destaques";
 import FiltroCategoria from "../FiltroCategoria/Filtro";
 import Carrinho from "../Carrinho/Carrinho";
-import Typography from "material-ui/es/Typography/Typography";
 import Product from "../Products/Product";
 
 
@@ -15,8 +14,8 @@ import Product from "../Products/Product";
 class Body extends Component {
     render() {
         return (
-            <Grid container xs={12} style={{marginTop: 130, padding: 20}}>
-                <Grid item xs={12} justify='center' style={{paddingLeft: '10%', paddingRight: '10%'}}>
+            <Grid container justify='center' style={{marginTop: 130, padding: 20}}>
+                <Grid item xs={12} style={{paddingLeft: '10%', paddingRight: '10%'}}>
                 <Switch>
                     
                     <Route exact path='/' component={Destaques}/>

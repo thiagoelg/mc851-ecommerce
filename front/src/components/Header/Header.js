@@ -50,29 +50,28 @@ class Header extends Component {
     }
 
     render() {
-        const {classes} = this.props;
         return (
             <AppBar position="fixed">
                 <Toolbar>
                     <Grid container spacing={0} alignItems="center" justify="center">
-                        <Grid item xs={12} sm={3} alignContent="center">
+                        <Grid item xs={12} sm={3} >
                             <Logo/>
                         </Grid>
 
-                        <Grid item xs={12} sm={6} alignContent="center" justify="center">
+                        <Grid item xs={12} sm={6} >
                             <SearchInput/>
                         </Grid>
 
-                        <Grid item xs={12} sm={3} alignContent="center" justify="center">
+                        <Grid item xs={12} sm={3} >
                             <Grid container spacing={8} alignItems="center">
-                                <Grid item xs={0} sm={3} alignContent="center" justify="center"/>
-                                <Grid item xs={6} sm={4} alignContent="center" justify="center">
+                                <Grid item xs={false} sm={3}  />
+                                <Grid item xs={6} sm={4} >
                                     <Button color="inherit">
                                         <AccountCircle/>
                                         Entrar
                                     </Button>
                                 </Grid>
-                                <Grid item xs={6} sm={4} alignContent="center" justify="center">
+                                <Grid item xs={6} sm={4} >
                                     <Badge badgeContent={0} color="error">
                                         <Button color="inherit">
                                             <ShoppingCart/>
@@ -80,18 +79,18 @@ class Header extends Component {
                                         </Button>
                                     </Badge>
                                 </Grid>
-                                <Grid item xs={0} sm={1} alignContent="center" justify="center"/>
+                                <Grid item xs={false} sm={1}  />
                             </Grid>
                         </Grid>
                     </Grid>
                 </Toolbar>
                 <Toolbar style={toolBarBottonHeader}>
                     <Grid container spacing={0} alignItems="center" justify="center">
-                        <Grid item xs={12} alignContent="center" justify="center">
-                            <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={12} >
+                            <Grid container spacing={0} alignItems="center">
                                 {
                                     this.state.categories.map((category) =>
-                                        <Grid item xs={2} alignContent="center" justify="center">
+                                        <Grid key={category.id} item xs={2}  >
                                             <NavigateButton color='default'
                                                             href={`/categorias/${category.id}`}>
                                                 {category.name}

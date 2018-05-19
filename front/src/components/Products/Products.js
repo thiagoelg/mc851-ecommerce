@@ -6,10 +6,6 @@ import InfoIcon from '@material-ui/icons/Info';
 
 class Products extends Component {
 
-    constructor(props) {
-        super(props);
-    };
-
     render() {
         let cols = this.props.cols
         if (cols === undefined)
@@ -19,7 +15,7 @@ class Products extends Component {
             <div className="destaques" justify='center'>
                 <GridList cellHeight={200} cols={cols}>
                     {this.props.products.map(tile => (
-                        <GridListTile key={tile.imageUrl} cols={1}
+                        <GridListTile key={tile.imageUrl + Math.random()} cols={1}
                                       onClick={() => this.props.history.push("/products/" + tile.id)}
                                       style={{cursor: 'pointer'}}>
                             <img src={tile.imageUrl} alt={tile.name}

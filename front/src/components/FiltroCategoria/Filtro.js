@@ -47,6 +47,7 @@ class Filtro extends Component {
             maxPrice: 1000.0
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleCheckbox = this.handleCheckbox.bind(this);
     };
 
     componentDidMount() {
@@ -74,6 +75,11 @@ class Filtro extends Component {
         this.setState({[target.name]: target.value});
     }
 
+    handleCheckbox = name => event => {
+        this.setState({[name]: event.target.checked});
+        console.log(name);
+    };
+
     render() {
         const {classes} = this.props;
 
@@ -87,7 +93,7 @@ class Filtro extends Component {
 
                     <div className={classes.toolbar}/>
 
-                    <CheckboxesGroup label="Categorias" items={this.state.categories}/>
+                    <CheckboxesGroup label="Categorias" items={this.state.categories} onChange={this.handleCheckbox} />
                     <Divider/>
                     <br/>
 
