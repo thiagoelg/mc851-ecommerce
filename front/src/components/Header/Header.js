@@ -73,11 +73,11 @@ class Header extends Component {
                                     </Button>
                                 </Grid>
                                 <Grid item xs={6} sm={4} alignContent="center" justify="center">
-                                    <Badge badgeContent={0} color="error">
-                                        <Button color="inherit">
+                                    <Badge badgeContent={0} color="secondary">
+                                        <NavigateButton href="/carrinho" color="inherit">
                                             <ShoppingCart/>
                                             Carrinho
-                                        </Button>
+                                        </NavigateButton>
                                     </Badge>
                                 </Grid>
                                 <Grid item xs={0} sm={1} alignContent="center" justify="center"/>
