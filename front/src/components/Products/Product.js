@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Grid from "material-ui/es/Grid/Grid";
 import TextField from "material-ui/es/TextField/TextField";
-import Button from "material-ui/es/Button/Button";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
 import NavigateButton from "../NavigateButton/NavigateButton";
 
