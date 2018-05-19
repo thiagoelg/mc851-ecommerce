@@ -30,19 +30,45 @@ class ProductFilter extends Component {
             products: [],
             categories: [],
             brands: ["Toppen"],
+
+            page: 1,
+            totalPages: null,
+            displayedPages: 5,
+            filter: {}
         };
 
         this.handleOnFilter = this.handleOnFilter.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);
+        this.filter = this.filter.bind(this);
     };
 
-    handleOnFilter(filter) {
-        getProducts(filter)
+    filter() {
+        let params = Object.assign({}, this.state.filter);
+        params.page = this.state.page;
+
+        getProducts(params)
             .then(response => {
-                this.setState({products: response.data});
+                this.setState({
+                    products: response.data,
+                    totalPages: 15 //FIXME ask produtos-1
+                });
             })
             .catch(error => {
                 //TODO treat error
             });
+    }
+
+    handleOnFilter(filter) {
+        this.setState({
+            filter: filter,
+            page: 1
+        }, () => this.filter());
+    }
+
+    handlePageChange(number) {
+        this.setState({
+            page: number
+        }, () => this.filter())
     }
 
     render() {
@@ -50,9 +76,15 @@ class ProductFilter extends Component {
 
         return (
             <div className={classes.root}>
-                <ProductFilterFields onFilter={this.handleOnFilter} defaultCategory={this.props.match.params.categoryId}/>
+                <ProductFilterFields onFilter={this.handleOnFilter}
+                                     defaultCategory={this.props.match.params.categoryId}
+                                    />
                 <main className={classes.content}>
-                    <Products cols={3} products={this.state.products}/>
+                    <Products cols={3} products={this.state.products}
+                              page={this.state.page}
+                              totalPages={this.state.totalPages}
+                              displayedPages={this.state.displayedPages}
+                              onPageChange={this.handlePageChange}/>
                 </main>
             </div>
         );

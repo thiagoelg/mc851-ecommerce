@@ -61,11 +61,17 @@ class ProductFilterFields extends Component {
     componentWillReceiveProps(nextProps) {
         const categoryId = this.props.defaultCategory;
 
-        this.setState({
-            minPrice: '',
-            maxPrice: '',
-            selectedCategories: categoryId ? [categoryId] : [],
-            selectedBrands: []
+        this.setState((prevState, props) => {
+            if (props.defaultCategory !== categoryId) {
+                return {
+                    minPrice: '',
+                    maxPrice: '',
+                    selectedCategories: categoryId ? [categoryId] : [],
+                    selectedBrands: []
+                }
+            }
+
+            return {};
         });
 
     }
