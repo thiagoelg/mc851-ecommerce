@@ -4,6 +4,7 @@ import TextField from "material-ui/es/TextField/TextField";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
 import Button from "material-ui/es/Button/Button";
 import Link from "../Link/Link";
+import Chip from "material-ui/es/Chip/Chip";
 
 class Product extends Component {
 
@@ -50,12 +51,15 @@ class Product extends Component {
         return (
             <Grid container>
                 <Grid item xs={4}>
-                    <img src={product.imageUrl} alt={product.name} height={300}/>
+                    <img src={product.imageUrl} alt={product.name} height={300} width={300}/>
                 </Grid>
                 <Grid item xs={8}>
                     <Grid container>
                         <Grid item xs={12}>
                             <h2>{product.name}</h2>
+                            {product.tags && product.tags.map(tag =>
+                                <Chip key={tag} label={tag} style={{marginRight: 5}} />)
+                            }
                             <p>
                                 <b>Preço:</b> R$ {parseFloat(product.price).toFixed(2)}
                             </p>
@@ -102,7 +106,11 @@ class Product extends Component {
                         <b>Categoria:</b> {category.name}
                     </p>
                     <p>
-                        <b>Dimensões:</b> {product.height} cm x {product.width} cm x {product.length} cm
+                        <b>Dimensões do Pacote:</b> {product.height} cm x {product.width} cm x {product.length} cm
+                    </p>
+                    <p>
+                        <b>Peso do
+                            Pacote:</b> {product.weight < 1000 ? `${product.weight}g` : `${parseFloat(product.weight / 1000).toFixed(2)}kg`}
                     </p>
                 </Grid>
             </Grid>
