@@ -6,21 +6,56 @@ import InfoIcon from '@material-ui/icons/Info';
 import Typography from "material-ui/es/Typography/Typography";
 import Pagination from "../Pagination";
 import Grid from "material-ui/es/Grid/Grid";
+import {getProducts} from "../../clients/ProductsClient";
 
 class Products extends Component {
 
     constructor(props) {
         super(props);
 
+        this.state = {
+            products: [],
+
+            page: 1,
+            totalPages: null,
+            displayedPages: 5,
+        };
+
         this.handlePageChange = this.handlePageChange.bind(this);
     }
 
-    empty(products) {
-        return products != null && products.length > 0;
+    componentDidMount() {
+        this.filter(this.props);
+    }
+
+    componentWillReceiveProps(props) {
+        this.filter(props);
+    }
+
+    filter(props) {
+        let params = Object.assign({}, props.filter);
+        params.page = this.state.page;
+
+        getProducts(params)
+            .then(response => {
+                this.setState({
+                    products: response.data,
+                    totalPages: 15 //FIXME ask produtos-1
+                });
+            })
+            .catch(error => {
+                //TODO treat error
+            });
+    }
+
+    empty() {
+        return this.state.products.length === 0;
     }
 
     handlePageChange(number) {
-        this.props.onPageChange(number);
+        this.setState({
+            page: number
+        }, () => this.filter())
     }
 
     render() {
@@ -28,12 +63,7 @@ class Products extends Component {
         if (cols === undefined)
             cols = 3;
 
-        let hasPagination = false;
-        if (this.props.totalPages != null && this.props.displayedPages != null && this.props.page != null) {
-            hasPagination = true;
-        }
-
-        let products = this.props.products.map(product => (
+        let products = this.state.products.map(product => (
             <GridListTile key={product.imageUrl + Math.random()} cols={1}
                           onClick={() => this.props.history.push("/products/" + product.id)}
                           style={{cursor: 'pointer'}}>
@@ -65,11 +95,11 @@ class Products extends Component {
                                 {products}
                             </GridList>
                         </Grid>
-                        {hasPagination && (
+                        {this.state.totalPages > 1 && (
                             <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
-                                <Pagination total={this.props.totalPages}
-                                            current={this.props.page}
-                                            display={this.props.displayedPages}
+                                <Pagination total={this.state.totalPages}
+                                            current={this.state.page}
+                                            display={this.state.displayedPages}
                                             onChange={this.handlePageChange}
                                 />
                             </Grid>
