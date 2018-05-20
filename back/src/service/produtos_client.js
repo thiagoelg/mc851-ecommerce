@@ -1,16 +1,16 @@
 import axios from 'axios'
 
-const REQUEST_TIMEOUT = 30000
-const PRODUTOS_URL = "https://ftt-catalog.herokuapp.com"
+const PRODUTOS_URL = "https://ftt-catalog.herokuapp.com";
+const GROUP_ID = "981ab11e-74c3-4226-b867-c8172ee6f503";
 
 export const getProducts = async (params) => {
 
     try {
-        const response = await axios.get(`${PRODUTOS_URL}/products/group/endereco`, {
+        const response = await axios.get(`${PRODUTOS_URL}/products/group/${GROUP_ID}`, {
             params
         })
 
-        return {data : response.data, status: response.status}
+        return {data: response.data, status: response.status}
     } catch (e) {
         console.error(e)
     }
@@ -21,7 +21,7 @@ export const getProduct = async (id) => {
     try {
         const response = await axios.get(`${PRODUTOS_URL}/products/${id}`)
 
-        return {data : response.data, status: response.status}
+        return {data: response.data, status: response.status}
     } catch (e) {
         console.error(e)
     }
@@ -30,11 +30,11 @@ export const getProduct = async (id) => {
 export const getCategories = async (params) => {
 
     try {
-        const response = await axios.get(`${PRODUTOS_URL}/categories`, {
+        const response = await axios.get(`${PRODUTOS_URL}/categories/group/${GROUP_ID}`, {
             params
         })
 
-        return {data : response.data, status: response.status}
+        return {data: response.data, status: response.status}
     } catch (e) {
         console.error(e)
     }
@@ -45,7 +45,7 @@ export const getCategory = async (id) => {
     try {
         const response = await axios.get(`${PRODUTOS_URL}/categories/${id}`)
 
-        return {data : response.data, status: response.status}
+        return {data: response.data, status: response.status}
     } catch (e) {
         console.error(e)
     }
@@ -61,7 +61,7 @@ export const reserveProduct = async (id, amount) => {
             data: amount
         })
 
-        return {data : response.data, status: response.status}
+        return {data: response.data, status: response.status}
     } catch (e) {
         console.error(e)
     }
@@ -77,7 +77,28 @@ export const releaseProduct = async (id, amount) => {
             data: amount
         })
 
-        return {data : response.data, status: response.status}
+        return {data: response.data, status: response.status}
+    } catch (e) {
+        console.error(e)
+    }
+}
+
+export const persistProduct = async (product) => {
+
+    try {
+        const response = await axios.post(`${PRODUTOS_URL}/products`, product);
+
+        return {data: response.headers.location, status: response.status}
+    } catch (e) {
+        console.error(e)
+    }
+}
+
+export const persistCategory = async (category) => {
+
+    try {
+        const response = await axios.post(`${PRODUTOS_URL}/categories`, category);
+        return {data: response.headers.location, status: response.status}
     } catch (e) {
         console.error(e)
     }
@@ -90,5 +111,8 @@ export default {
     getCategories,
     getCategory,
     reserveProduct,
-    releaseProduct
+    releaseProduct,
+    persistProduct,
+    persistCategory,
+    GROUP_ID
 }
