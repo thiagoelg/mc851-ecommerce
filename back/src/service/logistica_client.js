@@ -3,6 +3,16 @@ import axios from 'axios'
 const REQUEST_TIMEOUT = 30000
 const LOGISTICA_URL = "https://hidden-basin-50728.herokuapp.com"
 
+const SHIPPING_TYPE = {
+    PAC: "PAC",
+    SEDEX: "SEDEX"
+};
+
+const PACKET_TYPE = {
+    BOX: "Caixa",
+    ENVELOPE: "envelope"
+};
+
 export const getShipment = async (params) => {
 
     try {
@@ -44,4 +54,6 @@ export default {
     getShipment,
     getTracking,
     postShipment,
+    SHIPPING_TYPE,
+    PACKET_TYPE
 }

@@ -135,7 +135,7 @@ export const createEletrodomesticos = async () => {
                 "google"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/geladeira_torneiras.jpg",
+            imageUrl: "http://front.localhost/imgs/eletrodomesticos/geladeira_mini_usb_moderna.jpg",
             weight: 630,
             length: 10,
             width: 15,
@@ -155,7 +155,7 @@ export const createEletrodomesticos = async () => {
                 "google"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/geladeira_torneiras.jpg",
+            imageUrl: "http://front.localhost/imgs/eletrodomesticos/geladeira_mini__usb_antiga.jpg",
             weight: 538,
             length: 10,
             width: 15,

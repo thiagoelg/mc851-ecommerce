@@ -1,6 +1,7 @@
 import axios from 'axios'
+import ServerConfig from './ServerConfig'
 
-const URL = "http://back.localhost";
+const URL = ServerConfig.URL;
 
 export const getProducts = async (params) => {
     try {

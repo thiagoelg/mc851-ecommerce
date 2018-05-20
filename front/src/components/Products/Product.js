@@ -5,6 +5,7 @@ import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
 import Button from "material-ui/es/Button/Button";
 import Link from "../Link/Link";
 import Chip from "material-ui/es/Chip/Chip";
+import Freight from "../Freight/Freight";
 
 class Product extends Component {
 
@@ -92,9 +93,10 @@ class Product extends Component {
 
                     </Grid>
 
-                    {/*<Grid item xs={12}>*/}
-                    {/*<Freight/>*/}
-                    {/*</Grid>*/}
+                    <Grid item xs={12}>
+                        <br/>
+                        <Freight product={product}/>
+                    </Grid>
                 </Grid>
                 <Grid item xs={12}>
                     <h2>Detalhes:</h2>

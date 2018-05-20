@@ -1,20 +1,23 @@
 import React, {Component} from 'react';
-import Input from "material-ui/es/Input/Input";
-import CepMask from "./CepMask";
+import TextField from "material-ui/es/TextField/TextField";
 
 class CepInput extends Component {
-
-    constructor(props) {
-        super(props)
-    }
+    // FIXME add cep mask
+    // InputProps={{
+    //     inputComponent: CepMask
+    // }}
 
     render() {
         return (
-            <Input
+            <TextField
                 label="CEP"
-                id="cep"
-                inputComponent={CepMask}
-            />
+                onChange={this.props.onChange}
+                onKeyPress={this.props.onKeyPress}
+                name={this.props.name}
+                value={this.props.value}
+            >
+
+            </TextField>
         );
 
     }
