@@ -6,6 +6,7 @@ import Button from "material-ui/es/Button/Button";
 import Link from "../Link/Link";
 import Chip from "material-ui/es/Chip/Chip";
 import Freight from "../Freight/Freight";
+import {getCategory, getProduct} from "../../clients/ProductsClient";
 
 class Product extends Component {
 
@@ -15,7 +16,7 @@ class Product extends Component {
             product: {},
             category: {},
             amount: 1
-        }
+        };
         this.handleChange = this.handleChange.bind(this)
     }
 
@@ -25,22 +26,25 @@ class Product extends Component {
     }
 
     componentDidMount() {
-        fetch('http://back.localhost/products/' + this.props.match.params.id)
+
+        getProduct({id: this.props.match.params.id})
             .then(response => {
-                //TODO check response.ok
-                return response.json();
-            }).then(product => {
+                const product = response.data;
 
-            this.setState({product: product});
+                this.setState({product: product});
 
-            fetch('http://back.localhost/products/categories/' + product.categoryId)
-                .then(response => {
-                    //TODO check response.ok
-                    return response.json();
-                }).then(category => {
-                this.setState({category: category});
+                getCategory({id: product.categoryId})
+                    .then(response => {
+                        const category = response.data;
+                        this.setState({category: category});
+                    })
+                    .catch(error => {
+                        //TODO treat error
+                    })
             })
-        })
+            .catch(error => {
+                //TODO treat error
+            })
     }
 
     render() {
@@ -59,7 +63,7 @@ class Product extends Component {
                         <Grid item xs={12}>
                             <h2>{product.name}</h2>
                             {product.tags && product.tags.map(tag =>
-                                <Chip key={tag} label={tag} style={{marginRight: 5}} />)
+                                <Chip key={tag} label={tag} style={{marginRight: 5}}/>)
                             }
                             <p>
                                 <b>Preço:</b> R$ {parseFloat(product.price).toFixed(2)}
