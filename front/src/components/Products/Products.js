@@ -6,7 +6,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import Typography from "material-ui/es/Typography/Typography";
 import Pagination from "../Pagination";
 import Grid from "material-ui/es/Grid/Grid";
-import {getProducts} from "../../clients/ProductsClient";
+import {getProducts, getProductsByFullSearch} from "../../clients/ProductsClient";
 import Link from "../Link/Link";
 
 class Products extends Component {
@@ -37,16 +37,31 @@ class Products extends Component {
         let params = Object.assign({}, props.filter);
         params.page = this.state.page;
 
-        getProducts(params)
-            .then(response => {
-                this.setState({
-                    products: response.data,
-                    totalPages: 15 //FIXME ask produtos-1
+        const search = props.search;
+
+        if(search) {
+            getProductsByFullSearch(params)
+                .then(response => {
+                    this.setState({
+                        products: response.data,
+                        totalPages: 15 //FIXME ask produtos-1
+                    });
+                })
+                .catch(error => {
+                    //TODO treat error
                 });
-            })
-            .catch(error => {
-                //TODO treat error
-            });
+        } else {
+            getProducts(params)
+                .then(response => {
+                    this.setState({
+                        products: response.data,
+                        totalPages: 15 //FIXME ask produtos-1
+                    });
+                })
+                .catch(error => {
+                    //TODO treat error
+                });
+        }
     }
 
     empty() {

@@ -91,7 +91,7 @@ class Header extends Component {
                                 {
                                     this.state.categories.map((category) =>
                                         <Grid key={category.id} item xs={2} style={{display: 'flex', justifyContent: 'center'}}>
-                                            <Link to={`/busca/categorias/${category.id}`}>
+                                            <Link to={`/busca?categoryId=${category.id}`}>
                                                 <Button color='default'>
                                                     {category.name}
                                                 </Button>

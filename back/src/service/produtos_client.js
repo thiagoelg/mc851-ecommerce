@@ -8,48 +8,61 @@ export const getProducts = async (params) => {
     try {
         const response = await axios.get(`${PRODUTOS_URL}/products/group/${GROUP_ID}`, {
             params
-        })
+        });
 
         return {data: response.data, status: response.status}
     } catch (e) {
         console.error(e)
     }
-}
+};
+
+export const getProductsByFullSearch = async (params) => {
+
+    try {
+        const response = await axios.get(`${PRODUTOS_URL}/products/group/${GROUP_ID}/search/${params.search}`, {
+            params
+        });
+
+        return {data: response.data, status: response.status}
+    } catch (e) {
+        console.error(e)
+    }
+};
 
 export const getProduct = async (id) => {
 
     try {
-        const response = await axios.get(`${PRODUTOS_URL}/products/${id}`)
+        const response = await axios.get(`${PRODUTOS_URL}/products/${id}`);
 
         return {data: response.data, status: response.status}
     } catch (e) {
         console.error(e)
     }
-}
+};
 
 export const getCategories = async (params) => {
 
     try {
         const response = await axios.get(`${PRODUTOS_URL}/categories/group/${GROUP_ID}`, {
             params
-        })
+        });
 
         return {data: response.data, status: response.status}
     } catch (e) {
         console.error(e)
     }
-}
+};
 
 export const getCategory = async (id) => {
 
     try {
-        const response = await axios.get(`${PRODUTOS_URL}/categories/${id}`)
+        const response = await axios.get(`${PRODUTOS_URL}/categories/${id}`);
 
         return {data: response.data, status: response.status}
     } catch (e) {
         console.error(e)
     }
-}
+};
 
 export const reserveProduct = async (id, amount) => {
 
@@ -59,13 +72,13 @@ export const reserveProduct = async (id, amount) => {
                 id: id
             },
             data: amount
-        })
+        });
 
         return {data: response.data, status: response.status}
     } catch (e) {
         console.error(e)
     }
-}
+};
 
 export const releaseProduct = async (id, amount) => {
 
@@ -75,13 +88,13 @@ export const releaseProduct = async (id, amount) => {
                 id: id
             },
             data: amount
-        })
+        });
 
         return {data: response.data, status: response.status}
     } catch (e) {
         console.error(e)
     }
-}
+};
 
 export const persistProduct = async (product) => {
 
@@ -92,7 +105,7 @@ export const persistProduct = async (product) => {
     } catch (e) {
         console.error(e)
     }
-}
+};
 
 export const persistCategory = async (category) => {
 
@@ -102,11 +115,12 @@ export const persistCategory = async (category) => {
     } catch (e) {
         console.error(e)
     }
-}
+};
 
 
 export default {
     getProducts,
+    getProductsByFullSearch,
     getProduct,
     getCategories,
     getCategory,

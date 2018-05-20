@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Products from "./Products";
 import ProductFilterFields from "./ProductFilterFields";
+import QueryString from 'query-string'
 
 const styles = theme => ({
     root: {
@@ -41,13 +42,17 @@ class ProductFilter extends Component {
     render() {
         const {classes} = this.props;
 
+        const queryParameters = QueryString.parse(this.props.location.search);
+        const categoryId = queryParameters.categoryId;
+        const search = queryParameters.search;
+
         return (
             <div className={classes.root}>
                 <ProductFilterFields onFilter={this.handleOnFilter}
-                                     defaultCategory={this.props.match.params.categoryId}
+                                     defaultCategory={categoryId}
                 />
                 <main className={classes.content}>
-                    <Products cols={3} filter={this.state.filter}/>
+                    <Products cols={3} filter={this.state.filter} search={search}/>
                 </main>
             </div>
         );
