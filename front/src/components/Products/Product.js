@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import Grid from "material-ui/es/Grid/Grid";
 import TextField from "material-ui/es/TextField/TextField";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
-import NavigateButton from "../NavigateButton/NavigateButton";
+import Button from "material-ui/es/Button/Button";
+import Link from "../Link/Link";
 
 class Product extends Component {
 
@@ -77,16 +78,18 @@ class Product extends Component {
                         </Grid>
                         <Grid item xs={1}/>
                         <Grid item xs={9}>
-                            <NavigateButton href="/carrinho" variant="raised" color="secondary" style={{marginTop:'5%'}}>
-                                <ShoppingCart style={{marginRight: '10'}}/>
-                                Adicionar ao Carrinho
-                            </NavigateButton>
+                            <Link to="/carrinho">
+                                <Button variant="raised" color="secondary" style={{marginTop: '5%'}}>
+                                    <ShoppingCart style={{marginRight: '10'}}/>
+                                    Adicionar ao Carrinho
+                                </Button>
+                            </Link>
                         </Grid>
 
                     </Grid>
 
                     {/*<Grid item xs={12}>*/}
-                        {/*<Freight/>*/}
+                    {/*<Freight/>*/}
                     {/*</Grid>*/}
                 </Grid>
                 <Grid item xs={12}>

@@ -6,7 +6,7 @@ import Logo from "../Logo/Logo";
 import AccountCircle from "@material-ui/icons/es/AccountCircle";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
 import {withStyles} from 'material-ui/styles';
-import NavigateButton from "../NavigateButton/NavigateButton";
+import Link from "../Link/Link";
 
 const toolBarBottonHeader = {
     backgroundColor: '#F5F5F5',
@@ -54,47 +54,48 @@ class Header extends Component {
             <AppBar position="fixed">
                 <Toolbar>
                     <Grid container spacing={0} alignItems="center" justify="center">
-                        <Grid item xs={12} sm={3} >
+                        <Grid item xs={12} sm={3}>
                             <Logo/>
                         </Grid>
 
-                        <Grid item xs={12} sm={6} >
+                        <Grid item xs={12} sm={6}>
                             <SearchInput/>
                         </Grid>
 
-                        <Grid item xs={12} sm={3} >
+                        <Grid item xs={12} sm={3}>
                             <Grid container spacing={8} alignItems="center">
-                                <Grid item xs={false} sm={3}  />
-                                <Grid item xs={6} sm={4} >
+                                <Grid item xs={false} sm={3}/>
+                                <Grid item xs={6} sm={4}>
                                     <Button color="inherit">
                                         <AccountCircle/>
                                         Entrar
                                     </Button>
                                 </Grid>
-                                <Grid item xs={6} sm={4} >
+                                <Grid item xs={6} sm={4}>
                                     <Badge badgeContent={0} color="secondary">
-                                        <NavigateButton href="/carrinho" color="inherit">
+                                        <Link to="/carrinho">
                                             <ShoppingCart/>
                                             Carrinho
-                                        </NavigateButton>
+                                        </Link>
                                     </Badge>
                                 </Grid>
-                                <Grid item xs={false} sm={1}  />
+                                <Grid item xs={false} sm={1}/>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Toolbar>
                 <Toolbar style={toolBarBottonHeader}>
                     <Grid container spacing={0} alignItems="center" justify="center">
-                        <Grid item xs={12} >
+                        <Grid item xs={12}>
                             <Grid container spacing={0} alignItems="center">
                                 {
                                     this.state.categories.map((category) =>
-                                        <Grid key={category.id} item xs={2}  >
-                                            <NavigateButton color='default'
-                                                            href={`/busca/categorias/${category.id}`}>
-                                                {category.name}
-                                            </NavigateButton>
+                                        <Grid key={category.id} item xs={2}>
+                                            <Link to={`/busca/categorias/${category.id}`}>
+                                                <Button color='default'>
+                                                    {category.name}
+                                                </Button>
+                                            </Link>
                                         </Grid>
                                     )
                                 }

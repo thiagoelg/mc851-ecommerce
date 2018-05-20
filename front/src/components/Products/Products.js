@@ -7,6 +7,7 @@ import Typography from "material-ui/es/Typography/Typography";
 import Pagination from "../Pagination";
 import Grid from "material-ui/es/Grid/Grid";
 import {getProducts} from "../../clients/ProductsClient";
+import Link from "../Link/Link";
 
 class Products extends Component {
 
@@ -64,20 +65,20 @@ class Products extends Component {
             cols = 3;
 
         let products = this.state.products.map(product => (
-            <GridListTile key={product.imageUrl + Math.random()} cols={1}
-                          onClick={() => this.props.history.push("/products/" + product.id)}
-                          style={{cursor: 'pointer'}}>
-                <img src={product.imageUrl} alt={product.name}
-                     style={{height: '100%', width: '100%', margin: '0 auto', display: 'block'}}/>
-                <GridListTileBar
-                    title={product.name}
-                    subtitle={<span>{product.description} por {product.price}</span>}
-                    actionIcon={
-                        <IconButton>
-                            <InfoIcon/>
-                        </IconButton>
-                    }
-                />
+            <GridListTile cols={1} key={product.id}>
+                <Link to={`/products/${product.id}`}>
+                    <img src={product.imageUrl} alt={product.name}
+                         style={{height: '100%', width: '100%', margin: '0 auto', display: 'block'}}/>
+                    <GridListTileBar
+                        title={product.name}
+                        subtitle={<span>{product.description} por {product.price}</span>}
+                        actionIcon={
+                            <IconButton>
+                                <InfoIcon/>
+                            </IconButton>
+                        }
+                    />
+                </Link>
             </GridListTile>
         ));
 
