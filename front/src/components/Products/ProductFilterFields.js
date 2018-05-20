@@ -59,10 +59,10 @@ class ProductFilterFields extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const categoryId = this.props.defaultCategory;
+        const categoryId = nextProps.defaultCategory;
 
         this.setState((prevState, props) => {
-            if (props.defaultCategory !== categoryId) {
+            if (this.props.defaultCategory !== categoryId) {
                 return {
                     minPrice: '',
                     maxPrice: '',
