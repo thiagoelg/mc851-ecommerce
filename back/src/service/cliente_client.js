@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-const REQUEST_TIMEOUT = 30000
-const CLIENTE_URL = "http://us-central1-first-try-18f38.cloudfunctions.net/clientsAPI/"
+const CLIENTE_URL = "http://us-central1-first-try-18f38.cloudfunctions.net/clientsAPI";
 const headers = {
     'api_key': 'abc'
 }
@@ -11,13 +10,13 @@ export const register = async (info) => {
     try {
         const response = await axios.post(CLIENTE_URL + "/register", info, {
             headers
-        })
+        });
 
         return {data : response.data, status: response.status}
     } catch (e) {
         console.log(e)
     }
-}
+};
 
 export const getClients = async () => {
 
@@ -87,10 +86,10 @@ export const deleteUser = async (id) => {
 export const login = async (params) => {
     
     // Concatenate params to headers
-    Object.assign(headers, params)
+    Object.assign(headers, params);
 
     try {
-        const response = await axios.get(`${CLIENTE_URL}/login}`, {
+        const response = await axios.get(`${CLIENTE_URL}/login`, {
             headers,
         })
 
@@ -98,7 +97,7 @@ export const login = async (params) => {
     } catch (e) {
         console.log(e)
     }
-}
+};
 
 export default {
     register,

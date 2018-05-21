@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 
 import {AppBar, Badge, Button, Grid, Toolbar} from "material-ui";
-import SearchInput from '../SearchInput/SearchInput'
+import SearchInput from '../Products/SearchInput'
 import Logo from "../Logo/Logo";
-import AccountCircle from "@material-ui/icons/es/AccountCircle";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
 import {withStyles} from 'material-ui/styles';
 import Link from "../Link/Link";
+import UserButtons from "./UserButtons";
 
 const toolBarBottonHeader = {
     backgroundColor: '#F5F5F5',
@@ -64,18 +64,17 @@ class Header extends Component {
 
                         <Grid item xs={12} sm={3}>
                             <Grid container spacing={8} alignItems="center">
-                                <Grid item xs={false} sm={3}/>
-                                <Grid item xs={6} sm={4}>
-                                    <Button color="inherit">
-                                        <AccountCircle/>
-                                        Entrar
-                                    </Button>
+                                <Grid item xs={false} sm={1}/>
+                                <Grid item xs={12} sm={6}>
+                                    <UserButtons/>
                                 </Grid>
-                                <Grid item xs={6} sm={4}>
+                                <Grid item xs={12} sm={4}>
                                     <Badge badgeContent={0} color="secondary">
                                         <Link to="/carrinho">
-                                            <ShoppingCart/>
-                                            Carrinho
+                                            <Button color="inherit">
+                                                <ShoppingCart/>
+                                                Carrinho
+                                            </Button>
                                         </Link>
                                     </Badge>
                                 </Grid>
@@ -90,7 +89,8 @@ class Header extends Component {
                             <Grid container spacing={0} alignItems="center">
                                 {
                                     this.state.categories.map((category) =>
-                                        <Grid key={category.id} item xs={2} style={{display: 'flex', justifyContent: 'center'}}>
+                                        <Grid key={category.id} item xs={2}
+                                              style={{display: 'flex', justifyContent: 'center'}}>
                                             <Link to={`/busca?categoryId=${category.id}`}>
                                                 <Button color='default'>
                                                     {category.name}

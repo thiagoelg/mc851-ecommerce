@@ -6,6 +6,7 @@ import ProductRoutes from './routes/ProductRoutes'
 import CreditRoutes from './routes/CreditRoutes'
 import LogisticRoutes from './routes/LogisticRoutes'
 import FixtureRoutes from './routes/FixtureRoutes'
+import ClientRoutes from "./routes/ClientRoutes";
 
 const app = express(),
     port = process.env.PORT || 3001;
@@ -22,6 +23,7 @@ app.get('/ping', (req, res) => {
 app.use('/products', ProductRoutes);
 app.use('/credit', CreditRoutes);
 app.use('/logistic', LogisticRoutes);
+app.use('/user', ClientRoutes);
 //app.use('/fixtures', FixtureRoutes); // one time use only
 
 app.listen(port, () => {

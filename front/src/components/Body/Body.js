@@ -5,6 +5,8 @@ import Highlights from "../Products/Highlights";
 import ProductFilter from "../Products/ProductFilter";
 import Carrinho from "../Carrinho/Carrinho";
 import Product from "../Products/Product";
+import SignUp from "../Clients/SignUp";
+import SignIn from "../Clients/SignIn";
 
 
 // Para <ProductFilter /> dentro do grid, tirar o style do grid:
@@ -23,6 +25,8 @@ class Body extends Component {
                     <Route path='/busca?search=:search' component={ProductFilter}/>
                     <Route path='/busca?categoryId=:categoryId' component={ProductFilter}/>
                     <Route path='/products/:id' component={Product}/>
+                    <Route path='/signUp' component={SignUp}/>
+                    <Route path='/signIn' component={SignIn}/>
                     <Route path='/carrinho' component={Carrinho}/>
                 </Switch>
                 </Grid>
