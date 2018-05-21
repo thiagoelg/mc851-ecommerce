@@ -13,6 +13,10 @@ let UserProfile = (function () {
         }
     };
 
+    let getId = function () {
+        return id;
+    }
+
     let isLogged = function () {
         return logged;
     };
@@ -32,6 +36,7 @@ let UserProfile = (function () {
     return {
         getName: getName,
         getFirstName: getFirstName,
+        getId: getId,
         isLogged: isLogged,
         set: set,
         clear: clear

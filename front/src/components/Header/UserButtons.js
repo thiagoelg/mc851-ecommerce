@@ -61,7 +61,7 @@ class UserButtons extends Component {
                                 aria-haspopup="true"
                                 onClick={this.handleMenuClick}>
                             <AccountCircle/>
-                            Olá, {UserProfile.getFirstName()}!
+                            Meu Perfil
                         </Button>
                         <Menu
                             id="profile-menu"
@@ -69,7 +69,9 @@ class UserButtons extends Component {
                             open={Boolean(anchorEl)}
                             onClose={this.handleClose}
                         >
-                            <MenuItem name="profile" onClick={this.handleProfile}>Perfil</MenuItem>
+                            <MenuItem name="profile" onClick={this.handleProfile}>
+                                <Link to="profile">Perfil</Link>
+                            </MenuItem>
                             <MenuItem name="purchases" onClick={this.handlePurchases}>Minhas Compras</MenuItem>
                             <MenuItem name="customer-service" onClick={this.handleCustomerService}>Atendimento</MenuItem>
                             <MenuItem name="logout" onClick={this.handleLogout}>Logout</MenuItem>

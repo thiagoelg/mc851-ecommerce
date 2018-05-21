@@ -30,3 +30,15 @@ export const login = async (params) => {
         console.error(e);
     }
 };
+
+export const getClient = async (params) => {
+    try {
+
+        const response = await axios.get(`${URL}/user/${params}`);
+
+        return {data: response.data, status: response.status};
+
+    } catch (e) {
+        console.error(e);
+    }
+};

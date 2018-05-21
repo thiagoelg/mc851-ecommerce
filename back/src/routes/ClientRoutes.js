@@ -38,4 +38,20 @@ router.post('/login', async (req, res, next) => {
     }
 });
 
+router.get('/:id', async (req, res, next) => {
+
+    try {
+        const id = req.params.id;
+        console.log(id);
+        if (!id) {
+            return res.sendStatus(400);
+        }
+
+        let categories = await ClientController.getClient(id);
+        return res.json(categories);
+    } catch (e) {
+        next(e)
+    }
+});
+
 export default router

@@ -24,7 +24,20 @@ export const login = async (params) => {
     return response.data;
 };
 
+export const getClient = async (id) => {
+
+    const response = await ClientClient.getClient(id);
+
+    if (!response || (response.status >= 500 && response.status <= 599)) {
+        console.error("login error - status: " + response.status);
+        return;
+    }
+
+    return response.data;
+};
+
 export default {
     register,
-    login
+    login,
+    getClient
 };
