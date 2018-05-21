@@ -6,8 +6,16 @@ const router = express.Router();
 
 router.post('/', async (req, res, next) => {
 
-    //TODO validations
     try {
+        if (!req.body.name ||
+            !req.body.email ||
+            !req.body.cpf ||
+            !req.body.telephone ||
+            !req.body.password ||
+            !req.body.samePass) {
+            return res.sendStatus(400);
+        }
+
         let categories = await ClientController.register(req.body.params);
         return res.json(categories);
     } catch (e) {
@@ -17,8 +25,12 @@ router.post('/', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
 
-    //TODO validations
     try {
+        if (!req.body.email ||
+            !req.body.password) {
+            return res.sendStatus(400);
+        }
+
         let categories = await ClientController.login(req.body.params);
         return res.json(categories);
     } catch (e) {
