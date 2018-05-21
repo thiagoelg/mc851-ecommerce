@@ -26,8 +26,8 @@ router.post('/', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
 
     try {
-        if (!req.body.email ||
-            !req.body.password) {
+        if (!req.body.params.email ||
+            !req.body.params.password) {
             return res.sendStatus(400);
         }
 

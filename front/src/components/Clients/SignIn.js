@@ -6,8 +6,10 @@ import Button from "material-ui/es/Button/Button";
 import Link from "react-router-dom/es/Link";
 import {login} from '../../clients/ClientClient'
 import Snackbar from "material-ui/es/Snackbar/Snackbar";
-import Slide from "material-ui/es/transitions/Slide";
 import UserProfile from "../../state/UserProfile";
+import {validateEmail, validateNotEmpty} from "../../util/Validators";
+import IconButton from "material-ui/es/IconButton/IconButton";
+import Close from "@material-ui/icons/es/Close";
 
 
 class SignIn extends Component {
@@ -19,7 +21,10 @@ class SignIn extends Component {
             open: false,
 
             email: '',
-            password: ''
+            password: '',
+
+            wrongEmail: false,
+            wrongPassword: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -28,10 +33,22 @@ class SignIn extends Component {
     }
 
     handleClose = () => {
-        this.setState({ open: false });
+        this.setState({open: false});
     };
 
     handleClick(e) {
+        let wrongEmail = !validateEmail(this.state.email);
+        let wrongPassword = !validateNotEmpty(this.state.password);
+
+        if (wrongEmail || wrongPassword) {
+            this.setState({
+                wrongEmail: wrongEmail,
+                wrongPassword: wrongPassword,
+                open: true
+            });
+            return;
+        }
+
         const param = {
             email: this.state.email,
             password: this.state.password
@@ -47,14 +64,36 @@ class SignIn extends Component {
                 this.props.history.push('/')
             })
             .catch(error => {
-                //TODO treat error
+                console.log(error);
+                this.setState({
+                    open: true
+                });
             })
     }
 
     handleChange(e) {
         const target = e.target;
+        const name = target.name;
+
         this.setState({
-            [target.name]: target.value
+            [name]: target.value
+        }, () => {
+            let wrongEmail = this.state.wrongEmail;
+            let wrongPassword = this.state.wrongPassword;
+
+            if (name === "email") {
+                wrongEmail = !validateEmail(this.state.email);
+            }
+
+            if(name === "password") {
+                wrongPassword = !validateNotEmpty(this.state.password);
+            }
+
+            this.setState({
+                wrongEmail: wrongEmail,
+                wrongPassword: wrongPassword
+            });
+
         });
     }
 
@@ -64,14 +103,21 @@ class SignIn extends Component {
                 <Grid container>
                     <Grid item xs={12}>
                         <Snackbar
-                            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                            anchorOrigin={{vertical: 'top', horizontal: 'center'}}
                             open={this.state.open}
                             onClose={this.handleClose}
-                            ContentProps={{
-                                'aria-describedby': 'message-id',
-                            }}
-                            TransitionComponent={<Slide {...this.props} direction="down" />}
-                            message={<span id="message-id">Login realizado com sucesso!</span>}
+                            autoHideDuration={5000}
+                            message={<span id="message-id">Login ou senha inválidos!</span>}
+                            action={[
+                                <IconButton
+                                    key="close"
+                                    aria-label="Close"
+                                    color="inherit"
+                                    onClick={this.handleClose}
+                                >
+                                    <Close/>
+                                </IconButton>,
+                            ]}
                         />
                         <Typography variant="headline">
                             Login
@@ -90,6 +136,7 @@ class SignIn extends Component {
                                    name="email"
                                    value={this.state.email}
                                    onChange={this.handleChange}
+                                   error={this.state.wrongEmail}
                                    fullWidth/>
 
                     </Grid>
@@ -103,6 +150,7 @@ class SignIn extends Component {
                                    type="password"
                                    value={this.state.password}
                                    onChange={this.handleChange}
+                                   error={this.state.wrongPassword}
                                    fullWidth/>
                     </Grid>
                     <Grid item sm={4}/>
@@ -115,7 +163,10 @@ class SignIn extends Component {
                     </Grid>
                     <Grid item xs={12}>
                         <Typography>
-                            Não possui um cadastro? <Link to="/signUp" style={{color: "blue", textDecoration: "underline"}}>Cadastre-se</Link>.
+                            Não possui um cadastro? <Link to="/signUp" style={{
+                            color: "blue",
+                            textDecoration: "underline"
+                        }}>Cadastre-se</Link>.
                         </Typography>
                     </Grid>
                 </Grid>

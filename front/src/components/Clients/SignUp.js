@@ -151,6 +151,7 @@ class SignUp extends Component {
                             anchorOrigin={{vertical: 'top', horizontal: 'center'}}
                             open={this.state.open}
                             onClose={this.handleClose}
+                            autoHideDuration={5000}
                             message={
                                 <span id="message-id" color="error">
                                     {this.state.wrongName && <p>Informe seu nome completo.<br/></p>}
