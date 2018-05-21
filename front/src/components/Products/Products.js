@@ -83,7 +83,7 @@ class Products extends Component {
             <GridListTile cols={1} key={product.id}>
                 <Link to={`/products/${product.id}`}>
                     <img src={product.imageUrl} alt={product.name}
-                         style={{height: '100%', width: '100%', margin: '0 auto', display: 'block'}}/>
+                        style={{'max-height': '100%', 'max-width': '100%', margin: '0 auto', display: 'block'}}/>
                     <GridListTileBar
                         title={product.name}
                         subtitle={<span>{product.description} por {product.price}</span>}
@@ -107,7 +107,7 @@ class Products extends Component {
                 ) : (
                     <Grid container>
                         <Grid item xs={12}>
-                            <GridList cellHeight={200} cols={cols}>
+                            <GridList cellHeight={300} cols={cols}>
                                 {products}
                             </GridList>
                         </Grid>
