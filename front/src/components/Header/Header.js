@@ -64,8 +64,8 @@ class Header extends Component {
 
                         <Grid item xs={12} sm={3}>
                             <Grid container spacing={8} alignItems="center">
-                                <Grid item xs={false} sm={1}/>
-                                <Grid item xs={12} sm={6}>
+                                <Grid item xs={false} sm={2}/>
+                                <Grid item xs={12} sm={5}>
                                     <UserButtons/>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
