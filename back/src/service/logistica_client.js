@@ -12,7 +12,7 @@ export const getShipment = async (params) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
@@ -25,7 +25,7 @@ export const getTracking = async (params, codRastreio) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
@@ -36,7 +36,7 @@ export const postShipment = async (info) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 

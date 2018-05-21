@@ -60,9 +60,9 @@ export const changePassword = async (id, info) => {
     return response.data
 }
 
-export const deleteUser = async (id) => {
+export const deleteUser = async (id, info) => {
 
-    const response = await ClientClient.deleteUser(id)
+    const response = await ClientClient.deleteUser(id, info)
 
     if (!response || response.status != 200) {
         console.error("deleteUser error")
@@ -74,11 +74,11 @@ export const deleteUser = async (id) => {
 
 export const login = async (params) => {
 
-    const response = await ClientClient.login(id)
+    const response = await ClientClient.login(params)
 
     if (!response || response.status != 200) {
         console.error("login error")
-        return 0
+        return -1
     }
 
     return response.data

@@ -40,12 +40,6 @@ router.put('/update/:id', async (req, res, next) => {
 
         let info = req.body
 
-        if( !info.name      ||
-            !info.password  ||
-            !info.samePass) {
-             return res.sendStatus(400)
-        }
-
         let category = await ClientController.updateUser(id, info)
 
         return res.json(category)
@@ -54,6 +48,70 @@ router.put('/update/:id', async (req, res, next) => {
     }
 })
 
+router.put('/changePass/:id', async (req, res, next) => {
+
+    try{
+        let id = req.params.id
+        if (!id) {
+            return res.sendStatus(400)
+        }
+
+        let info = req.body
+
+        if( !info.password  ||
+            !info.samePass) {
+             return res.sendStatus(400)
+        }
+
+        let category = await ClientController.changePassword(id, info)
+
+        return res.json(category)
+    } catch (e) {
+        next(e)
+    }
+})
+
+router.get('/login/', async (req, res, next) => {
+
+    try{
+        let info = {
+            email: req.headers.email,
+            password: req.headers.password
+        }
+
+        if( !info.email  ||
+            !info.password) {
+            return res.sendStatus(400)
+        }
+
+        let category = await ClientController.login(info)
+
+        return res.json(category)
+    } catch (e) {
+        next(e)
+    }
+})
+
+router.delete('/delete/:id', async (req, res, next) => {
+
+    try{
+        let info = {}
+        info.password = req.header.password
+        
+        let id = req.params.id
+        
+        if (!id ||
+            !info.password) {
+            return res.sendStatus(400)
+        }
+
+        let category = await ClientController.deleteUser(id, info)
+
+        return res.json(category)
+    } catch (e) {
+        next(e)
+    }
+})
 router.get('/:id', async (req, res, next) => {
 
     try{

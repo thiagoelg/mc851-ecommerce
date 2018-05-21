@@ -12,7 +12,7 @@ export const getProducts = async (params) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.error(e)
     }
 }
 
@@ -23,7 +23,7 @@ export const getProduct = async (id) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.error(e)
     }
 }
 
@@ -36,7 +36,7 @@ export const getCategories = async (params) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.error(e)
     }
 }
 
@@ -47,7 +47,7 @@ export const getCategory = async (id) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.error(e)
     }
 }
 
@@ -63,7 +63,7 @@ export const reserveProduct = async (id, amount) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.error(e)
     }
 }
 
@@ -79,7 +79,7 @@ export const releaseProduct = async (id, amount) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.error(e)
     }
 }
 

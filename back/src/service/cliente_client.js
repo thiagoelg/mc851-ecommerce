@@ -15,7 +15,7 @@ export const register = async (info) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
@@ -28,7 +28,7 @@ export const getClients = async () => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
@@ -41,7 +41,7 @@ export const getClient = async (id) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
@@ -54,7 +54,7 @@ export const updateUser = async (id, info) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
@@ -67,31 +67,34 @@ export const changePassword = async (id, info) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
-export const deleteUser = async (id) => {
+export const deleteUser = async (id, info) => {
+    
+    // Concatenate params to headers
+    Object.assign(info, headers)
 
     try {
         const response = await axios.delete(`${CLIENTE_URL}/delete/${id}`, {
-            headers
+            headers: info
         })
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
 export const login = async (params) => {
     
     // Concatenate params to headers
-    Object.assign(headers, params)
+    Object.assign(params, headers)
 
     try {
         const response = await axios.get(`${CLIENTE_URL}/login}`, {
-            headers,
+            headers: params,
         })
 
         return {data : response.data, status: response.status}
