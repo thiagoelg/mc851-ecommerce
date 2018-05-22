@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import UserProfile from '../../state/UserProfile'
 import {getClient} from "../../clients/ClientClient";
-import Grid from "material-ui/es/Grid/Grid";
-import Typography from "material-ui/es/Typography/Typography";
-import Button from "material-ui/es/Button/Button";
+import Grid from "@material-ui/core/es/Grid/Grid";
+import Typography from "@material-ui/core/es/Typography/Typography";
+import Button from "@material-ui/core/es/Button";
 
 class Profile extends Component {
 

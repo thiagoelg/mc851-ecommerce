@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from "material-ui/es/Button/Button";
+import Button from "@material-ui/core/es/Button";
 import NavigationLastPage from "@material-ui/icons/es/LastPage"
 import NavigationFirstPage from "@material-ui/icons/es/FirstPage"
 

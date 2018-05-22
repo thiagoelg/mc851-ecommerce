@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import {withStyles} from 'material-ui/styles';
+import {withStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import {Drawer} from "material-ui";
+import {Drawer} from "@material-ui/core";
 import MultiSelectionCheckboxes from '../MultiSelectionCheckboxes/MultiSelectionCheckboxes'
-import Divider from "material-ui/es/Divider/Divider";
-import Grid from "material-ui/es/Grid/Grid";
-import FormLabel from "material-ui/es/Form/FormLabel";
-import TextField from "material-ui/es/TextField/TextField";
-import Button from "material-ui/es/Button/Button";
+import Divider from "@material-ui/core/es/Divider/Divider";
+import Grid from "@material-ui/core/es/Grid/Grid";
+import FormLabel from "@material-ui/core/es/FormLabel";
+import TextField from "@material-ui/core/es/TextField/TextField";
+import Button from "@material-ui/core/es/Button/Button";
 import {getCategories} from "../../clients/ProductsClient";
 
 const drawerWidth = 240;

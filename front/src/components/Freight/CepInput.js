@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import TextField from "material-ui/es/TextField/TextField";
+import TextField from "@material-ui/core/es/TextField/TextField";
 
 class CepInput extends Component {
     // FIXME add cep mask

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import Logo from "../Logo/Logo";
-import Toolbar from "material-ui/es/Toolbar/Toolbar";
-import Grid from "material-ui/es/Grid/Grid";
-import AppBar from "material-ui/es/AppBar/AppBar";
-import Typography from "material-ui/es/Typography/Typography";
-import ListItem from "material-ui/es/List/ListItem";
-import ListItemText from "material-ui/es/List/ListItemText";
-import List from "material-ui/es/List/List";
+import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
+import Grid from "@material-ui/core/es/Grid/Grid";
+import AppBar from "@material-ui/core/es/AppBar/AppBar";
+import Typography from "@material-ui/core/es/Typography/Typography";
+import ListItem from "@material-ui/core/es/ListItem";
+import ListItemText from "@material-ui/core/es/ListItemText";
+import List from "@material-ui/core/es/List/List";
 
 class Footer extends Component {
     render() {

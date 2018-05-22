@@ -2,10 +2,10 @@ import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import UserProfile from "../../state/UserProfile";
 import Link from "../Link/Link";
-import Button from "material-ui/es/Button/Button";
+import Button from "@material-ui/core/es/Button";
 import AccountCircle from "@material-ui/icons/es/AccountCircle";
-import MenuItem from "material-ui/es/Menu/MenuItem";
-import Menu from "material-ui/es/Menu/Menu";
+import MenuItem from "@material-ui/core/es/MenuItem";
+import Menu from "@material-ui/core/es/Menu/Menu";
 
 class UserButtons extends Component {
 

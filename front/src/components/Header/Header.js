@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 
-import {AppBar, Badge, Button, Grid, Toolbar} from "material-ui";
+import {AppBar, Badge, Button, Grid, Toolbar} from "@material-ui/core";
 import SearchInput from '../Products/SearchInput'
 import Logo from "../Logo/Logo";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
-import {withStyles} from 'material-ui/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Link from "../Link/Link";
 import UserButtons from "./UserButtons";
 

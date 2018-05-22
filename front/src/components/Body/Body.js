@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Grid from "material-ui/es/Grid/Grid";
+import Grid from "@material-ui/core/es/Grid";
 import {Route, Switch} from 'react-router-dom'
 import Highlights from "../Products/Highlights";
 import ProductFilter from "../Products/ProductFilter";

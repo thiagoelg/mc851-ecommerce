@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Products from "./Products";
-import Typography from "material-ui/es/Typography/Typography";
+import Typography from "@material-ui/core/es/Typography/Typography";
 
 
 class Highlights extends Component {

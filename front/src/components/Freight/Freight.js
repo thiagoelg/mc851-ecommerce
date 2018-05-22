@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import CepInput from "./CepInput";
-import Grid from "material-ui/es/Grid/Grid";
-import Button from "material-ui/es/Button/Button";
+import Grid from "@material-ui/core/es/Grid/Grid";
+import Button from "@material-ui/core/es/Button/Button";
 import {getShippingOptions} from "../../clients/LogisticClient";
-import Table from "material-ui/es/Table/Table";
-import TableHead from "material-ui/es/Table/TableHead";
-import TableRow from "material-ui/es/Table/TableRow";
-import TableCell from "material-ui/es/Table/TableCell";
-import TableBody from "material-ui/es/Table/TableBody";
+import Table from "@material-ui/core/es/Table";
+import TableHead from "@material-ui/core/es/TableHead";
+import TableRow from "@material-ui/core/es/TableRow";
+import TableCell from "@material-ui/core/es/TableCell";
+import TableBody from "@material-ui/core/es/TableBody";
 
 class Freight extends Component {
 

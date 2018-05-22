@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
-import GridList, {GridListTile, GridListTileBar} from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
-import Typography from "material-ui/es/Typography/Typography";
+import Typography from "@material-ui/core/es/Typography/Typography";
 import Pagination from "../Pagination";
-import Grid from "material-ui/es/Grid/Grid";
+import Grid from "@material-ui/core/es/Grid";
 import {getProducts, getProductsByFullSearch} from "../../clients/ProductsClient";
 import Link from "../Link/Link";
 
@@ -16,7 +18,6 @@ class Products extends Component {
 
         this.state = {
             products: [],
-
             page: 1,
             totalPages: null,
             displayedPages: 5,
@@ -78,15 +79,14 @@ class Products extends Component {
         let cols = this.props.cols;
         if (cols === undefined)
             cols = 3;
-
         let products = this.state.products.map(product => (
             <GridListTile cols={1} key={product.id}>
                 <Link to={`/products/${product.id}`}>
                     <img src={product.imageUrl} alt={product.name}
-                        style={{'max-height': '100%', 'max-width': '100%', margin: '0 auto', display: 'block'}}/>
+                        style={{maxHeight: '100%', maxWidth: '100%', margin: '0 auto', display: 'block'}}/>
                     <GridListTileBar
                         title={product.name}
-                        subtitle={<span>{product.description} por {product.price}</span>}
+                        subtitle={<span>Por R${product.price}</span>}
                         actionIcon={
                             <IconButton>
                                 <InfoIcon/>

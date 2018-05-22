@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
-import Grid from "material-ui/es/Grid/Grid";
-import TextField from "material-ui/es/TextField/TextField";
-import Typography from "material-ui/es/Typography/Typography";
-import Button from "material-ui/es/Button/Button";
+import Grid from "@material-ui/core/es/Grid/Grid";
+import TextField from "@material-ui/core/es/TextField/TextField";
+import Typography from "@material-ui/core/es/Typography/Typography";
+import Button from "@material-ui/core/es/Button";
 import Link from "react-router-dom/es/Link";
 import {login} from '../../clients/ClientClient'
-import Snackbar from "material-ui/es/Snackbar/Snackbar";
+import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import UserProfile from "../../state/UserProfile";
 import {validateEmail, validateNotEmpty} from "../../util/Validators";
-import IconButton from "material-ui/es/IconButton/IconButton";
+import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
 
 

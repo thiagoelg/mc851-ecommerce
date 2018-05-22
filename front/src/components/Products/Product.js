@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import Grid from "material-ui/es/Grid/Grid";
-import TextField from "material-ui/es/TextField/TextField";
+import Grid from "@material-ui/core/es/Grid/Grid";
+import TextField from "@material-ui/core/es/TextField/TextField";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
-import Button from "material-ui/es/Button/Button";
+import Button from "@material-ui/core/es/Button/Button";
 import Link from "../Link/Link";
-import Chip from "material-ui/es/Chip/Chip";
+import Chip from "@material-ui/core/es/Chip/Chip";
 import Freight from "../Freight/Freight";
 import {getCategory, getProduct} from "../../clients/ProductsClient";
 

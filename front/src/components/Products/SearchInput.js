@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
-import {Grid, IconButton, Input, Paper} from "material-ui";
+import {Grid, IconButton, Input, Paper} from "@material-ui/core";
 import Search from "@material-ui/icons/es/Search";
 
 class SearchInput extends Component {

@@ -1,6 +1,6 @@
 import React from 'react';
-import {FormControl, FormControlLabel, FormGroup, FormLabel,} from 'material-ui/Form';
-import Checkbox from 'material-ui/Checkbox';
+import {FormControl, FormControlLabel, FormGroup, FormLabel,} from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
 
 class MultiSelectionCheckboxes extends React.Component {
 
