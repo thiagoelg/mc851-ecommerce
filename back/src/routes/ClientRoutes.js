@@ -13,15 +13,10 @@ router.post('/register/', async (req, res, next) => {
            !info.email     ||
            !info.password  ||
            !info.samePass  ||
-           !info.birthDate ||
-           !info.gender    ||
-           !info.cep       ||
-           !info.address   ||
-           !info.telephone ||
            !info.cpf) {
             return res.sendStatus(400)
         }
-
+            
         let id = await ClientController.register(info)
 
         return res.json(id)
@@ -71,13 +66,10 @@ router.put('/changePass/:id', async (req, res, next) => {
     }
 })
 
-router.get('/login/', async (req, res, next) => {
+router.post('/login/', async (req, res, next) => {
 
     try{
-        let info = {
-            email: req.headers.email,
-            password: req.headers.password
-        }
+        let info = req.body
 
         if( !info.email  ||
             !info.password) {

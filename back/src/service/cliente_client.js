@@ -11,13 +11,13 @@ export const register = async (info) => {
     try {
         const response = await axios.post(CLIENTE_URL + "/register", info, {
             headers
-        })
+        });
 
         return {data : response.data, status: response.status}
     } catch (e) {
         //console.log(e)
     }
-}
+};
 
 export const getClients = async () => {
 
@@ -92,6 +92,9 @@ export const login = async (params) => {
     // Concatenate params to headers
     Object.assign(params, headers)
 
+    console.log(params)
+    console.log()
+
     try {
         const response = await axios.get(`${CLIENTE_URL}/login}`, {
             headers: params,
@@ -99,9 +102,9 @@ export const login = async (params) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        //console.log(e)
+        console.log(e)
     }
-}
+};
 
 export default {
     register,

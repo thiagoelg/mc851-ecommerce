@@ -2,39 +2,61 @@ import express from 'express'
 import LogisticController from '../controller/LogisticController';
 
 const router = express.Router()
+
 const cepUnicamp = 13083970
+
+const SHIPPING_TYPE = {
+    PAC: "PAC",
+    SEDEX: "SEDEX"
+};
+
+const PACKET_TYPE = {
+    BOX: "Caixa",
+    ENVELOPE: "envelope"
+};
 
 router.get('/shipping', async (req, res, next) => {
     try {
 
-        let params = {
-            tipoEntrega  : req.query.tipoEntrega  || "PAC",
-            cepOrigem    : req.query.cepOrigem    || cepUnicamp,
-            cepDestino   : req.query.cepDestino,
-            peso         : req.query.peso         || 1000,
-            tipoPacote   : req.query.tipoPacote   || "Caixa",
-            comprimento  : req.query.comprimento  || 10,
-            altura       : req.query.altura       || 10,
-            largura      : req.query.largura      || 10,
-        }
-        
-        if (!params.tipoEntrega ||
-            !params.cepOrigem ||
-            !params.cepDestino ||
-            !params.peso ||
-            !params.tipoPacote ||
-            !params.comprimento ||
-            !params.altura ||
-            !params.largura ) {
-            return res.sendStatus(400)
-        }
+        let allShipping = [];
 
-        let shipping = await LogisticController.getShipment(params)
-        return res.json(shipping)
+        for (let shippingType in LogisticService.SHIPPING_TYPE) {
+
+            let params = {
+                tipoEntrega  : req.query.shippingType || shippingType,
+                cepOrigem    : req.query.originCep    || cepUnicamp,
+                cepDestino   : req.query.destinyCep,
+                peso         : req.query.weight,
+                tipoPacote   : req.query.packetType   || PACKET_TYPE.BOX,
+                comprimento  : req.query.length,
+                altura       : req.query.height,
+                largura      : req.query.width
+            };
+
+            if (!params.tipoEntrega ||
+                !params.cepOrigem ||
+                !params.cepDestino ||
+                !params.peso ||
+                !params.tipoPacote ||
+                !params.comprimento ||
+                !params.altura ||
+                !params.largura ) {
+                return res.sendStatus(400)
+            }
+
+            let shipping = await LogisticController.getShipment(params);
+            allShipping.push({
+                price: shipping.preco,
+                type: shippingType,
+                //TODO deliveryTime
+            });
+
+        }
+        return res.json(allShipping)
 
     } catch(e) {
         next(e)
     }
-})
+});
 
 export default router

@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
-import {Typography} from "material-ui";
+import {Typography} from "@material-ui/core";
+import Link from "../Link/Link";
 
 class Logo extends Component {
     render() {
         return (
-            <div onClick={() => this.props.history.push("/")} style={{cursor: 'pointer'}}>
+            <Link to={`/`} style={{textDecoration: 'none'}}>
                 <Typography variant="title" color="inherit">
                     ToppenStore
                 </Typography>
-            </div>
+            </Link>
         );
     }
 }

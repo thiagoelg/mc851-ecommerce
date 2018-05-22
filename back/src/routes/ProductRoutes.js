@@ -47,7 +47,7 @@ router.get('/', async (req, res, next) => {
         let params = {
             page: req.query.page                        || 1,
             highlight: req.query.highlight              || false,
-        }
+        };
         
         if (req.params.brand) {
             params.brand = req.params.brand
@@ -73,13 +73,28 @@ router.get('/', async (req, res, next) => {
             params.parent_product = req.params.parent_product
         }
 
-        let products = await ProductController.getProducts(params)
+        let products = await ProductController.getProducts(params);
     
         return res.json(products)
     } catch (e) {
         next(e)
     }
-})
+});
+
+router.get('/search', async (req, res, next) => {
+
+    try {
+        let params = {
+            search: req.query.search
+        };
+
+        let products = await ProductController.getProductsByFullSearch(params);
+
+        return res.json(products)
+    } catch (e) {
+        next(e)
+    }
+});
 
 router.get('/:id', async (req, res, next) => {
 
