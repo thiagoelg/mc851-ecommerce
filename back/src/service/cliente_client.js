@@ -99,7 +99,7 @@ export const login = async (params) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 

@@ -96,7 +96,7 @@ router.delete('/delete/:id', async (req, res, next) => {
 
     try{
         let info = {}
-        info.password = req.header.password
+        info.password = req.headers.password
         
         let id = req.params.id
         
@@ -112,6 +112,7 @@ router.delete('/delete/:id', async (req, res, next) => {
         next(e)
     }
 })
+
 router.get('/:id', async (req, res, next) => {
 
     try{
