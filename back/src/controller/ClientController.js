@@ -1,43 +1,95 @@
-import ClientClient from "../service/cliente_client"
+import ClientClient from '../service/cliente_client'
 
-export const register = async (params) => {
+export const register = async (info) => {
 
-    const response = await ClientClient.register(params);
+    const response = await ClientClient.register(info)
 
-    if (!response || (response.status >= 500 && response.status <= 599)) {
-        console.error("register error - status: " + response.status);
-        return;
+    if (!response || response.status != 200) {
+        console.error("register error")
+        return -1 //TODO: post return value
     }
 
-    return response.data;
-};
+    return response.data
+}
 
-export const login = async (params) => {
+export const getClients = async () => {
 
-    const response = await ClientClient.login(params);
+    const response = await ClientClient.getClients()
 
-    if (!response || (response.status >= 500 && response.status <= 599)) {
-        console.error("login error - status: " + response.status);
-        return;
+    if (!response || response.status != 200) {
+        console.error("getClients error")
+        return 0
     }
 
-    return response.data;
-};
+    return response.data
+}
 
 export const getClient = async (id) => {
 
-    const response = await ClientClient.getClient(id);
+    const response = await ClientClient.getClient(id)
 
-    if (!response || (response.status >= 500 && response.status <= 599)) {
-        console.error("login error - status: " + response.status);
-        return;
+    if (!response || response.status != 200) {
+        console.error("getClient error")
+        return 0
     }
 
-    return response.data;
-};
+    return response.data
+}
+
+export const updateUser = async (id, info) => {
+
+    const response = await ClientClient.updateUser(id, info)
+
+    if (!response || response.status != 200) {
+        console.error("updateUser error")
+        return 0
+    }
+
+    return response.data
+}
+
+export const changePassword = async (id, info) => {
+
+    const response = await ClientClient.changePassword(id, info)
+
+    if (!response || response.status != 200) {
+        console.error("changePassword error")
+        return 0
+    }
+
+    return response.data
+}
+
+export const deleteUser = async (id, info) => {
+
+    const response = await ClientClient.deleteUser(id, info)
+
+    if (!response || response.status != 200) {
+        console.error("deleteUser error")
+        return 0
+    }
+
+    return response.data
+}
+
+export const login = async (params) => {
+
+    const response = await ClientClient.login(params)
+
+    if (!response || response.status != 200) {
+        console.error("login error")
+        return -1
+    }
+
+    return response.data
+}
 
 export default {
     register,
-    login,
-    getClient
-};
+    getClients,
+    getClient,
+    updateUser,
+    changePassword,
+    deleteUser,
+    login
+}

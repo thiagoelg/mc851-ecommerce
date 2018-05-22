@@ -12,7 +12,7 @@ export const getProducts = async (params) => {
 
         return {data: response.data, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.log(e)
     }
 };
 
@@ -36,7 +36,7 @@ export const getProduct = async (id) => {
 
         return {data: response.data, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.log(e)
     }
 };
 
@@ -49,7 +49,7 @@ export const getCategories = async (params) => {
 
         return {data: response.data, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.log(e)
     }
 };
 
@@ -60,7 +60,7 @@ export const getCategory = async (id) => {
 
         return {data: response.data, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.log(e)
     }
 };
 
@@ -76,7 +76,7 @@ export const reserveProduct = async (id, amount) => {
 
         return {data: response.data, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.log(e)
     }
 };
 
@@ -113,7 +113,7 @@ export const persistCategory = async (category) => {
         const response = await axios.post(`${PRODUTOS_URL}/categories`, category);
         return {data: response.headers.location, status: response.status}
     } catch (e) {
-        console.error(e)
+        //console.log(e)
     }
 };
 
