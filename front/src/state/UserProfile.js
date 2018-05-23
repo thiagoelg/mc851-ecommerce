@@ -1,5 +1,9 @@
+const jwt = require('jsonwebtoken');
+
+const LOCAL_STORAGE_ITEM_NAME = 'auth-token-ecommerce';
+
 let UserProfile = (function () {
-    let id = null;
+    let token = null;
     let name = null;
     let logged = false;
 
@@ -13,30 +17,39 @@ let UserProfile = (function () {
         }
     };
 
-    let getId = function () {
-        return id;
-    }
+    let getToken = function () {
+        return token;
+    };
 
     let isLogged = function () {
         return logged;
     };
 
-    let set = function (params) {
-        name = params.name;
-        id = params.id;
+    let set = function (t) {
+        token = t;
+
+        const decoded = jwt.decode(token);
+        name = decoded.name;
         logged = true;
+
+        localStorage.setItem(LOCAL_STORAGE_ITEM_NAME, token);
     };
 
     let clear = function () {
         name = null;
-        id = null;
+        token = null;
         logged = false;
     };
+
+    const savedToken = localStorage.getItem(LOCAL_STORAGE_ITEM_NAME);
+    if(savedToken) {
+        set(savedToken);
+    }
 
     return {
         getName: getName,
         getFirstName: getFirstName,
-        getId: getId,
+        getToken: getToken,
         isLogged: isLogged,
         set: set,
         clear: clear

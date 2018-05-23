@@ -16,7 +16,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        const id = UserProfile.getId();
+        const id = UserProfile.getToken();
 
         getClient(id)
             .then(response => {

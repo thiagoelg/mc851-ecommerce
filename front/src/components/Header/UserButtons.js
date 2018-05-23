@@ -2,10 +2,10 @@ import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import UserProfile from "../../state/UserProfile";
 import Link from "../Link/Link";
-import Button from "@material-ui/core/es/Button";
+import Button from "@material-ui/core/Button";
 import AccountCircle from "@material-ui/icons/es/AccountCircle";
-import MenuItem from "@material-ui/core/es/MenuItem";
-import Menu from "@material-ui/core/es/Menu/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 
 class UserButtons extends Component {
 
@@ -17,27 +17,17 @@ class UserButtons extends Component {
         };
 
         this.handleMenuClick = this.handleMenuClick.bind(this);
-        this.handleProfile = this.handleProfile.bind(this);
-        this.handlePurchases = this.handlePurchases.bind(this);
-        this.handleCustomerService = this.handleCustomerService.bind(this);
+        this.handleClose = this.handleClose.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
 
     }
 
-    handleMenuClick = event => {
-        this.setState({anchorEl: event.currentTarget});
+    handleMenuClick(event) {
+        this.setState({anchorEl: event.target});
     };
 
-    handleCustomerService() {
+    handleClose() {
         this.close()
-    }
-
-    handlePurchases() {
-        this.close()
-    }
-
-    handleProfile() {
-        this.close();
     }
 
     handleLogout() {
@@ -61,7 +51,7 @@ class UserButtons extends Component {
                                 aria-haspopup="true"
                                 onClick={this.handleMenuClick}>
                             <AccountCircle/>
-                            Meu Perfil
+                            Olá, {UserProfile.getFirstName()}!
                         </Button>
                         <Menu
                             id="profile-menu"
@@ -69,11 +59,18 @@ class UserButtons extends Component {
                             open={Boolean(anchorEl)}
                             onClose={this.handleClose}
                         >
-                            <MenuItem name="profile" onClick={this.handleProfile}>
-                                <Link to="profile">Perfil</Link>
+                            <MenuItem name="profile" onClick={this.handleClose}>
+                                <Link to="/profile">Perfil</Link>
                             </MenuItem>
-                            <MenuItem name="purchases" onClick={this.handlePurchases}>Minhas Compras</MenuItem>
-                            <MenuItem name="customer-service" onClick={this.handleCustomerService}>Atendimento</MenuItem>
+                            <MenuItem name="changepassword" onClick={this.handleClose}>
+                                <Link to="/changepassword">Alterar senha</Link>
+                            </MenuItem>
+                            <MenuItem name="purchases" onClick={this.handleClose}>
+                                <Link to="/purchases">Minhas Compras</Link>
+                            </MenuItem>
+                            <MenuItem name="customer-service" onClick={this.handleClose}>
+                                <Link to="/customerservice">Atendimento</Link>
+                            </MenuItem>
                             <MenuItem name="logout" onClick={this.handleLogout}>Logout</MenuItem>
                         </Menu>
                     </div>

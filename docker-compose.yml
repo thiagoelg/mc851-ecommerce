@@ -50,13 +50,29 @@ services:
   db:
     container_name: db
     image: mariadb
+    volumes:
+      - .:/database/init_db.sql
     environment:
       MYSQL_ROOT_PASSWORD: P4ssword!
     networks:
       mc851:
-    
+        aliases:
+          - db.localhost
+
+  flyway:
+    image: boxfuse/flyway
+    command: -url=jdbc:mysql://db.localhost:3306 -schemas=ecommerce -user=root -password=P4ssword! migrate
+    volumes:
+      - .:/flyway/sql
+    depends_on:
+      - db
+    networks:
+      mc851:
+
   pma:
     image: phpmyadmin/phpmyadmin
+    depends_on:
+      - db
     environment:
       PMA_HOST: mariadb
       PMA_ARBITRARY: 1

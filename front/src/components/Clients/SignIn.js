@@ -56,11 +56,7 @@ class SignIn extends Component {
 
         login(param)
             .then(response => {
-                let userManagedData = {
-                    //TODO ask backend to return this name: this.state.name,
-                    id: response.data
-                };
-                UserProfile.set(userManagedData);
+                UserProfile.set(response.data);
                 this.props.history.push('/')
             })
             .catch(error => {

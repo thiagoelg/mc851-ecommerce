@@ -39,6 +39,7 @@ class SignUp extends Component {
             wrongTelephone: false,
             wrongPassword: false,
             wrongSamePass: false,
+            duplicateEmail: false,
 
             open: false
         };
@@ -86,11 +87,15 @@ class SignUp extends Component {
 
         register(params)
             .then(response => {
-                let userManagedData = {
-                    name: this.state.name,
-                    id: response.data
-                };
-                UserProfile.set(userManagedData);
+                if (response.status === 400) {
+                    this.setState({
+                        open: true,
+                        duplicateEmail: true
+                    });
+                    return;
+                }
+
+                UserProfile.set(response.data);
                 this.props.history.push('/')
             })
             .catch(error => {
@@ -139,7 +144,10 @@ class SignUp extends Component {
     }
 
     handleClose = () => {
-        this.setState({open: false});
+        this.setState({
+            open: false,
+            duplicateEmail: false
+        });
     };
 
     render() {
@@ -160,6 +168,7 @@ class SignUp extends Component {
                                     {this.state.wrongTelephone && <p>Informe um telefone válido.<br/></p>}
                                     {this.state.wrongPassword && <p>A senha deve ter no mínimo 6 dígitos.<br/></p>}
                                     {this.state.wrongSamePass && <p>As senhas fornecidas são diferentes.<br/></p>}
+                                    {this.state.duplicateEmail && <p>Esse e-mail já está cadastrado.<br/></p>}
                                 </span>}
                             action={[
                                 <IconButton
