@@ -20,7 +20,8 @@ router.post('/', async (req, res, next) => {
 
         let response = await ClientController.register(info);
 
-        return res.status(response.status).json(response.data);
+        res.header('x-auth-token', response.data);
+        return res.sendStatus(response.status);
     } catch (e) {
         next(e)
     }
@@ -39,7 +40,8 @@ router.post('/login/', async (req, res, next) => {
 
         let response = await ClientController.login(info);
 
-        return res.status(response.status).json(response.data);
+        res.header('x-auth-token', response.data);
+        return res.sendStatus(response.status);
     } catch (e) {
         next(e)
     }

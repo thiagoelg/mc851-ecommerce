@@ -95,7 +95,7 @@ class SignUp extends Component {
                     return;
                 }
 
-                UserProfile.set(response.data);
+                UserProfile.set(response.headers["x-auth-token"]);
                 this.props.history.push('/')
             })
             .catch(error => {

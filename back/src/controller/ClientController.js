@@ -65,6 +65,7 @@ export const login = async (params) => {
         }
     }
 
+
     const response = await ClientClient.getClient(user.clientId);
 
     if (!response || response.status !== 200) {

@@ -13,7 +13,10 @@ const app = express(),
     port = process.env.PORT || 3001;
 
 app.use(cors());
-
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Expose-Headers', 'X-Requested-With,content-type,X-Auth-Token');
+    next();
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

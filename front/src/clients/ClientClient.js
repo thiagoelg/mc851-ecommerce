@@ -6,9 +6,7 @@ const URL = ServerConfig.URL;
 export const register = async (params) => {
     try {
 
-        const response = await axios.post(`${URL}/user`, params);
-
-        return {data: response.data, status: response.status};
+        return await axios.post(`${URL}/user`, params);
 
     } catch (e) {
         return {status: 400};
@@ -18,9 +16,7 @@ export const register = async (params) => {
 export const login = async (params) => {
     try {
 
-        const response = await axios.post(`${URL}/user/login`, params);
-
-        return {data: response.data, status: response.status};
+        return await axios.post(`${URL}/user/login`, params);
 
     } catch (e) {
         console.error(e);
