@@ -87,19 +87,14 @@ class SignUp extends Component {
 
         register(params)
             .then(response => {
-                if (response.status === 400) {
-                    this.setState({
-                        open: true,
-                        duplicateEmail: true
-                    });
-                    return;
-                }
-
                 UserProfile.set(response.headers["x-auth-token"]);
                 this.props.history.push('/')
             })
             .catch(error => {
-                //TODO treat error
+                this.setState({
+                    open: true,
+                    duplicateEmail: true
+                });
             })
     }
 

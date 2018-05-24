@@ -16,9 +16,9 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        const id = UserProfile.getToken();
+        const token = UserProfile.getToken();
 
-        getClient(id)
+        getClient(token)
             .then(response => {
                 this.setState({
                     user: response.data

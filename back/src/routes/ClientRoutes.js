@@ -48,14 +48,14 @@ router.post('/login/', async (req, res, next) => {
 });
 
 
-router.get('/:id', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
-        let id = req.params.id;
-        if (!id) {
+        let token = req.get("x-auth-token");
+        if (!token) {
             return res.sendStatus(400)
         }
 
-        let response = await ClientController.getClient(id);
+        let response = await ClientController.getClient(token);
         return res.status(response.status).json(response.data);
     } catch (e) {
         next(e)

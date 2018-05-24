@@ -82,12 +82,20 @@ export const login = async (params) => {
     };
 };
 
-export const getClient = async (id) => {
+export const getClient = async (token) => {
 
-    const response = await ClientClient.getClient(id)
+    const decoded = AuthTokenGenerator.verify(token);
+
+    if(!decoded) {
+        return {
+            status: 401
+        }
+    }
+
+    const response = await ClientClient.getClient(decoded.cid);
 
     if (!response || response.status !== 200) {
-        console.error("getClient error")
+        console.error("getClient error");
         return 0
     }
 
