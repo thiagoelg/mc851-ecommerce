@@ -1,9 +1,15 @@
 import React, {Component} from 'react'
 import UserProfile from '../../state/UserProfile'
 import {getClient} from "../../clients/ClientClient";
-import Grid from "@material-ui/core/es/Grid/Grid";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import Button from "@material-ui/core/es/Button";
+import Card from "@material-ui/core/es/Card/Card";
+import CardContent from "@material-ui/core/es/CardContent/CardContent";
+import CardActions from "@material-ui/core/es/CardActions/CardActions";
+import EditIcon from "@material-ui/icons/Edit"
+import DeleteIcon from "@material-ui/icons/Delete"
+import SecurityIcon from "@material-ui/icons/Security"
+import Grid from "@material-ui/core/es/Grid/Grid";
 
 class Profile extends Component {
 
@@ -30,61 +36,77 @@ class Profile extends Component {
     }
 
     render() {
+        const cardStyle = {
+            display: 'block',
+            width: 'auto',
+            transitionDuration: '0.3s',
+            height: 'auto',
+            margin: 20
+        };
+
+        const user = this.state.user;
+        //FIXME remove
+        user.address = {
+            identification: "Minha Casa",
+            cep: "13070717",
+            street: "Rua Luis Gama",
+            number: "757",
+            neighborhood: "Bonfim",
+            city: "Campinas",
+            state: "SP",
+            compliment: "Casa da Frente"
+        };
+        const address = user.address;
 
         return (
-            <Grid container>
-                <Grid item xs={6}>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <Typography variant="headline">
-                                Meu Perfil
-                            </Typography>
+            <div style={{display: "flex"}}>
+                <Card style={cardStyle}>
+                    <CardContent>
+                        <Grid container>
+                            <Grid item style={{margin: 20}}>
+                                <Typography variant="headline">
+                                    Meu Perfil
+                                </Typography>
+
+                                <p><b>Nome: </b>{user.name}</p>
+                                <p><b>E-mail: </b>{user.email}</p>
+                                <p><b>CPF: </b>{user.cpf}</p>
+                                <p><b>Telefone: </b>{user.telephone}</p>
+                            </Grid>
+                            <Grid item style={{margin: 20}}>
+                                {address && (
+                                    <div>
+                                        <Typography variant="title">
+                                            Endereço
+                                        </Typography>
+
+                                        <p>
+                                            <b>{address.identification}</b>
+                                            <br/>
+                                            {address.cep}
+                                            <br/>
+                                            {address.street}, {address.number}
+                                            <br/>
+                                            {address.neighborhood}, {address.city}, {address.state}
+                                            <br/>
+                                            {address.compliment}
+                                            <br/>
+                                        </p>
+                                    </div>
+                                )}
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <p><b>Nome: </b>{this.state.user.name}</p>
-                            <p><b>E-mail: </b>{this.state.user.email}</p>
-                            <p><b>CPF: </b>{this.state.user.cpf}</p>
-                            <p><b>Telefone: </b>{this.state.user.telephone}</p>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={6}>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <Typography variant="subheading">
-                                Endereço
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <p><b>Rua: </b>{this.state.user.street}</p>
-                            <p><b>Número: </b>{this.state.user.number}</p>
-                            <p><b>Bairro: </b>{this.state.user.neighborhood}</p>
-                            <p><b>Cidade: </b>{this.state.user.city}</p>
-                            <p><b>Estado: </b>{this.state.user.state}</p>
-                            <p><b>CEP: </b>{this.state.user.cep}</p>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid container style={{marginTop: 10, marginBottom: 20}}>
-                        <Grid item xs={4}>
-                            <Button variant="raised" color="default">
-                                Alterar Meus Dados
-                            </Button>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Button variant="raised" color="default">
-                                Minhas Compras
-                            </Button>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Button variant="raised" color="default">
-                                Atendimento
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small">
+                            <EditIcon/> Editar
+                        </Button>
+                        <Button size="small">
+                            <SecurityIcon/> Trocar a senha
+                        </Button>
+                    </CardActions>
+                </Card>
+            </div>
         );
 
     }
