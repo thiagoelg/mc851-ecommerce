@@ -62,9 +62,6 @@ class UserButtons extends Component {
                             <MenuItem name="profile" onClick={this.handleClose}>
                                 <Link to="/profile">Perfil</Link>
                             </MenuItem>
-                            <MenuItem name="changepassword" onClick={this.handleClose}>
-                                <Link to="/changepassword">Alterar senha</Link>
-                            </MenuItem>
                             <MenuItem name="purchases" onClick={this.handleClose}>
                                 <Link to="/purchases">Minhas Compras</Link>
                             </MenuItem>

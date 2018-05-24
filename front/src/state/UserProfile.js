@@ -39,6 +39,7 @@ let UserProfile = (function () {
         name = null;
         token = null;
         logged = false;
+        localStorage.removeItem(LOCAL_STORAGE_ITEM_NAME);
     };
 
     const savedToken = localStorage.getItem(LOCAL_STORAGE_ITEM_NAME);
