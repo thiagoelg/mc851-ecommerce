@@ -6,7 +6,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import Typography from "@material-ui/core/es/Typography/Typography";
-import Pagination from "../Pagination";
+import Pagination from "../Pagination/Pagination";
 import Grid from "@material-ui/core/es/Grid";
 import {getProducts, getProductsByFullSearch} from "../../clients/ProductsClient";
 import Link from "../Link/Link";

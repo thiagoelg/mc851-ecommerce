@@ -8,6 +8,7 @@
     "axios": "^0.18.0",
     "jsonwebtoken": "^8.2.1",
     "nodemon": "^1.17.3",
+    "prop-types": "^15.6.1",
     "query-string": "^6.1.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
@@ -15,6 +16,7 @@
     "react-number-format": "^3.3.4",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
+    "react-select": "^1.2.1",
     "react-text-mask": "^5.4.1"
   },
   "scripts": {

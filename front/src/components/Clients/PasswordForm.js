@@ -65,8 +65,7 @@ class PasswordForm extends Component {
 
         return (
             <Grid container>
-                <Grid item sm={4}/>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12}>
                     <br/>
 
                     <TextField label="Senha" name="password"
@@ -77,10 +76,8 @@ class PasswordForm extends Component {
                                helperText={this.state.wrongPassword && "A senha deve ter no mínimo 6 dígitos."}
                                fullWidth/>
                 </Grid>
-                <Grid item sm={4}/>
 
-                <Grid item sm={4}/>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12}>
                     <br/>
 
                     <TextField label="Confirme a senha"
@@ -92,7 +89,6 @@ class PasswordForm extends Component {
                                helperText={this.state.wrongSamePass && "As senhas fornecidas são diferentes."}
                                fullWidth/>
                 </Grid>
-                <Grid item sm={4}/>
 
             </Grid>
         );

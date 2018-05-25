@@ -81,10 +81,10 @@ class ClientBasicForm extends Component {
     }
 
     render() {
+
         return (
             <Grid container>
-                <Grid item sm={4}/>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12}>
                     <br/>
 
                     <TextField label="Nome"
@@ -95,10 +95,8 @@ class ClientBasicForm extends Component {
                                helperText={this.state.wrongName && "Informe seu nome completo."}
                                fullWidth/>
                 </Grid>
-                <Grid item sm={4}/>
 
-                <Grid item sm={4}/>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12}>
                     <br/>
 
                     <TextField label="E-mail"
@@ -111,10 +109,8 @@ class ClientBasicForm extends Component {
                                fullWidth/>
 
                 </Grid>
-                <Grid item sm={4}/>
 
-                <Grid item sm={4}/>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12}>
                     <br/>
 
                     <TextField label="CPF" name="cpf"
@@ -124,10 +120,8 @@ class ClientBasicForm extends Component {
                                helperText={this.state.wrongCpf && "Informe um CPF válido."}
                                fullWidth/>
                 </Grid>
-                <Grid item sm={4}/>
 
-                <Grid item sm={4}/>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12}>
                     <br/>
 
                     <TextField label="Telefone" name="telephone"
@@ -137,7 +131,6 @@ class ClientBasicForm extends Component {
                                helperText={this.state.wrongTelephone && "Informe um telefone válido."}
                                fullWidth/>
                 </Grid>
-                <Grid item sm={4}/>
             </Grid>
         )
     }

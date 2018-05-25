@@ -8,6 +8,7 @@ import Product from "../Products/Product";
 import SignUp from "../Clients/SignUp";
 import SignIn from "../Clients/SignIn";
 import Profile from "../Clients/Profile";
+import UpdateProfile from "../Clients/UpdateProfile";
 
 
 // Para <ProductFilter /> dentro do grid, tirar o style do grid:
@@ -29,6 +30,7 @@ class Body extends Component {
                     <Route exact path='/signUp' component={SignUp}/>
                     <Route exact path='/signIn' component={SignIn}/>
                     <Route exact path='/profile' component={Profile}/>
+                    <Route exact path='/profile/update' component={UpdateProfile}/>
                     <Route path='/carrinho' component={Carrinho}/>
                 </Switch>
                 </Grid>

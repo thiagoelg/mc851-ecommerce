@@ -2,7 +2,7 @@ import express from 'express'
 
 import ClientController from '../controller/ClientController'
 
-const router = express.Router()
+const router = express.Router();
 
 router.post('/', async (req, res, next) => {
 

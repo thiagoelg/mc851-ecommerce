@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {withRouter} from 'react-router-dom'
 import UserProfile from '../../state/UserProfile'
 import {getClient} from "../../clients/ClientClient";
 import Typography from "@material-ui/core/es/Typography/Typography";
@@ -7,9 +8,9 @@ import Card from "@material-ui/core/es/Card/Card";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import CardActions from "@material-ui/core/es/CardActions/CardActions";
 import EditIcon from "@material-ui/icons/Edit"
-import DeleteIcon from "@material-ui/icons/Delete"
 import SecurityIcon from "@material-ui/icons/Security"
 import Grid from "@material-ui/core/es/Grid/Grid";
+import Link from "../Link/Link";
 
 class Profile extends Component {
 
@@ -90,9 +91,11 @@ class Profile extends Component {
                         </Grid>
                     </CardContent>
                     <CardActions>
-                        <Button size="small">
-                            <EditIcon/> Editar
-                        </Button>
+                        <Link to="/profile/update">
+                            <Button size="small">
+                                <EditIcon/> Editar
+                            </Button>
+                        </Link>
                         <Button size="small">
                             <SecurityIcon/> Trocar a senha
                         </Button>
@@ -105,4 +108,4 @@ class Profile extends Component {
 
 }
 
-export default Profile;
+export default withRouter(Profile);

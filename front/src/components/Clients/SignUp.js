@@ -125,17 +125,21 @@ class SignUp extends Component {
                         <Typography>Você precisa ter uma conta para realizar qualquer compra no site.</Typography>
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid item sm={4}/>
+                    <Grid item xs={12} sm={4}>
                         <ClientBasicForm name="basicInfo"
                                          value={this.state.basicInfo}
                                          onChange={this.handleChange}/>
                     </Grid>
+                    <Grid item sm={4}/>
 
-                    <Grid item xs={12}>
+                    <Grid item sm={4}/>
+                    <Grid item xs={12} sm={4}>
                         <PasswordForm name="password"
                                       value={this.state.password}
                                       onChange={this.handleChange}/>
                     </Grid>
+                    <Grid item sm={4}/>
 
                     <Grid item sm={4}/>
                     <Grid item xs={12} sm={4} style={{display: 'flex', justifyContent: 'center', marginTop: 20}}>

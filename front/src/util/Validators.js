@@ -1,6 +1,6 @@
 
 export const validateEmail = (email) => {
-    return email && /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
+    return email && email !== null && /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
 };
 
 export const validateCpf = (cpf) => {
@@ -25,11 +25,15 @@ export const validateCpf = (cpf) => {
 };
 
 export const validateTelephone = (telephone) => {
-    return telephone && !isNaN(telephone) && (telephone.length === 11 || telephone.length === 10);
+    return telephone && telephone !== null && !isNaN(telephone) && (telephone.length === 11 || telephone.length === 10);
+};
+
+export const validateCep = (cep) => {
+    return cep && cep !== null && !isNaN(cep) && cep.length === 8;
 };
 
 export const validatePassword = (pass) => {
-    return pass && pass.length >= 6;
+    return pass && pass !== null && pass.length >= 6;
 };
 
 export const validateSamePass = (pass, samePass) => {
@@ -37,5 +41,5 @@ export const validateSamePass = (pass, samePass) => {
 };
 
 export const validateNotEmpty = (str) => {
-    return str || str.length > 0;
+    return str && str !== null && str.length > 0;
 };
