@@ -56,7 +56,9 @@ class Product extends Component {
         return (
             <Grid container>
                 <Grid item xs={4} style={{padding: 20}}>
-                    <img src={product.imageUrl} alt={product.name} width={'100%'} />
+                    <img src={product.imageUrl} alt={product.name}
+                         style={{maxHeight: '100%', maxWidth: '100%', margin: '0 auto', display: 'block'}}
+                    />
                 </Grid>
                 <Grid item xs={8}>
                     <Grid container>
