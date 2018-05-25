@@ -113,6 +113,7 @@ class ClientBasicForm extends Component {
                                onChange={this.handleChange}
                                error={this.state.wrongEmail}
                                helperText={this.state.wrongEmail && "Informe um e-mail válido."}
+                               disabled={this.props.edit}
                                fullWidth/>
 
                 </Grid>
@@ -125,6 +126,7 @@ class ClientBasicForm extends Component {
                                onChange={this.handleChange}
                                error={this.state.wrongCpf}
                                helperText={this.state.wrongCpf && "Informe um CPF válido."}
+                               disabled={this.props.edit}
                                fullWidth/>
                 </Grid>
 

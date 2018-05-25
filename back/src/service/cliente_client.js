@@ -50,13 +50,13 @@ export const updateUser = async (id, info) => {
     try {
         const response = await axios.put(`${CLIENTE_URL}/update/${id}`, info, {
             headers
-        })
+        });
 
         return {data : response.data, status: response.status}
     } catch (e) {
         //console.log(e)
     }
-}
+};
 
 export const changePassword = async (id, info) => {
 

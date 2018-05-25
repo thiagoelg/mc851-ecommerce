@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/es/Grid/Grid";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import Button from "@material-ui/core/es/Button/Button";
 import UserProfile from "../../state/UserProfile";
-import {getClient} from "../../clients/ClientClient";
+import {getClient, updateClient} from "../../clients/ClientClient";
 
 class UpdateProfile extends Component {
 
@@ -48,7 +48,7 @@ class UpdateProfile extends Component {
             .then(response => {
                 const data = response.data;
 
-                if(!data.address) {
+                if (!data.address) {
                     data.address = {
                         identification: '',
                         cep: '',
@@ -115,7 +115,31 @@ class UpdateProfile extends Component {
     }
 
     handleUpdateClick(e) {
-        console.log(this.state);
+        const client = {
+            name: this.state.name,
+            email: this.state.email,
+            cpf: this.state.cpf,
+            telephone: this.state.telephone,
+
+            address: {
+                identification: this.state.identification,
+                cep: this.state.cep,
+                street: this.state.street,
+                number: this.state.number,
+                neighborhood: this.state.neighborhood,
+                city: this.state.city,
+                state: this.state.state,
+                compliment: this.state.compliment,
+            }
+        };
+
+        updateClient(UserProfile.getToken(), client)
+            .then(response => {
+                this.props.history.push('/profile');
+            })
+            .catch(error => {
+                //TODO treat error
+            });
     }
 
     render() {
@@ -137,7 +161,8 @@ class UpdateProfile extends Component {
                                              email={this.state.email}
                                              cpf={this.state.cpf}
                                              telephone={this.state.telephone}
-                                             onChange={this.handleChangeBasicInfo}/>
+                                             onChange={this.handleChangeBasicInfo}
+                                             edit={true}/>
                         </Grid>
                         <Grid item xs={2}/>
 

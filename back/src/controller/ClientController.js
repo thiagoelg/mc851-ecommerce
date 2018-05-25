@@ -120,14 +120,24 @@ export const getClients = async () => {
     const response = await ClientClient.getClients()
 
     if (!response || response.status !== 200) {
-        console.error("getClients error")
+        console.error("getClients error");
         return 0
     }
 
     return response.data
 };
 
-export const updateUser = async (id, info) => {
+export const updateUser = async (token, info) => {
+
+    const decoded = AuthTokenGenerator.verify(token);
+
+    if(!decoded) {
+        return {
+            status: 401
+        }
+    }
+
+    const id = decoded.cid;
 
     const response = await ClientClient.updateUser(id, {
         name: info.name,

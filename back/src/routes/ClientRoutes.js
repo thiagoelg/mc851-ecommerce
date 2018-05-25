@@ -61,17 +61,17 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.put('/update/:id', async (req, res, next) => {
+router.put('/update', async (req, res, next) => {
 
     try {
-        let id = req.params.id;
-        if (!id) {
+        let token = req.get("x-auth-token");
+        if (!token) {
             return res.sendStatus(400)
         }
 
         let info = req.body;
 
-        let category = await ClientController.updateUser(id, info);
+        let category = await ClientController.updateUser(token, info);
 
         return res.json(category)
     } catch (e) {
