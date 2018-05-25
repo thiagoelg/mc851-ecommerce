@@ -8,6 +8,8 @@ import TableHead from "@material-ui/core/es/TableHead";
 import TableRow from "@material-ui/core/es/TableRow";
 import TableCell from "@material-ui/core/es/TableCell";
 import TableBody from "@material-ui/core/es/TableBody";
+import Fade from "@material-ui/core/es/Fade/Fade";
+import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
 
 class Freight extends Component {
 
@@ -17,6 +19,7 @@ class Freight extends Component {
         this.state = {
             cep: '',
 
+            loading: false,
             shippingOptions: []
         };
 
@@ -44,25 +47,32 @@ class Freight extends Component {
     }
 
     getShippingOptions() {
-        const product = this.props.product;
+        this.setState({
+            loading: true,
+            shippingOptions: []
+        }, () => {
+            const product = this.props.product;
 
-        let params = {
-            destinyCep: this.state.cep,
-            weight: product.weight,
-            length: product.length,
-            height: product.height,
-            width: product.width
-        };
+            let params = {
+                destinyCep: this.state.cep,
+                weight: product.weight,
+                length: product.length,
+                height: product.height,
+                width: product.width
+            };
 
-        getShippingOptions(params)
-            .then(response => {
-                this.setState({
-                    shippingOptions: response.data
+            getShippingOptions(params)
+                .then(response => {
+                    this.setState({
+                        loading: false,
+                        shippingOptions: response.data
+                    })
                 })
-            })
-            .catch(error => {
-                //TODO treat error
-            });
+                .catch(error => {
+                    //TODO treat error
+                });
+        });
+
     }
 
     render() {
@@ -85,7 +95,19 @@ class Freight extends Component {
                         OK
                     </Button>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
+                    {this.state.loading && (
+                        <Fade
+                            in={this.state.loading}
+                            style={{
+                                transitionDelay: this.state.loading ? '800ms' : '0ms'
+                            }}
+                            unmountOnExit
+                        >
+                            <CircularProgress/>
+                        </Fade>
+                    )}
+
                     {this.state.shippingOptions.length > 0 &&
                     <Table>
                         <TableHead>
@@ -102,7 +124,7 @@ class Freight extends Component {
                                         <TableCell component="th" scope="row">
                                             {shipping.type}
                                         </TableCell>
-                                        <TableCell numeric>R$ {parseFloat(shipping.price/100).toFixed(2)}</TableCell>
+                                        <TableCell numeric>R$ {parseFloat(shipping.price / 100).toFixed(2)}</TableCell>
                                         <TableCell numeric>{shipping.deliveryTime}</TableCell>
                                     </TableRow>
                                 );

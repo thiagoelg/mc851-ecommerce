@@ -1,19 +1,10 @@
 import express from 'express'
 import LogisticController from '../controller/LogisticController';
+import LogisticService from '../service/logistica_client'
 
 const router = express.Router()
 
 const cepUnicamp = 13083970
-
-const SHIPPING_TYPE = {
-    PAC: "PAC",
-    SEDEX: "SEDEX"
-};
-
-const PACKET_TYPE = {
-    BOX: "Caixa",
-    ENVELOPE: "envelope"
-};
 
 router.get('/shipping', async (req, res, next) => {
     try {
@@ -27,7 +18,7 @@ router.get('/shipping', async (req, res, next) => {
                 cepOrigem    : req.query.originCep    || cepUnicamp,
                 cepDestino   : req.query.destinyCep,
                 peso         : req.query.weight,
-                tipoPacote   : req.query.packetType   || PACKET_TYPE.BOX,
+                tipoPacote   : req.query.packetType   || LogisticService.PACKET_TYPE.BOX,
                 comprimento  : req.query.length,
                 altura       : req.query.height,
                 largura      : req.query.width
