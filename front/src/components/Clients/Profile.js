@@ -96,9 +96,11 @@ class Profile extends Component {
                                 <EditIcon/> Editar
                             </Button>
                         </Link>
-                        <Button size="small">
-                            <SecurityIcon/> Trocar a senha
-                        </Button>
+                        <Link to='/profile/changepassword'>
+                            <Button size="small">
+                                <SecurityIcon/> Trocar a senha
+                            </Button>
+                        </Link>
                     </CardActions>
                 </Card>
             </div>

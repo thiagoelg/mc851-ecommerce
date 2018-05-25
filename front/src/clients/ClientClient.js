@@ -34,3 +34,13 @@ export const updateClient = async (token, data) => {
     });
 
 };
+
+export const changePassword = async (token, data) => {
+
+    return await axios.put(`${URL}/user/changepassword`, data, {
+        headers: {
+            "x-auth-token": token
+        }
+    });
+
+};

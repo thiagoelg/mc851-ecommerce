@@ -115,6 +115,7 @@ class UpdateProfile extends Component {
     }
 
     handleUpdateClick(e) {
+        //TODO validate
         const client = {
             name: this.state.name,
             email: this.state.email,

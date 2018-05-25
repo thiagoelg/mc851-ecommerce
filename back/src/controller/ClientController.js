@@ -154,22 +154,49 @@ export const updateUser = async (token, info) => {
 
     if (!response || response.status !== 200) {
         console.error("updateUser error");
-        return 0
+        return {
+            status: response.status
+        }
     }
 
-    return response.data
+    return {
+        status: response.status,
+        data: response.data
+    }
 };
 
-export const changePassword = async (id, info) => {
+export const changePassword = async (token, info) => {
+    const decoded = AuthTokenGenerator.verify(token);
 
-    const response = await ClientClient.changePassword(id, info)
-
-    if (!response || response.status !== 200) {
-        console.error("changePassword error")
-        return 0
+    if(!decoded) {
+        return {
+            status: 401
+        }
     }
 
-    return response.data
+    const id = decoded.cid;
+
+    const user = await Database.getUserByClientId(id);
+
+    const verified = bcrypt.compareSync(info.oldPassword, user.password);
+
+    if (!verified) {
+        return {
+            status: 401
+        }
+    }
+
+    const updated = await Database.changePassword(id, info.password);
+
+    if (!updated) {
+        return {
+            status: 404
+        }
+    }
+
+    return {
+        status: 200
+    }
 };
 
 export const deleteUser = async (id, info) => {

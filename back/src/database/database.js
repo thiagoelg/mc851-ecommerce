@@ -50,4 +50,29 @@ export const getUserByEmail = async (email, done) => {
     return rows[0];
 };
 
-export default {connect, createUser, associateClientToUser, getUserByEmail};
+export const getUserByClientId = async (clientId, done) => {
+    if (!pool)
+        throw 'Missing database connection!';
+
+    const [rows, fields] = await pool.query(
+        `SELECT id, email, password, clientId FROM user
+         WHERE clientId = ?`, [clientId]);
+
+    return rows[0];
+};
+
+export const changePassword = async (clientId, newPassword, done) => {
+    if (!pool)
+        throw 'Missing database connection!';
+
+    const newHash = bcrypt.hashSync(newPassword);
+
+    const [rows, fields] = await pool.query(
+        `UPDATE user
+         SET password = ?
+         WHERE clientId = ?`, [newHash, clientId]);
+
+    return rows && rows.affectedRows === 1;
+};
+
+export default {connect, createUser, associateClientToUser, getUserByEmail, getUserByClientId, changePassword};
