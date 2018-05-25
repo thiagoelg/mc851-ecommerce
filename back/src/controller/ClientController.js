@@ -27,8 +27,8 @@ export const register = async (params) => {
         address: params.address, // FIXME
         telephone: params.telephone,
         cpf: params.cpf,
-        password: "systemgen",
-        samePass: "systemgen"
+        password: "private",
+        samePass: "private"
     });
 
     if (!response || response.status !== 200) {

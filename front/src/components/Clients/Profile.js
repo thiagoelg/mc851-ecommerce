@@ -45,7 +45,7 @@ class Profile extends Component {
         };
 
         const user = this.state.user;
-        //FIXME remove
+        //FIXME remove when back end implements
         user.address = {
             identification: "Minha Casa",
             cep: "13070717",

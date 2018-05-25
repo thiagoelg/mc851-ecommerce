@@ -32,6 +32,7 @@ class UserButtons extends Component {
 
     handleLogout() {
         UserProfile.clear();
+        this.props.history.push("/");
         this.close();
     };
 

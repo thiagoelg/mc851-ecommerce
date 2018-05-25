@@ -12,7 +12,6 @@ router.post('/', async (req, res, next) => {
         if (!info.name ||
             !info.email ||
             !info.password ||
-            !info.samePass ||
             !info.cpf ||
             !info.telephone) {
             return res.sendStatus(400);
@@ -102,6 +101,7 @@ router.put('/changePass/:id', async (req, res, next) => {
         next(e)
     }
 });
+
 router.delete('/delete/:id', async (req, res, next) => {
 
     try {
