@@ -17,27 +17,27 @@ class UpdateProfile extends Component {
             email: '',
             cpf: '',
             telephone: '',
-            validBasicInfo: false,
+            validBasicInfo: true,
 
-            address: {
-                identification: '',
-                cep: '',
-                street: '',
-                number: '',
-                neighborhood: '',
-                city: '',
-                state: '',
-                compliment: '',
-                valid: false
-            },
+            identification: '',
+            cep: '',
+            street: '',
+            number: '',
+            neighborhood: '',
+            city: '',
+            state: '',
+            compliment: '',
+            validAddress: false,
 
             duplicateEmail: false,
 
             open: false
         };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeBasicInfo = this.handleChangeBasicInfo.bind(this);
+        this.handleChangeAddress = this.handleChangeAddress.bind(this);
         this.handleCancelClick = this.handleCancelClick.bind(this);
+        this.handleUpdateClick = this.handleUpdateClick.bind(this);
     }
 
 
@@ -48,26 +48,35 @@ class UpdateProfile extends Component {
             .then(response => {
                 const data = response.data;
 
-                // const address = {
-                //     identification: data.address.identification || '',
-                //     cep: data.address.cep || '',
-                //     street: data.address.street || '',
-                //     number: data.address.number || '',
-                //     neighborhood: data.address.neighborhood || '',
-                //     city: data.address.city || '',
-                //     state: data.address.state || '',
-                //     compliment: data.address.compliment || '',
-                //     valid: false
-                // };
+                if(!data.address) {
+                    data.address = {
+                        identification: '',
+                        cep: '',
+                        street: '',
+                        number: '',
+                        neighborhood: '',
+                        city: '',
+                        state: '',
+                        compliment: ''
+                    }
+                }
 
                 this.setState({
                     name: data.name,
                     email: data.email,
                     cpf: data.cpf,
-                    telephone: data.telephone
+                    telephone: data.telephone,
 
+                    identification: data.address.identification,
+                    cep: data.address.cep,
+                    street: data.address.street,
+                    number: data.address.number,
+                    neighborhood: data.address.neighborhood,
+                    city: data.address.city,
+                    state: data.address.state,
+                    compliment: data.address.compliment
                 });
-            })
+            }, () => console.log(this.state))
             .catch(error => {
                 //TODO treat error
             });
@@ -77,13 +86,36 @@ class UpdateProfile extends Component {
         this.props.history.goBack();
     }
 
-    handleChange(e) {
+    handleChangeBasicInfo(e) {
         const target = e.target;
-        const name = target.name;
 
         this.setState({
-            [name]: target.value
+            name: target.name,
+            email: target.email,
+            cpf: target.cpf,
+            telephone: target.telephone,
+            validBasicInfo: target.valid
         });
+    }
+
+    handleChangeAddress(e) {
+        const target = e.target;
+
+        this.setState({
+            identification: target.identification,
+            cep: target.cep,
+            street: target.street,
+            number: target.number,
+            neighborhood: target.neighborhood,
+            city: target.city,
+            state: target.state,
+            compliment: target.compliment,
+            validAddress: target.valid
+        });
+    }
+
+    handleUpdateClick(e) {
+        console.log(this.state);
     }
 
     render() {
@@ -105,7 +137,7 @@ class UpdateProfile extends Component {
                                              email={this.state.email}
                                              cpf={this.state.cpf}
                                              telephone={this.state.telephone}
-                                             onChange={this.handleChange}/>
+                                             onChange={this.handleChangeBasicInfo}/>
                         </Grid>
                         <Grid item xs={2}/>
 
@@ -125,8 +157,15 @@ class UpdateProfile extends Component {
                         <Grid item xs={2}/>
                         <Grid item xs={8}>
                             <AddressForm name="address"
-                                         value={this.state.address}
-                                         onChange={this.handleChange}/>
+                                         identification={this.state.identification}
+                                         cep={this.state.cep}
+                                         street={this.state.street}
+                                         number={this.state.number}
+                                         neighborhood={this.state.neighborhood}
+                                         city={this.state.city}
+                                         state={this.state.state}
+                                         compliment={this.state.compliment}
+                                         onChange={this.handleChangeAddress}/>
                         </Grid>
                         <Grid item xs={2}/>
                     </Grid>
@@ -139,7 +178,7 @@ class UpdateProfile extends Component {
                             style={{marginRight: 20}}>
                         Cancelar
                     </Button>
-                    <Button variant="raised" color="secondary" onClick={this.handleClick}>
+                    <Button variant="raised" color="secondary" onClick={this.handleUpdateClick}>
                         Atualizar
                     </Button>
                 </Grid>

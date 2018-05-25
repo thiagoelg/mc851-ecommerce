@@ -35,7 +35,7 @@ class SignUp extends Component {
             open: false
         };
 
-        this.handleChangeBasicForm = this.handleChangeBasicForm.bind(this);
+        this.handleChangeBasicInfo = this.handleChangeBasicInfo.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -71,12 +71,14 @@ class SignUp extends Component {
             })
     }
 
-    handleChangeBasicForm(e) {
+    handleChangeBasicInfo(e) {
         const target = e.target;
-        const name = target.name;
 
         this.setState({
-            [name]: target.value,
+            name: target.name,
+            email: target.email,
+            cpf: target.cpf,
+            telephone: target.telephone,
             validBasicInfo: target.valid
         });
     }
@@ -139,7 +141,7 @@ class SignUp extends Component {
                                          email={this.state.email}
                                          cpf={this.state.cpf}
                                          telephone={this.state.telephone}
-                                         onChange={this.handleChangeBasicForm}/>
+                                         onChange={this.handleChangeBasicInfo}/>
                     </Grid>
                     <Grid item sm={4}/>
 

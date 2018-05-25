@@ -11,26 +11,25 @@ class AddressForm extends Component {
     constructor(props) {
         super(props);
 
-        const value = props.value;
         this.state = {
-            identification: value.identification,
-            cep: value.cep,
-            street: value.street,
-            number: value.number,
-            neighborhood: value.neighborhood,
-            city: value.city,
-            state: value.state,
-            compliment: value.compliment,
+            identification: props.identification,
+            cep: props.cep,
+            street: props.street,
+            number: props.number,
+            neighborhood: props.neighborhood,
+            city: props.city,
+            state: props.state,
+            compliment: props.compliment,
 
-
-            wrongIdentification: value.wrongIdentification,
-            wrongCep: value.wrongCep,
-            wrongStreet: value.wrongStreet,
-            wrongNumber: value.wrongNumber,
-            wrongNeighborhood: value.wrongNeighborhood,
-            wrongCity: value.wrongCity,
-            wrongState: value.wrongState,
-            wrongCompliment: value.wrongCompliment,
+            //TODO first validation
+            wrongIdentification: false,
+            wrongCep: false,
+            wrongStreet: false,
+            wrongNumber: false,
+            wrongNeighborhood: false,
+            wrongCity: false,
+            wrongState: false,
+            wrongCompliment: false,
 
             states: []
         };
@@ -52,11 +51,11 @@ class AddressForm extends Component {
                     return {
                         wrongIdentification: !validateNotEmpty(prevState.identification)
                     }
-                }, () => this.onChange());
+                }, () => this.onChange(target));
 
             } else if (name === "cep") {
 
-                this.validateCep();
+                this.fillAddressThroughCep(target);
 
             } else if (name === "street") {
 
@@ -111,7 +110,7 @@ class AddressForm extends Component {
         });
     }
 
-    validateCep() {
+    fillAddressThroughCep(target) {
         let valid = validateCep(this.state.cep);
 
         if (valid) {
@@ -153,22 +152,34 @@ class AddressForm extends Component {
 
             this.props.onChange({
                 target: {
-                    name: this.props.name,
-                    value: {
-                        identification: this.state.identification,
-                        cep: this.state.cep,
-                        street: this.state.street,
-                        number: this.state.number,
-                        neighborhood: this.state.neighborhood,
-                        city: this.state.city,
-                        state: this.state.state,
-                        compliment: this.state.compliment,
-                        valid: !this.state.wrongPassword && !this.state.wrongSamePass
-                    }
+                    identification: this.state.identification,
+                    cep: this.state.cep,
+                    street: this.state.street,
+                    number: this.state.number,
+                    neighborhood: this.state.neighborhood,
+                    city: this.state.city,
+                    state: this.state.state,
+                    compliment: this.state.compliment,
+                    valid: !this.state.wrongIdentification && !this.state.wrongStreet &&
+                    !this.state.wrongNumber && !this.state.wrongCep && !this.state.wrongCity &&
+                    !this.state.wrongState && !this.state.wrongCompliment && !this.state.wrongNeighborhood
                 }
             });
-
         }
+    }
+
+    componentWillReceiveProps(props) {
+        //TODO validate
+        this.setState({
+            identification: props.identification,
+            cep: props.cep,
+            street: props.street,
+            number: props.number,
+            neighborhood: props.neighborhood,
+            city: props.city,
+            state: props.state,
+            compliment: props.compliment,
+        });
     }
 
     render() {

@@ -14,6 +14,7 @@ class ClientBasicForm extends Component {
             cpf: props.cpf,
             telephone: props.telephone,
 
+            //TODO first validation
             wrongName: false,
             wrongEmail: false,
             wrongCpf: false,
@@ -37,36 +38,38 @@ class ClientBasicForm extends Component {
                     return {
                         wrongName: !validateNotEmpty(prevState.name)
                     }
-                }, () => this.onChange(target));
+                }, () => this.onChange());
             } else if (name === "email") {
                 this.setState((prevState, props) => {
                     return {
                         wrongEmail: !validateEmail(prevState.email)
                     }
-                }, () => this.onChange(target));
+                }, () => this.onChange());
             } else if (name === "cpf") {
                 this.setState((prevState, props) => {
                     return {
                         wrongCpf: !validateCpf(prevState.cpf)
                     }
-                }, () => this.onChange(target));
+                }, () => this.onChange());
             } else if (name === "telephone") {
                 this.setState((prevState, props) => {
                     return {
                         wrongTelephone: !validateTelephone(prevState.telephone)
                     }
-                }, () => this.onChange(target));
+                }, () => this.onChange());
             }
 
         });
     }
 
-    onChange(target) {
+    onChange() {
         if (this.props.onChange) {
             this.props.onChange({
                 target: {
-                    name: target.name,
-                    value: target.value,
+                    name: this.state.name,
+                    email: this.state.email,
+                    cpf: this.state.cpf,
+                    telephone: this.state.telephone,
                     valid: !this.state.wrongEmail && !this.state.wrongName &&
                             !this.state.wrongTelephone && !this.state.wrongCpf
                 }
