@@ -45,17 +45,6 @@ class Profile extends Component {
         };
 
         const user = this.state.user;
-        //FIXME remove when back end implements
-        user.address = {
-            identification: "Minha Casa",
-            cep: "13070717",
-            street: "Rua Luis Gama",
-            number: "757",
-            neighborhood: "Bonfim",
-            city: "Campinas",
-            state: "SP",
-            compliment: "Casa da Frente"
-        };
         const address = user.address;
 
         return (
@@ -85,9 +74,12 @@ class Profile extends Component {
                                             <br/>
                                             {address.cep}
                                             <br/>
-                                            {address.street}, {address.number}
+                                            {address.street}{address.street && ", "}
+                                            {address.number}
                                             <br/>
-                                            {address.neighborhood}, {address.city}, {address.state}
+                                            {address.neighborhood}{address.neighborhood && ", "}
+                                            {address.city}{address.city && ", "}
+                                            {address.state}
                                             <br/>
                                             {address.compliment}
                                             <br/>

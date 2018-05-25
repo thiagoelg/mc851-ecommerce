@@ -2,6 +2,7 @@ import bcrypt from "bcrypt-nodejs"
 import ClientClient from "../service/cliente_client"
 import Database from "../database/database"
 import AuthTokenGenerator from "../utils/AuthTokenGenerator"
+import AddressConverter from "../utils/AddressConverter"
 
 export const register = async (params) => {
 
@@ -24,7 +25,7 @@ export const register = async (params) => {
         birthDate: params.birthDate,
         gender: params.gender,
         cep: params.cep,
-        address: params.address, // FIXME
+        address: AddressConverter.toString(params.address),
         telephone: params.telephone,
         cpf: params.cpf,
         password: "private",
@@ -107,7 +108,7 @@ export const getClient = async (token) => {
             birthDate: response.data.birthDate,
             gender: response.data.gender,
             cep: response.data.cep,
-            address: response.data.address, // FIXME
+            address: AddressConverter.toObject(response.data.address),
             telephone: response.data.telephone,
             cpf: response.data.cpf,
         }
@@ -128,10 +129,21 @@ export const getClients = async () => {
 
 export const updateUser = async (id, info) => {
 
-    const response = await ClientClient.updateUser(id, info)
+    const response = await ClientClient.updateUser(id, {
+        name: info.name,
+        email: info.email,
+        birthDate: info.birthDate,
+        gender: info.gender,
+        cep: info.cep,
+        address: AddressConverter.toString(info.address),
+        telephone: info.telephone,
+        cpf: info.cpf,
+        password: "private",
+        samePass: "private"
+    });
 
     if (!response || response.status !== 200) {
-        console.error("updateUser error")
+        console.error("updateUser error");
         return 0
     }
 
