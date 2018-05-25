@@ -13,13 +13,11 @@ class UpdateProfile extends Component {
         super(props);
 
         this.state = {
-            basicInfo: {
-                name: '',
-                email: '',
-                cpf: '',
-                telephone: '',
-                valid: false
-            },
+            name: '',
+            email: '',
+            cpf: '',
+            telephone: '',
+            validBasicInfo: false,
 
             address: {
                 identification: '',
@@ -49,28 +47,25 @@ class UpdateProfile extends Component {
         getClient(token)
             .then(response => {
                 const data = response.data;
-                const address = data.address;
+
+                // const address = {
+                //     identification: data.address.identification || '',
+                //     cep: data.address.cep || '',
+                //     street: data.address.street || '',
+                //     number: data.address.number || '',
+                //     neighborhood: data.address.neighborhood || '',
+                //     city: data.address.city || '',
+                //     state: data.address.state || '',
+                //     compliment: data.address.compliment || '',
+                //     valid: false
+                // };
 
                 this.setState({
-                    basicInfo: {
-                        name: data.name,
-                        email: data.email,
-                        cpf: data.cpf,
-                        telephone: data.telephone,
-                        valid: true
-                    },
+                    name: data.name,
+                    email: data.email,
+                    cpf: data.cpf,
+                    telephone: data.telephone
 
-                    address: {
-                        identification: address.identification || '',
-                        cep: address.cep || '',
-                        street: address.street || '',
-                        number: address.number || '',
-                        neighborhood: address.neighborhood || '',
-                        city: address.city || '',
-                        state: address.state || '',
-                        compliment: address.compliment || '',
-                        valid: false
-                    }
                 });
             })
             .catch(error => {
@@ -106,8 +101,10 @@ class UpdateProfile extends Component {
 
                         <Grid item xs={2}/>
                         <Grid item xs={8}>
-                            <ClientBasicForm name="basicInfo"
-                                             value={this.state.basicInfo}
+                            <ClientBasicForm name={this.state.name}
+                                             email={this.state.email}
+                                             cpf={this.state.cpf}
+                                             telephone={this.state.telephone}
                                              onChange={this.handleChange}/>
                         </Grid>
                         <Grid item xs={2}/>

@@ -8,17 +8,16 @@ class ClientBasicForm extends Component {
     constructor(props) {
         super(props);
 
-        const value = props.value;
         this.state = {
-            name: value.name,
-            email: value.email,
-            cpf: value.cpf,
-            telephone: value.telephone,
+            name: props.name,
+            email: props.email,
+            cpf: props.cpf,
+            telephone: props.telephone,
 
-            wrongName: value.wrongName,
-            wrongEmail: value.wrongEmail,
-            wrongCpf: value.wrongCpf,
-            wrongTelephone: value.wrongTelephone
+            wrongName: false,
+            wrongEmail: false,
+            wrongCpf: false,
+            wrongTelephone: false
 
         };
 
@@ -38,46 +37,51 @@ class ClientBasicForm extends Component {
                     return {
                         wrongName: !validateNotEmpty(prevState.name)
                     }
-                }, () => this.onChange());
+                }, () => this.onChange(target));
             } else if (name === "email") {
                 this.setState((prevState, props) => {
                     return {
                         wrongEmail: !validateEmail(prevState.email)
                     }
-                }, () => this.onChange());
+                }, () => this.onChange(target));
             } else if (name === "cpf") {
                 this.setState((prevState, props) => {
                     return {
                         wrongCpf: !validateCpf(prevState.cpf)
                     }
-                }, () => this.onChange());
+                }, () => this.onChange(target));
             } else if (name === "telephone") {
                 this.setState((prevState, props) => {
                     return {
                         wrongTelephone: !validateTelephone(prevState.telephone)
                     }
-                }, () => this.onChange());
+                }, () => this.onChange(target));
             }
 
         });
     }
 
-    onChange() {
+    onChange(target) {
         if (this.props.onChange) {
             this.props.onChange({
                 target: {
-                    name: this.props.name,
-                    value: {
-                        name: this.state.name,
-                        email: this.state.email,
-                        cpf: this.state.cpf,
-                        telephone: this.state.telephone,
-
-                        valid: !this.state.wrongName && !this.state.wrongEmail && !this.state.wrongCpf && !this.state.wrongTelephone,
-                    }
+                    name: target.name,
+                    value: target.value,
+                    valid: !this.state.wrongEmail && !this.state.wrongName &&
+                            !this.state.wrongTelephone && !this.state.wrongCpf
                 }
             });
         }
+    }
+
+    componentWillReceiveProps(props) {
+        //TODO validate
+        this.setState({
+            name: props.name,
+            email: props.email,
+            cpf: props.cpf,
+            telephone: props.telephone,
+        });
     }
 
     render() {
