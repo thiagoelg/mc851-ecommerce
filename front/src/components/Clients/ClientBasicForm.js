@@ -2,23 +2,25 @@ import React, {Component} from "react"
 import Grid from "@material-ui/core/es/Grid/Grid";
 import TextField from "@material-ui/core/es/TextField/TextField";
 import {validateCpf, validateEmail, validateNotEmpty, validateTelephone} from "../../util/Validators";
+import CpfInput from "./Cpf/CpfInput";
+import Input from "@material-ui/core/es/Input/Input";
+import TelephoneInput from "./Telephone/TelephoneInput";
 
 class ClientBasicForm extends Component {
 
     constructor(props) {
         super(props);
 
-        const value = props.value;
         this.state = {
-            name: value.name,
-            email: value.email,
-            cpf: value.cpf,
-            telephone: value.telephone,
+            name: props.name,
+            email: props.email,
+            cpf: props.cpf,
+            telephone: props.telephone,
 
-            wrongName: value.wrongName,
-            wrongEmail: value.wrongEmail,
-            wrongCpf: value.wrongCpf,
-            wrongTelephone: value.wrongTelephone
+            wrongName: false,
+            wrongEmail: false,
+            wrongCpf: false,
+            wrongTelephone: false
 
         };
 
@@ -28,56 +30,88 @@ class ClientBasicForm extends Component {
     handleChange(e) {
         const target = e.target;
         const name = target.name;
+        const value = target.value;
 
         this.setState({
-            [name]: target.value
+            [name]: value
         }, () => {
+            const validationResult = this.validateFields([name]);
+            const wrongFieldName = 'wrong' + name.charAt(0).toUpperCase() + name.slice(1);
 
-            if (name === "name") {
-                this.setState((prevState, props) => {
-                    return {
-                        wrongName: !validateNotEmpty(prevState.name)
-                    }
-                }, () => this.onChange());
-            } else if (name === "email") {
-                this.setState((prevState, props) => {
-                    return {
-                        wrongEmail: !validateEmail(prevState.email)
-                    }
-                }, () => this.onChange());
-            } else if (name === "cpf") {
-                this.setState((prevState, props) => {
-                    return {
-                        wrongCpf: !validateCpf(prevState.cpf)
-                    }
-                }, () => this.onChange());
-            } else if (name === "telephone") {
-                this.setState((prevState, props) => {
-                    return {
-                        wrongTelephone: !validateTelephone(prevState.telephone)
-                    }
-                }, () => this.onChange());
-            }
+            this.setState({
+                [wrongFieldName]: validationResult[wrongFieldName],
+            }, () => {
+                this.onChange()
+            });
 
         });
+    }
+
+    validateFields(names) {
+
+        let wrongName = this.state.wrongName;
+        let wrongEmail = this.state.wrongEmail;
+        let wrongCpf = this.state.wrongCpf;
+        let wrongTelephone = this.state.wrongTelephone;
+
+
+        if (names.indexOf("name") >= 0) {
+            wrongName = !validateNotEmpty(this.state.name);
+        }
+
+        if (names.indexOf("email") >= 0) {
+            wrongEmail = !validateEmail(this.state.email);
+        }
+
+        if (names.indexOf("cpf") >= 0) {
+            wrongCpf = !validateCpf(this.state.cpf);
+        }
+
+        if (names.indexOf("telephone") >= 0) {
+            wrongTelephone = !validateTelephone(this.state.telephone);
+        }
+
+        return {
+            wrongName: wrongName,
+            wrongEmail: wrongEmail,
+            wrongCpf: wrongCpf,
+            wrongTelephone: wrongTelephone
+        };
     }
 
     onChange() {
         if (this.props.onChange) {
             this.props.onChange({
                 target: {
-                    name: this.props.name,
-                    value: {
-                        name: this.state.name,
-                        email: this.state.email,
-                        cpf: this.state.cpf,
-                        telephone: this.state.telephone,
-
-                        valid: !this.state.wrongName && !this.state.wrongEmail && !this.state.wrongCpf && !this.state.wrongTelephone,
-                    }
+                    name: this.state.name,
+                    email: this.state.email,
+                    cpf: this.state.cpf,
+                    telephone: this.state.telephone,
+                    valid: !this.state.wrongEmail && !this.state.wrongName &&
+                    !this.state.wrongTelephone && !this.state.wrongCpf
                 }
             });
         }
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({
+            name: props.name,
+            email: props.email,
+            cpf: props.cpf,
+            telephone: props.telephone,
+        }, () => {
+            if(props.edit) {
+                const validationResult = this.validateFields(["name", "email", "cpf", "telephone"]);
+                this.setState({
+                    wrongName: validationResult.wrongName,
+                    wrongEmail: validationResult.wrongEmail,
+                    wrongCpf: validationResult.wrongCpf,
+                    wrongTelephone: validationResult.wrongTelephone,
+                });
+            }
+
+        });
     }
 
     render() {
@@ -106,6 +140,7 @@ class ClientBasicForm extends Component {
                                onChange={this.handleChange}
                                error={this.state.wrongEmail}
                                helperText={this.state.wrongEmail && "Informe um e-mail válido."}
+                               disabled={this.props.edit}
                                fullWidth/>
 
                 </Grid>
@@ -113,23 +148,20 @@ class ClientBasicForm extends Component {
                 <Grid item xs={12}>
                     <br/>
 
-                    <TextField label="CPF" name="cpf"
-                               value={this.state.cpf}
-                               onChange={this.handleChange}
-                               error={this.state.wrongCpf}
-                               helperText={this.state.wrongCpf && "Informe um CPF válido."}
-                               fullWidth/>
+                    <CpfInput name="cpf"
+                              value={this.state.cpf}
+                              onChange={this.handleChange}
+                              disabled={this.props.edit}
+                              fullWidth/>
                 </Grid>
 
                 <Grid item xs={12}>
                     <br/>
 
-                    <TextField label="Telefone" name="telephone"
-                               value={this.state.telephone}
-                               onChange={this.handleChange}
-                               error={this.state.wrongTelephone}
-                               helperText={this.state.wrongTelephone && "Informe um telefone válido."}
-                               fullWidth/>
+                    <TelephoneInput name="telephone"
+                              value={this.state.telephone}
+                              onChange={this.handleChange}
+                                    fullWidth/>
                 </Grid>
             </Grid>
         )

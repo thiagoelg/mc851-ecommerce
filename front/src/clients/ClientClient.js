@@ -24,3 +24,23 @@ export const getClient = async (token) => {
     });
 
 };
+
+export const updateClient = async (token, data) => {
+
+    return await axios.put(`${URL}/user/update`, data, {
+        headers: {
+            "x-auth-token": token
+        }
+    });
+
+};
+
+export const changePassword = async (token, data) => {
+
+    return await axios.put(`${URL}/user/changepassword`, data, {
+        headers: {
+            "x-auth-token": token
+        }
+    });
+
+};

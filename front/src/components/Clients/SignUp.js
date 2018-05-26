@@ -19,13 +19,11 @@ class SignUp extends Component {
         super(props);
 
         this.state = {
-            basicInfo: {
-                name: '',
-                email: '',
-                cpf: '',
-                telephone: '',
-                valid: false
-            },
+            name: '',
+            email: '',
+            cpf: '',
+            telephone: '',
+            validBasicInfo: false,
 
             password: {
                 password: '',
@@ -37,6 +35,7 @@ class SignUp extends Component {
             open: false
         };
 
+        this.handleChangeBasicInfo = this.handleChangeBasicInfo.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -44,7 +43,7 @@ class SignUp extends Component {
 
     handleClick(e) {
 
-        if (!this.state.basicInfo.valid || !this.state.password.valid) {
+        if (!this.state.validBasicInfo || !this.state.password.valid) {
             this.setState({
                 open: true
             });
@@ -52,13 +51,12 @@ class SignUp extends Component {
         }
 
         let params = {
-            name: this.state.basicInfo.name,
-            email: this.state.basicInfo.email,
-            cpf: this.state.basicInfo.cpf,
-            telephone: this.state.basicInfo.telephone,
+            name: this.state.name,
+            email: this.state.email,
+            cpf: this.state.cpf,
+            telephone: this.state.telephone,
             password: this.state.password.password
         };
-        console.log(params);
 
         register(params)
             .then(response => {
@@ -66,11 +64,27 @@ class SignUp extends Component {
                 this.props.history.push('/')
             })
             .catch(error => {
-                this.setState({
-                    open: true,
-                    duplicateEmail: true
-                });
+                if (error.response && error.response.status === 400) {
+                    this.setState({
+                        open: true,
+                        duplicateEmail: true
+                    });
+                    return;
+                }
+                //TODO treat error
             })
+    }
+
+    handleChangeBasicInfo(e) {
+        const target = e.target;
+
+        this.setState({
+            name: target.name,
+            email: target.email,
+            cpf: target.cpf,
+            telephone: target.telephone,
+            validBasicInfo: target.valid
+        });
     }
 
     handleChange(e) {
@@ -102,7 +116,7 @@ class SignUp extends Component {
                             message={
                                 <span id="message-id" color="error">
                                     {this.state.duplicateEmail && <p>Esse e-mail já está cadastrado.<br/></p>}
-                                    {(!this.state.basicInfo.valid || !this.state.password.valid) &&
+                                    {(!this.state.validBasicInfo || !this.state.password.valid) &&
                                     <p>Preencha todos os campos corretamente.<br/></p>
                                     }
                                 </span>}
@@ -127,9 +141,11 @@ class SignUp extends Component {
 
                     <Grid item sm={4}/>
                     <Grid item xs={12} sm={4}>
-                        <ClientBasicForm name="basicInfo"
-                                         value={this.state.basicInfo}
-                                         onChange={this.handleChange}/>
+                        <ClientBasicForm name={this.state.name}
+                                         email={this.state.email}
+                                         cpf={this.state.cpf}
+                                         telephone={this.state.telephone}
+                                         onChange={this.handleChangeBasicInfo}/>
                     </Grid>
                     <Grid item sm={4}/>
 

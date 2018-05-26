@@ -7,6 +7,7 @@ import Link from "../Link/Link";
 import Chip from "@material-ui/core/es/Chip/Chip";
 import Freight from "../Freight/Freight";
 import {getCategory, getProduct} from "../../clients/ProductsClient";
+import Typography from "@material-ui/core/es/Typography/Typography";
 
 class Product extends Component {
 
@@ -21,7 +22,7 @@ class Product extends Component {
     }
 
     handleChange(event) {
-        const target = event.target
+        const target = event.target;
         this.setState({[target.name]: event.target.value})
     }
 
@@ -56,7 +57,9 @@ class Product extends Component {
         return (
             <Grid container>
                 <Grid item xs={4} style={{padding: 20}}>
-                    <img src={product.imageUrl} alt={product.name} width={'100%'} />
+                    <img src={product.imageUrl} alt={product.name}
+                         style={{maxHeight: '100%', maxWidth: '100%', margin: '0 auto', display: 'block'}}
+                    />
                 </Grid>
                 <Grid item xs={8}>
                     <Grid container>
@@ -65,6 +68,11 @@ class Product extends Component {
                             {product.tags && product.tags.map(tag =>
                                 <Chip key={tag} label={tag} style={{marginRight: 5}}/>)
                             }
+                            <br/>
+                            <br/>
+                            <Typography variant="caption">
+                                Apenas {product.stock} unidades em estoque.
+                            </Typography>
                             <p>
                                 <b>Preço:</b> R$ {parseFloat(product.price).toFixed(2)}
                             </p>
@@ -88,7 +96,7 @@ class Product extends Component {
                         <Grid item xs={1}/>
                         <Grid item xs={9}>
                             <Link to="/carrinho">
-                                <Button variant="raised" color="secondary" style={{marginTop: '5%'}}>
+                                <Button variant="raised" color="secondary" style={{marginTop: '5%'}} disabled={product.stock === 0}>
                                     <ShoppingCart style={{marginRight: '10'}}/>
                                     Adicionar ao Carrinho
                                 </Button>

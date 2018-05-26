@@ -82,7 +82,7 @@ class Profile extends Component {
                                             {address.city}{address.city && ", "}
                                             {address.state}
                                             <br/>
-                                            {address.compliment}
+                                            {address.complement}
                                             <br/>
                                         </p>
                                     </div>
@@ -96,9 +96,11 @@ class Profile extends Component {
                                 <EditIcon/> Editar
                             </Button>
                         </Link>
-                        <Button size="small">
-                            <SecurityIcon/> Trocar a senha
-                        </Button>
+                        <Link to='/profile/changepassword'>
+                            <Button size="small">
+                                <SecurityIcon/> Trocar a senha
+                            </Button>
+                        </Link>
                     </CardActions>
                 </Card>
             </div>

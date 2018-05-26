@@ -51,7 +51,7 @@ router.get('/', async (req, res, next) => {
     try {
         let token = req.get("x-auth-token");
         if (!token) {
-            return res.sendStatus(400)
+            return res.sendStatus(401)
         }
 
         let response = await ClientController.getClient(token);
@@ -61,42 +61,41 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.put('/update/:id', async (req, res, next) => {
+router.put('/update', async (req, res, next) => {
 
     try {
-        let id = req.params.id;
-        if (!id) {
-            return res.sendStatus(400)
+        let token = req.get("x-auth-token");
+        if (!token) {
+            return res.sendStatus(401)
         }
 
         let info = req.body;
 
-        let category = await ClientController.updateUser(id, info);
+        let response = await ClientController.updateUser(token, info);
 
-        return res.json(category)
+        return res.status(response.status).json(response.data)
     } catch (e) {
         next(e)
     }
 });
 
-router.put('/changePass/:id', async (req, res, next) => {
+router.put('/changepassword', async (req, res, next) => {
 
     try {
-        let id = req.params.id;
-        if (!id) {
-            return res.sendStatus(400)
+        let token = req.get("x-auth-token");
+        if (!token) {
+            return res.sendStatus(401)
         }
 
         let info = req.body;
 
-        if (!info.password ||
-            !info.samePass) {
+        if (!info.password || !info.oldPassword) {
             return res.sendStatus(400)
         }
 
-        let category = await ClientController.changePassword(id, info);
+        let response = await ClientController.changePassword(token, info);
 
-        return res.json(category)
+        return res.status(response.status).json(response.data)
     } catch (e) {
         next(e)
     }
