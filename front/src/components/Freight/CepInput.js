@@ -40,6 +40,17 @@ class CepInput extends Component {
 
     }
 
+    componentWillReceiveProps(props) {
+        if(props.value) {
+            const valid = validateCep(props.value);
+
+            this.setState({
+                value: props.value,
+                valid: valid
+            });
+        }
+    }
+
     render() {
         return (
             <FormControl>

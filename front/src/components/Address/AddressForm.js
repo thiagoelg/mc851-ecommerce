@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/es/TextField/TextField";
 import States from "./States";
 import Cities from "./Cities";
 import AddressClient from "../../clients/AddressClient"
+import CepInput from "../Freight/CepInput";
 
 class AddressForm extends Component {
 
@@ -215,13 +216,10 @@ class AddressForm extends Component {
                 <Grid item xs={12}>
                     <br/>
 
-                    <TextField label="CEP"
-                               name="cep"
-                               value={this.state.cep}
-                               onChange={this.handleChange}
-                               error={this.state.wrongCep}
-                               helperText={this.state.wrongCep && "Informe um CEP válido."}
-                               fullWidth/>
+                    <CepInput name="cep"
+                              value={this.state.cep}
+                              onChange={this.handleChange}
+                              onKeyPress={this.handleKeyPress}/>
                 </Grid>
 
                 <Grid item xs={12}>
