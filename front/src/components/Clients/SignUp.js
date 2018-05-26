@@ -64,10 +64,14 @@ class SignUp extends Component {
                 this.props.history.push('/')
             })
             .catch(error => {
-                this.setState({
-                    open: true,
-                    duplicateEmail: true
-                });
+                if (error.response && error.response.status === 400) {
+                    this.setState({
+                        open: true,
+                        duplicateEmail: true
+                    });
+                    return;
+                }
+                //TODO treat error
             })
     }
 

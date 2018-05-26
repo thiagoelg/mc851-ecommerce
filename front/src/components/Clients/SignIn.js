@@ -60,9 +60,13 @@ class SignIn extends Component {
                 this.props.history.push('/')
             })
             .catch(error => {
-                this.setState({
-                    open: true
-                });
+                if (error.response && error.response.status === 401) {
+                    this.setState({
+                        open: true
+                    });
+                    return;
+                }
+                //TODO treat error
             })
     }
 
