@@ -32,14 +32,14 @@ class ClientBasicForm extends Component {
         this.setState({
             [name]: value
         }, () => {
-
             const validationResult = this.validateFields([name]);
+            const wrongFieldName = 'wrong' + name.charAt(0).toUpperCase() + name.slice(1);
+
             this.setState({
-                wrongName: validationResult.wrongName,
-                wrongEmail: validationResult.wrongEmail,
-                wrongCpf: validationResult.wrongCpf,
-                wrongTelephone: validationResult.wrongTelephone
-            }, () => this.onChange());
+                [wrongFieldName]: validationResult[wrongFieldName],
+            }, () => {
+                this.onChange()
+            });
 
         });
     }
@@ -98,14 +98,15 @@ class ClientBasicForm extends Component {
             cpf: props.cpf,
             telephone: props.telephone,
         }, () => {
-
-            const validationResult = this.validateFields(["name", "email", "cpf", "telephone"]);
-            this.setState({
-                wrongName: validationResult.wrongName,
-                wrongEmail: validationResult.wrongEmail,
-                wrongCpf: validationResult.wrongCpf,
-                wrongTelephone: validationResult.wrongTelephone,
-            });
+            if(props.edit) {
+                const validationResult = this.validateFields(["name", "email", "cpf", "telephone"]);
+                this.setState({
+                    wrongName: validationResult.wrongName,
+                    wrongEmail: validationResult.wrongEmail,
+                    wrongCpf: validationResult.wrongCpf,
+                    wrongTelephone: validationResult.wrongTelephone,
+                });
+            }
 
         });
     }

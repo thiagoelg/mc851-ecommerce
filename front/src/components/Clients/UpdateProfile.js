@@ -29,7 +29,7 @@ class UpdateProfile extends Component {
             neighborhood: '',
             city: '',
             state: '',
-            compliment: '',
+            complement: '',
             validAddress: true,
 
             duplicateEmail: false,
@@ -51,6 +51,7 @@ class UpdateProfile extends Component {
         getClient(token)
             .then(response => {
                 const data = response.data;
+                const hasAddress = data.address;
 
                 if (!data.address) {
                     data.address = {
@@ -61,8 +62,8 @@ class UpdateProfile extends Component {
                         neighborhood: '',
                         city: '',
                         state: '',
-                        compliment: ''
-                    }
+                        complement: ''
+                    };
                 }
 
                 this.setState({
@@ -78,7 +79,9 @@ class UpdateProfile extends Component {
                     neighborhood: data.address.neighborhood,
                     city: data.address.city,
                     state: data.address.state,
-                    compliment: data.address.compliment
+                    complement: data.address.complement,
+
+                    hasAddress: hasAddress
                 });
             }, () => console.log(this.state))
             .catch(error => {
@@ -119,7 +122,7 @@ class UpdateProfile extends Component {
             neighborhood: target.neighborhood,
             city: target.city,
             state: target.state,
-            compliment: target.compliment,
+            complement: target.complement,
             validAddress: target.valid
         });
     }
@@ -146,7 +149,7 @@ class UpdateProfile extends Component {
                 neighborhood: this.state.neighborhood,
                 city: this.state.city,
                 state: this.state.state,
-                compliment: this.state.compliment,
+                complement: this.state.complement,
             }
         };
 
@@ -231,8 +234,9 @@ class UpdateProfile extends Component {
                                          neighborhood={this.state.neighborhood}
                                          city={this.state.city}
                                          state={this.state.state}
-                                         compliment={this.state.compliment}
-                                         onChange={this.handleChangeAddress}/>
+                                         complement={this.state.complement}
+                                         onChange={this.handleChangeAddress}
+                                         edit={this.state.hasAddress}/>
                         </Grid>
                         <Grid item xs={2}/>
                     </Grid>

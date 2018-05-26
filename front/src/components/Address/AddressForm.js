@@ -19,9 +19,8 @@ class AddressForm extends Component {
             neighborhood: props.neighborhood,
             city: props.city,
             state: props.state,
-            compliment: props.compliment,
+            complement: props.complement,
 
-            //TODO first validation
             wrongIdentification: false,
             wrongCep: false,
             wrongStreet: false,
@@ -29,7 +28,7 @@ class AddressForm extends Component {
             wrongNeighborhood: false,
             wrongCity: false,
             wrongState: false,
-            wrongCompliment: false,
+            wrongComplement: false,
 
             states: []
         };
@@ -45,106 +44,106 @@ class AddressForm extends Component {
             [name]: target.value
         }, () => {
 
-            if (name === "identification") {
+            const validationResult = this.validateFields([name]);
+            const wrongFieldName = 'wrong' + name.charAt(0).toUpperCase() + name.slice(1);
 
-                this.setState((prevState, props) => {
-                    return {
-                        wrongIdentification: !validateNotEmpty(prevState.identification)
-                    }
-                }, () => this.onChange(target));
-
-            } else if (name === "cep") {
-
-                this.fillAddressThroughCep(target);
-
-            } else if (name === "street") {
-
-                this.setState((prevState, props) => {
-                    return {
-                        wrongStreet: !validateNotEmpty(prevState.street)
-                    }
-                }, () => this.onChange());
-
-            } else if (name === "number") {
-
-                this.setState((prevState, props) => {
-                    return {
-                        wrongNumber: !validateNotEmpty(prevState.number)
-                    }
-                }, () => this.onChange());
-
-            } else if (name === "neighborhood") {
-
-                this.setState((prevState, props) => {
-                    return {
-                        wrongNeighborhood: !validateNotEmpty(prevState.neighborhood)
-                    }
-                }, () => this.onChange());
-
-            } else if (name === "city") {
-
-                this.setState((prevState, props) => {
-                    return {
-                        wrongCity: !validateNotEmpty(prevState.city)
-                    }
-                }, () => this.onChange());
-
-            } else if (name === "state") {
-
-                this.setState((prevState, props) => {
-                    return {
-                        wrongState: !validateNotEmpty(prevState.state)
-                    }
-                }, () => this.onChange());
-
-            } else if (name === "compliment") {
-
-                this.setState((prevState, props) => {
-                    return {
-                        wrongCompliment: !validateNotEmpty(prevState.compliment)
-                    }
-                }, () => this.onChange());
-
-            }
+            this.setState({
+                [wrongFieldName]: validationResult[wrongFieldName],
+            }, () => {
+                if (name === "cep" && !this.state.wrongCep) {
+                    this.setAddressByCep();
+                } else {
+                    this.onChange()
+                }
+            });
 
         });
     }
 
-    fillAddressThroughCep(target) {
-        let valid = validateCep(this.state.cep);
+    validateFields(names) {
+        let wrongIdentification = this.state.wrongIdentification;
+        let wrongStreet = this.state.wrongStreet;
+        let wrongNumber = this.state.wrongNumber;
+        let wrongNeighborhood = this.state.wrongNeighborhood;
+        let wrongCity = this.state.wrongCity;
+        let wrongState = this.state.wrongState;
+        let wrongComplement = this.state.wrongComplement;
+        let wrongCep = this.state.wrongCep;
 
-        if (valid) {
+        if (names.indexOf("identification") >= 0) {
 
-            AddressClient.getCep(this.state.cep)
-                .then(response => {
-                    const data = response.data;
+            wrongIdentification = !validateNotEmpty(this.state.identification);
 
-                    this.setState({
-                        street: data.logradouro,
-                        neighborhood: data.bairro,
-                        state: data.uf,
-                        wrongCep: !valid
-                    }, () => {
-                        let cityStateChange = () => {
-                            this.setState({
-                                city: data.city
-                            }, () => this.onChange());
-                        };
-                        setTimeout(() => cityStateChange(), 2000);
-                    });
+        } else if (names.indexOf("cep") >= 0) {
 
-                })
-                .catch(error => {
-                    //TODO treat error
-                });
+            wrongCep = !validateCep(this.state.cep);
 
-        } else {
+        } else if (names.indexOf("street") >= 0) {
 
-            this.setState({
-                wrongCep: !valid
-            }, () => this.onChange());
+            wrongStreet = !validateNotEmpty(this.state.street);
+
+        } else if (names.indexOf("number") >= 0) {
+
+            wrongNumber = !validateNotEmpty(this.state.number);
+
+        } else if (names.indexOf("neighborhood") >= 0) {
+
+            wrongNeighborhood = !validateNotEmpty(this.state.neighborhood);
+
+        } else if (names.indexOf("city") >= 0) {
+
+            wrongCity = !validateNotEmpty(this.state.city);
+
+        } else if (names.indexOf("state") >= 0) {
+
+            wrongState = !validateNotEmpty(this.state.state);
+
+        } else if (names.indexOf("complement") >= 0) {
+
+            wrongComplement = false;
 
         }
+
+        return {
+            wrongIdentification: wrongIdentification,
+            wrongCep: wrongCep,
+            wrongStreet: wrongStreet,
+            wrongNumber: wrongNumber,
+            wrongNeighborhood: wrongNeighborhood,
+            wrongCity: wrongCity,
+            wrongState: wrongState,
+            wrongComplement: wrongComplement,
+        };
+
+    }
+
+    setAddressByCep() {
+
+        AddressClient.getCep(this.state.cep)
+            .then(response => {
+                const data = response.data;
+
+                this.setState({
+                    street: data.logradouro,
+                    neighborhood: data.bairro,
+                    city: data.cidade,
+                    state: data.uf,
+                }, () => {
+                    const validationResult = this.validateFields(["street", "neighborhood", "city", "state", "cep"]);
+
+                    this.setState({
+                        wrongCep: validationResult.wrongCep,
+                        wrongStreet: validationResult.wrongStreet,
+                        wrongNeighborhood: validationResult.wrongNeighborhood,
+                        wrongCity: validationResult.wrongCity,
+                        wrongState: validationResult.wrongState
+                    }, () => this.onChange());
+                });
+
+            })
+            .catch(error => {
+                //TODO treat error
+            });
     }
 
     onChange() {
@@ -159,17 +158,16 @@ class AddressForm extends Component {
                     neighborhood: this.state.neighborhood,
                     city: this.state.city,
                     state: this.state.state,
-                    compliment: this.state.compliment,
+                    complement: this.state.complement,
                     valid: !this.state.wrongIdentification && !this.state.wrongStreet &&
                     !this.state.wrongNumber && !this.state.wrongCep && !this.state.wrongCity &&
-                    !this.state.wrongState && !this.state.wrongCompliment && !this.state.wrongNeighborhood
+                    !this.state.wrongState && !this.state.wrongComplement && !this.state.wrongNeighborhood
                 }
             });
         }
     }
 
     componentWillReceiveProps(props) {
-        //TODO validate
         this.setState({
             identification: props.identification,
             cep: props.cep,
@@ -178,7 +176,25 @@ class AddressForm extends Component {
             neighborhood: props.neighborhood,
             city: props.city,
             state: props.state,
-            compliment: props.compliment,
+            complement: props.complement,
+        }, () => {
+
+            if(props.edit) {
+                const validationResult = this.validateFields(
+                    ["identification", "cep", "street", "number", "neighborhood", "city", "state", "complement"]);
+
+                this.setState({
+                    wrongIdentification: validationResult.wrongIdentification,
+                    wrongCep: validationResult.wrongCep,
+                    wrongStreet: validationResult.wrongStreet,
+                    wrongNumber: validationResult.wrongNumber,
+                    wrongNeighborhood: validationResult.wrongNeighborhood,
+                    wrongCity: validationResult.wrongCity,
+                    wrongState: validationResult.wrongState,
+                    wrongComplement: validationResult.wrongComplement,
+                });
+            }
+
         });
     }
 
@@ -248,11 +264,11 @@ class AddressForm extends Component {
                     <br/>
 
                     <TextField label="Complemento"
-                               name="compliment"
-                               value={this.state.compliment}
+                               name="complement"
+                               value={this.state.complement}
                                onChange={this.handleChange}
-                               error={this.state.wrongCompliment}
-                               helperText={this.state.wrongCompliment && "Informe um complemento."}
+                               error={this.state.wrongComplement}
+                               helperText={this.state.wrongComplement && "Informe um complemento."}
                                fullWidth/>
                 </Grid>
 

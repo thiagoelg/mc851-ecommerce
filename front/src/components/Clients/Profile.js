@@ -82,7 +82,7 @@ class Profile extends Component {
                                             {address.city}{address.city && ", "}
                                             {address.state}
                                             <br/>
-                                            {address.compliment}
+                                            {address.complement}
                                             <br/>
                                         </p>
                                     </div>
