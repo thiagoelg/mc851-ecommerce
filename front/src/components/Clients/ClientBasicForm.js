@@ -14,7 +14,6 @@ class ClientBasicForm extends Component {
             cpf: props.cpf,
             telephone: props.telephone,
 
-            //TODO first validation
             wrongName: false,
             wrongEmail: false,
             wrongCpf: false,
@@ -28,38 +27,53 @@ class ClientBasicForm extends Component {
     handleChange(e) {
         const target = e.target;
         const name = target.name;
+        const value = target.value;
 
         this.setState({
-            [name]: target.value
+            [name]: value
         }, () => {
 
-            if (name === "name") {
-                this.setState((prevState, props) => {
-                    return {
-                        wrongName: !validateNotEmpty(prevState.name)
-                    }
-                }, () => this.onChange());
-            } else if (name === "email") {
-                this.setState((prevState, props) => {
-                    return {
-                        wrongEmail: !validateEmail(prevState.email)
-                    }
-                }, () => this.onChange());
-            } else if (name === "cpf") {
-                this.setState((prevState, props) => {
-                    return {
-                        wrongCpf: !validateCpf(prevState.cpf)
-                    }
-                }, () => this.onChange());
-            } else if (name === "telephone") {
-                this.setState((prevState, props) => {
-                    return {
-                        wrongTelephone: !validateTelephone(prevState.telephone)
-                    }
-                }, () => this.onChange());
-            }
+            const validationResult = this.validateFields([name]);
+            this.setState({
+                wrongName: validationResult.wrongName,
+                wrongEmail: validationResult.wrongEmail,
+                wrongCpf: validationResult.wrongCpf,
+                wrongTelephone: validationResult.wrongTelephone
+            }, () => this.onChange());
 
         });
+    }
+
+    validateFields(names) {
+
+        let wrongName = this.state.wrongName;
+        let wrongEmail = this.state.wrongEmail;
+        let wrongCpf = this.state.wrongCpf;
+        let wrongTelephone = this.state.wrongTelephone;
+
+
+        if (names.indexOf("name") >= 0) {
+            wrongName = !validateNotEmpty(this.state.name);
+        }
+
+        if (names.indexOf("email") >= 0) {
+            wrongEmail = !validateEmail(this.state.email);
+        }
+
+        if (names.indexOf("cpf") >= 0) {
+            wrongCpf = !validateCpf(this.state.cpf);
+        }
+
+        if (names.indexOf("telephone") >= 0) {
+            wrongTelephone = !validateTelephone(this.state.telephone);
+        }
+
+        return {
+            wrongName: wrongName,
+            wrongEmail: wrongEmail,
+            wrongCpf: wrongCpf,
+            wrongTelephone: wrongTelephone
+        };
     }
 
     onChange() {
@@ -71,19 +85,28 @@ class ClientBasicForm extends Component {
                     cpf: this.state.cpf,
                     telephone: this.state.telephone,
                     valid: !this.state.wrongEmail && !this.state.wrongName &&
-                            !this.state.wrongTelephone && !this.state.wrongCpf
+                    !this.state.wrongTelephone && !this.state.wrongCpf
                 }
             });
         }
     }
 
     componentWillReceiveProps(props) {
-        //TODO validate
         this.setState({
             name: props.name,
             email: props.email,
             cpf: props.cpf,
             telephone: props.telephone,
+        }, () => {
+
+            const validationResult = this.validateFields(["name", "email", "cpf", "telephone"]);
+            this.setState({
+                wrongName: validationResult.wrongName,
+                wrongEmail: validationResult.wrongEmail,
+                wrongCpf: validationResult.wrongCpf,
+                wrongTelephone: validationResult.wrongTelephone,
+            });
+
         });
     }
 
