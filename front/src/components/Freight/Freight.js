@@ -54,7 +54,7 @@ class Freight extends Component {
             const product = this.props.product;
 
             let params = {
-                destinyCep: this.state.cep,
+                destinyCep: this.state.cep.replace(/\D+/g, ''),
                 weight: product.weight,
                 length: product.length,
                 height: product.height,
@@ -79,7 +79,7 @@ class Freight extends Component {
 
         return (
             <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={4} style={{paddingTop: 10}}>
                     <p>
                         Calcular Frete e Prazo:
                     </p>
@@ -90,7 +90,7 @@ class Freight extends Component {
                               onChange={this.handleChange}
                               onKeyPress={this.handleKeyPress}/>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={3} style={{paddingTop: 10}}>
                     <Button variant="raised" color="default" onClick={this.handleOkClick}>
                         OK
                     </Button>

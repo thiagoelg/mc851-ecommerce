@@ -1,26 +1,27 @@
 import React, {Component} from 'react';
-import TextField from "@material-ui/core/es/TextField/TextField";
+import CepMask from "./CepMask";
+import FormControl from "@material-ui/core/es/FormControl/FormControl";
+import InputLabel from "@material-ui/core/es/InputLabel/InputLabel";
+import Input from "@material-ui/core/es/Input/Input";
 
 class CepInput extends Component {
-    // FIXME add cep mask
-    // InputProps={{
-    //     inputComponent: CepMask
-    // }}
 
     render() {
         return (
-            <TextField
-                label="CEP"
-                onChange={this.props.onChange}
-                onKeyPress={this.props.onKeyPress}
-                name={this.props.name}
-                value={this.props.value}
-            >
-
-            </TextField>
+            <FormControl>
+                <InputLabel htmlFor="cep" shrink>CEP</InputLabel>
+                <Input
+                    value={this.props.value}
+                    onChange={this.props.onChange}
+                    onKeyPress={this.props.onKeyPress}
+                    name={this.props.name}
+                    id="cep"
+                    inputComponent={CepMask}
+                />
+            </FormControl>
         );
-
     }
+
 }
 
 export default CepInput;

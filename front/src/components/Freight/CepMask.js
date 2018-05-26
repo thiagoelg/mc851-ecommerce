@@ -1,11 +1,19 @@
 import React, {Component} from 'react';
-import InputMask from 'react-input-mask'
+import MaskedInput from "react-text-mask";
 
 class CepMask extends Component {
 
     render() {
+        const { inputRef, ...other } = this.props;
+
         return (
-            <InputMask mask="99999-999" maskChar="_" />
+            <MaskedInput
+                {...other}
+                ref={inputRef}
+                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]}
+                placeholderChar={'\u2000'}
+                showMask
+            />
         );
 
     }
