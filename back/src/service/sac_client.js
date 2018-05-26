@@ -10,17 +10,7 @@ export const ticketsByClient = async (clientId) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
-    }
-}
-
-export const ticketByPurchase = async (clientId, purchaseId) => {
-    try {
-        const response = await axios.get(`${ATENDIMENTO_URL}/tickets/${SITE_ID}/${clientId}/compra/${purchaseId}`)
-        
-        return {data : response.data, status: response.status}
-    } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
@@ -30,7 +20,17 @@ export const ticketByClient = async (clientId, ticketId) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
+    }
+}
+
+export const ticketByPurchase = async (clientId, purchaseId) => {
+    try {
+        const response = await axios.get(`${ATENDIMENTO_URL}/tickets/${SITE_ID}/${clientId}/compra/${purchaseId}`)
+        
+        return {data : response.data, status: response.status}
+    } catch (e) {
+        //console.log(e)
     }
 }
 
@@ -40,7 +40,7 @@ export const addTicket = async (clientId, ticket) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
@@ -50,7 +50,7 @@ export const addTicketByPurchase = async (clientId, ticket, purchaseId) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
@@ -60,19 +60,20 @@ export const updateTicket = async (clientId, ticketId, ticket) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
-export const changeStatus = async (clientId, ticketId, params) => {
+export const changeStatus = async (clientId, ticketId, ticket, params) => {
     try {
         const response = await axios.delete(`${ATENDIMENTO_URL}/tickets/${SITE_ID}/${clientId}/ticket/${ticketId}`, {
-            params
+            params,
+            data: ticket,
         })
         
         return {data : response.data, status: response.status}
     } catch (e) {
-        console.log(e)
+        //console.log(e)
     }
 }
 
