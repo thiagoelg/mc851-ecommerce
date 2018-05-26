@@ -2,6 +2,9 @@ import React, {Component} from "react"
 import Grid from "@material-ui/core/es/Grid/Grid";
 import TextField from "@material-ui/core/es/TextField/TextField";
 import {validateCpf, validateEmail, validateNotEmpty, validateTelephone} from "../../util/Validators";
+import CpfInput from "./Cpf/CpfInput";
+import Input from "@material-ui/core/es/Input/Input";
+import TelephoneInput from "./Telephone/TelephoneInput";
 
 class ClientBasicForm extends Component {
 
@@ -145,24 +148,20 @@ class ClientBasicForm extends Component {
                 <Grid item xs={12}>
                     <br/>
 
-                    <TextField label="CPF" name="cpf"
-                               value={this.state.cpf}
-                               onChange={this.handleChange}
-                               error={this.state.wrongCpf}
-                               helperText={this.state.wrongCpf && "Informe um CPF válido."}
-                               disabled={this.props.edit}
-                               fullWidth/>
+                    <CpfInput name="cpf"
+                              value={this.state.cpf}
+                              onChange={this.handleChange}
+                              disabled={this.props.edit}
+                              fullWidth/>
                 </Grid>
 
                 <Grid item xs={12}>
                     <br/>
 
-                    <TextField label="Telefone" name="telephone"
-                               value={this.state.telephone}
-                               onChange={this.handleChange}
-                               error={this.state.wrongTelephone}
-                               helperText={this.state.wrongTelephone && "Informe um telefone válido."}
-                               fullWidth/>
+                    <TelephoneInput name="telephone"
+                              value={this.state.telephone}
+                              onChange={this.handleChange}
+                                    fullWidth/>
                 </Grid>
             </Grid>
         )

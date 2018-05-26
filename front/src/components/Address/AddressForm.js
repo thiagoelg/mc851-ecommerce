@@ -219,7 +219,7 @@ class AddressForm extends Component {
                     <CepInput name="cep"
                               value={this.state.cep}
                               onChange={this.handleChange}
-                              onKeyPress={this.handleKeyPress}/>
+                              fullWidth/>
                 </Grid>
 
                 <Grid item xs={12}>
