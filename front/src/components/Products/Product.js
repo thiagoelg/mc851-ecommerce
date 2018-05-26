@@ -96,7 +96,7 @@ class Product extends Component {
                         <Grid item xs={1}/>
                         <Grid item xs={9}>
                             <Link to="/carrinho">
-                                <Button variant="raised" color="secondary" style={{marginTop: '5%'}}>
+                                <Button variant="raised" color="secondary" style={{marginTop: '5%'}} disabled={product.stock === 0}>
                                     <ShoppingCart style={{marginRight: '10'}}/>
                                     Adicionar ao Carrinho
                                 </Button>
