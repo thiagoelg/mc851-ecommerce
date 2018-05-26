@@ -10,6 +10,9 @@ import TableCell from "@material-ui/core/es/TableCell";
 import TableBody from "@material-ui/core/es/TableBody";
 import Fade from "@material-ui/core/es/Fade/Fade";
 import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
+import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
+import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import Close from "@material-ui/icons/es/Close";
 
 class Freight extends Component {
 
@@ -18,6 +21,8 @@ class Freight extends Component {
 
         this.state = {
             cep: '',
+            valid: false,
+            open: false,
 
             loading: false,
             shippingOptions: []
@@ -26,13 +31,16 @@ class Freight extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleOkClick = this.handleOkClick.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+
     }
 
     handleChange(e) {
         const target = e.target;
 
         this.setState({
-            [target.name]: target.value
+            [target.name]: target.value,
+            valid: target.valid
         });
     }
 
@@ -46,7 +54,20 @@ class Freight extends Component {
         this.getShippingOptions();
     }
 
+    handleClose = () => {
+        this.setState({
+            open: false
+        });
+    };
+
     getShippingOptions() {
+        if(!this.state.valid) {
+            this.setState({
+                open: true
+            });
+            return;
+        }
+
         this.setState({
             loading: true,
             shippingOptions: []
@@ -54,7 +75,7 @@ class Freight extends Component {
             const product = this.props.product;
 
             let params = {
-                destinyCep: this.state.cep.replace(/\D+/g, ''),
+                destinyCep: this.state.cep,
                 weight: product.weight,
                 length: product.length,
                 height: product.height,
@@ -79,6 +100,30 @@ class Freight extends Component {
 
         return (
             <Grid container>
+                <Grid item xs={12}>
+                    <Snackbar
+                        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                        open={this.state.open}
+                        onClose={this.handleClose}
+                        autoHideDuration={5000}
+                        message={
+                            <span id="message-id" color="error">
+                                {(!this.state.valid) &&
+                                <p>Preencha o CEP corretamente.<br/></p>
+                                }
+                                </span>}
+                        action={[
+                            <IconButton
+                                key="close"
+                                aria-label="Close"
+                                color="inherit"
+                                onClick={this.handleClose}
+                            >
+                                <Close/>
+                            </IconButton>,
+                        ]}
+                    />
+                </Grid>
                 <Grid item xs={4} style={{paddingTop: 10}}>
                     <p>
                         Calcular Frete e Prazo:
