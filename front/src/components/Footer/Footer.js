@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
 import Logo from "../Logo/Logo";
-import Toolbar from "material-ui/es/Toolbar/Toolbar";
-import Grid from "material-ui/es/Grid/Grid";
-import AppBar from "material-ui/es/AppBar/AppBar";
-import Typography from "material-ui/es/Typography/Typography";
-import ListItem from "material-ui/es/List/ListItem";
-import ListItemText from "material-ui/es/List/ListItemText";
-import List from "material-ui/es/List/List";
+import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
+import Grid from "@material-ui/core/es/Grid/Grid";
+import AppBar from "@material-ui/core/es/AppBar/AppBar";
+import Typography from "@material-ui/core/es/Typography/Typography";
+import ListItem from "@material-ui/core/es/ListItem";
+import ListItemText from "@material-ui/core/es/ListItemText";
+import List from "@material-ui/core/es/List/List";
 
 class Footer extends Component {
     render() {
         return (
-            <AppBar position="relative" color="default" style={{top: '80%', bottom: '0%', padding: 20}}>
+            <AppBar position="static" color="default" style={{top: '80%', bottom: '0%', padding: 20}}>
                 <Toolbar>
                     <Grid container spacing={8} alignItems="center" justify="center">
-                        <Grid item xs={12} sm={4} alignContent="center">
+                        <Grid item xs={12} sm={4} >
                             <Logo/>
                         </Grid>
-                        <Grid item xs={12} sm={4} alignContent="center">
+                        <Grid item xs={12} sm={4} >
                             <Typography variant="title" color="inherit">
                                 Institucional
                             </Typography>
@@ -32,7 +32,7 @@ class Footer extends Component {
                                 </List>
                             </div>
                         </Grid>
-                        <Grid item xs={12} sm={4} alignContent="center">
+                        <Grid item xs={12} sm={4} >
                             <Typography variant="title" color="inherit">
                                 Políticas
                             </Typography>

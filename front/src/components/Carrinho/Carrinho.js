@@ -6,13 +6,18 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Grid, Button } from 'material-ui/es';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-
+import Card from "@material-ui/core/es/Card/Card";
+import CardContent from "@material-ui/core/es/CardContent/CardContent";
+import Divider from '@material-ui/core/Divider';
+import CardActions from "@material-ui/core/es/CardActions/CardActions";
+import Link from "../Link/Link";
+import Freight from "../Freight/Freight";
 
 const styles = theme => ({
   root: {
@@ -34,9 +39,9 @@ function createData(imagem, produto, qtd, preco) {
 let imagePath = "lhama.jpg"
 
 const data = [
-  createData(imagePath, 'Abajur Lhama', 1, 70.0),
-  createData(imagePath, 'Abajur Esquilo', 1, 70.0),
-  createData(imagePath, 'Abajur Baleia', 1, 70.0),
+  createData(imagePath, 'Abajur Lhama', 1, 70.00),
+  createData(imagePath, 'Abajur Esquilo', 1, 70.00),
+  createData(imagePath, 'Abajur Baleia', 1, 70.00),
 ];
 
 class SimpleTable extends Component {
@@ -59,7 +64,7 @@ class SimpleTable extends Component {
     const {classes} = this.props;
 
     return (
-    <Grid container spacing={24}>
+    <Grid container spacing={24} height="auto">
       <Grid item xs={8}>
         <Table className={classes.table}>
           <TableHead>
@@ -76,10 +81,12 @@ class SimpleTable extends Component {
                 <TableRow key={n.id}>
                   <TableCell component="th" scope="row">
                     <Grid container> 
-                      <Grid item xs={2}>
-                        <img src={n.imagePath} height='auto'/>
+                      <Grid item xs={8} justify="center">
+                        <div>
+                          <img height={40} src={"https://media4.s-nbcnews.com/j/newscms/2016_36/1685951/ss-160826-twip-05_8cf6d4cb83758449fd400c7c3d71aa1f.nbcnews-ux-2880-1000.jpg"}/>
+                        </div>
                       </Grid>
-                      <Grid item xs={4}>
+                      <Grid item xs={4} justify="center">
                         {n.produto}
                       </Grid>
                     </Grid> 
@@ -110,14 +117,42 @@ class SimpleTable extends Component {
         </Table>
       </Grid>
       <Grid item xs={4}>
-        <Paper>
-          <Typography variant="headline" component="h3">
-            This is a sheet of paper.
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your application.
-          </Typography>
-        </Paper>
+        <Card>
+          <CardContent>
+            <Typography variant="headline">
+              resumo do pedido
+            </Typography>
+            <p>subtotal (3 produtos): <b>R$ 699,00</b> </p>
+            <p>frete: <b>R$ 25,50</b></p> 
+            <Divider/>
+            <p> </p>
+            <Typography variant="Subheading">
+              Total: <b>R$ 724,50</b> 
+            </Typography>
+            <Typography variant="caption">
+              Em até 10x sem juros
+            </Typography>
+            <Typography variant="caption" color="secondary">
+              R$ 700,00 no boleto
+            </Typography>
+            <p> </p>
+            <Divider/>
+          </CardContent>
+          <CardActions>
+            <Grid item xs={12}>
+              <Link to="/carrinho">
+                <Button variant="raised" color="secondary" fullWidth>
+                 Comprar
+                </Button>
+              </Link>
+            </Grid>
+          </CardActions>
+        </Card>
+      </Grid>
+      <Grid item xs={9}>
+        <br/>
+        <Freight />
+        <br/>
       </Grid>
     </Grid>
     );

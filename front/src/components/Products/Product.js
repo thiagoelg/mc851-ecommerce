@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import Grid from "material-ui/es/Grid/Grid";
-import TextField from "material-ui/es/TextField/TextField";
-import Button from "material-ui/es/Button/Button";
+import Grid from "@material-ui/core/es/Grid/Grid";
+import TextField from "@material-ui/core/es/TextField/TextField";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
+import Button from "@material-ui/core/es/Button/Button";
+import Link from "../Link/Link";
+import Chip from "@material-ui/core/es/Chip/Chip";
 import Freight from "../Freight/Freight";
+import {getCategory, getProduct} from "../../clients/ProductsClient";
 
 class Product extends Component {
 
@@ -13,7 +16,7 @@ class Product extends Component {
             product: {},
             category: {},
             amount: 1
-        }
+        };
         this.handleChange = this.handleChange.bind(this)
     }
 
@@ -23,22 +26,25 @@ class Product extends Component {
     }
 
     componentDidMount() {
-        fetch('http://back.localhost/products/' + this.props.match.params.id)
+
+        getProduct({id: this.props.match.params.id})
             .then(response => {
-                //TODO check response.ok
-                return response.json();
-            }).then(product => {
+                const product = response.data;
 
-            this.setState({product: product});
+                this.setState({product: product});
 
-            fetch('http://back.localhost/products/categories/' + product.categoryId)
-                .then(response => {
-                    //TODO check response.ok
-                    return response.json();
-                }).then(category => {
-                this.setState({category: category});
+                getCategory({id: product.categoryId})
+                    .then(response => {
+                        const category = response.data;
+                        this.setState({category: category});
+                    })
+                    .catch(error => {
+                        //TODO treat error
+                    })
             })
-        })
+            .catch(error => {
+                //TODO treat error
+            })
     }
 
     render() {
@@ -49,13 +55,16 @@ class Product extends Component {
 
         return (
             <Grid container>
-                <Grid item xs={4}>
-                    <img src={product.imageUrl} alt={product.name} height={300}/>
+                <Grid item xs={4} style={{padding: 20}}>
+                    <img src={product.imageUrl} alt={product.name} width={'100%'} />
                 </Grid>
                 <Grid item xs={8}>
                     <Grid container>
                         <Grid item xs={12}>
                             <h2>{product.name}</h2>
+                            {product.tags && product.tags.map(tag =>
+                                <Chip key={tag} label={tag} style={{marginRight: 5}}/>)
+                            }
                             <p>
                                 <b>Preço:</b> R$ {parseFloat(product.price).toFixed(2)}
                             </p>
@@ -78,17 +87,20 @@ class Product extends Component {
                         </Grid>
                         <Grid item xs={1}/>
                         <Grid item xs={9}>
-                            <Button variant="raised" color="secondary" style={{marginTop:'5%'}}>
-                                <ShoppingCart style={{marginRight: '10'}}/>
-                                Adicionar ao Carrinho
-                            </Button>
+                            <Link to="/carrinho">
+                                <Button variant="raised" color="secondary" style={{marginTop: '5%'}}>
+                                    <ShoppingCart style={{marginRight: '10'}}/>
+                                    Adicionar ao Carrinho
+                                </Button>
+                            </Link>
                         </Grid>
 
                     </Grid>
 
-                    {/*<Grid item xs={12}>*/}
-                        {/*<Freight/>*/}
-                    {/*</Grid>*/}
+                    <Grid item xs={12}>
+                        <br/>
+                        <Freight product={product}/>
+                    </Grid>
                 </Grid>
                 <Grid item xs={12}>
                     <h2>Detalhes:</h2>
@@ -100,7 +112,11 @@ class Product extends Component {
                         <b>Categoria:</b> {category.name}
                     </p>
                     <p>
-                        <b>Dimensões:</b> {product.height} x {product.width} x {product.length}
+                        <b>Dimensões do Pacote:</b> {product.height} cm x {product.width} cm x {product.length} cm
+                    </p>
+                    <p>
+                        <b>Peso do
+                            Pacote:</b> {product.weight < 1000 ? `${product.weight}g` : `${parseFloat(product.weight / 1000).toFixed(2)}kg`}
                     </p>
                 </Grid>
             </Grid>

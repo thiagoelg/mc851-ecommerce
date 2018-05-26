@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
-import {Typography} from "material-ui";
+import {withRouter} from 'react-router-dom'
+import {Typography} from "@material-ui/core";
+import Link from "../Link/Link";
 
 class Logo extends Component {
     render() {
         return (
-            <Typography variant="title" color="inherit">
-                ToppenStore
-            </Typography>
+            <Link to={`/`} style={{textDecoration: 'none'}}>
+                <Typography variant="title" color="inherit">
+                    ToppenStore
+                </Typography>
+            </Link>
         );
     }
 }
 
-export default Logo;
+export default withRouter(Logo);
