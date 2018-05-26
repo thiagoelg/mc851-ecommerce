@@ -35,11 +35,11 @@ export const createEletrodomesticos = async () => {
                 "blocos"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/geladeira_blocos.jpg",
+            imageUrl: "/imgs/eletrodomesticos/geladeira_blocos.jpg",
             weight: 44000,
-            length: 6130,
-            width: 5400,
-            height: 16190,
+            length: 61,
+            width: 54,
+            height: 169,
             groupId: groupId
         },
         {
@@ -55,11 +55,11 @@ export const createEletrodomesticos = async () => {
                 "coca-cola"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/geladeira_coca_cola.jpg",
+            imageUrl: "/imgs/eletrodomesticos/geladeira_coca_cola.jpg",
             weight: 44000,
-            length: 6130,
-            width: 6000,
-            height: 16190,
+            length: 61,
+            width: 60,
+            height: 161,
             groupId: groupId
         },
         {
@@ -75,11 +75,11 @@ export const createEletrodomesticos = async () => {
                 "google"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/geladeira_google.jpg",
+            imageUrl: "/imgs/eletrodomesticos/geladeira_google.jpg",
             weight: 44000,
-            length: 6130,
-            width: 6000,
-            height: 16190,
+            length: 61,
+            width: 60,
+            height: 161,
             groupId: groupId
         },
         {
@@ -95,11 +95,11 @@ export const createEletrodomesticos = async () => {
                 "kombi"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/geladeira_kombi.jpg",
+            imageUrl: "/imgs/eletrodomesticos/geladeira_kombi.jpg",
             weight: 44000,
-            length: 6130,
-            width: 6000,
-            height: 16190,
+            length: 61,
+            width: 60,
+            height: 161,
             groupId: groupId
         },
         {
@@ -115,11 +115,11 @@ export const createEletrodomesticos = async () => {
                 "google"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/geladeira_torneiras.jpg",
+            imageUrl: "/imgs/eletrodomesticos/geladeira_torneiras.jpg",
             weight: 44000,
-            length: 6130,
-            width: 6000,
-            height: 16190,
+            length: 61,
+            width: 60,
+            height: 161,
             groupId: groupId
         },
         {
@@ -135,7 +135,7 @@ export const createEletrodomesticos = async () => {
                 "google"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/geladeira_mini_usb_moderna.jpg",
+            imageUrl: "/imgs/eletrodomesticos/geladeira_mini_usb_moderna.jpg",
             weight: 630,
             length: 10,
             width: 15,
@@ -155,7 +155,7 @@ export const createEletrodomesticos = async () => {
                 "google"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/geladeira_mini__usb_antiga.jpg",
+            imageUrl: "/imgs/eletrodomesticos/geladeira_mini__usb_antiga.jpg",
             weight: 538,
             length: 10,
             width: 15,
@@ -175,7 +175,7 @@ export const createEletrodomesticos = async () => {
                 "lavar"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/maquina_de_lavar_banheiro.jpg",
+            imageUrl: "/imgs/eletrodomesticos/maquina_de_lavar_banheiro.jpg",
             weight: 34000,
             length: 67,
             width: 62,
@@ -195,7 +195,7 @@ export const createEletrodomesticos = async () => {
                 "lavar"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/maquina_de_lavar_fliperama.png",
+            imageUrl: "/imgs/eletrodomesticos/maquina_de_lavar_fliperama.png",
             weight: 34000,
             length: 67,
             width: 62,
@@ -215,7 +215,7 @@ export const createEletrodomesticos = async () => {
                 "lavar"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/maquina_de_lavar_orbital.jpg",
+            imageUrl: "/imgs/eletrodomesticos/maquina_de_lavar_orbital.jpg",
             weight: 20000,
             length: 50,
             width: 62,
@@ -235,7 +235,7 @@ export const createEletrodomesticos = async () => {
                 "lavar"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/maquina_de_lavar_orbital_mini.jpg",
+            imageUrl: "/imgs/eletrodomesticos/maquina_de_lavar_orbital_mini.jpg",
             weight: 10000,
             length: 25,
             width: 31,
@@ -254,7 +254,7 @@ export const createEletrodomesticos = async () => {
                 "microondas"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/microondas_carro.jpg",
+            imageUrl: "/imgs/eletrodomesticos/microondas_carro.jpg",
             weight: 10000,
             length: 54,
             width: 54,
@@ -274,7 +274,7 @@ export const createEletrodomesticos = async () => {
                 "pizza"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/microondas_pizza.jpg",
+            imageUrl: "/imgs/eletrodomesticos/microondas_pizza.jpg",
             weight: 20000,
             length: 54,
             width: 74,
@@ -295,7 +295,7 @@ export const createEletrodomesticos = async () => {
                 "torrada"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/microondas_torradeira.jpeg",
+            imageUrl: "/imgs/eletrodomesticos/microondas_torradeira.jpeg",
             weight: 20000,
             length: 54,
             width: 74,
@@ -316,7 +316,7 @@ export const createEletrodomesticos = async () => {
                 "heinz"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/microondas_usb.jpg",
+            imageUrl: "/imgs/eletrodomesticos/microondas_usb.jpg",
             weight: 3000,
             length: 30,
             width: 30,
@@ -337,7 +337,7 @@ export const createEletrodomesticos = async () => {
                 "alce"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_alce.jpeg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_alce.jpeg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -358,7 +358,7 @@ export const createEletrodomesticos = async () => {
                 "cachorro"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_cachorro.jpg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_cachorro.jpg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -379,7 +379,7 @@ export const createEletrodomesticos = async () => {
                 "caranguejo"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_caranguejo.jpg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_caranguejo.jpg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -400,7 +400,7 @@ export const createEletrodomesticos = async () => {
                 "cavalo"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_cavalo.jpg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_cavalo.jpg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -421,7 +421,7 @@ export const createEletrodomesticos = async () => {
                 "guaxinim"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_guaxinim.jpg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_guaxinim.jpg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -442,7 +442,7 @@ export const createEletrodomesticos = async () => {
                 "passaro"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_passaro.jpg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_passaro.jpg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -463,7 +463,7 @@ export const createEletrodomesticos = async () => {
                 "pavao"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_pavao.jpg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_pavao.jpg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -484,7 +484,7 @@ export const createEletrodomesticos = async () => {
                 "peixe"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_peixe.jpg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_peixe.jpg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -505,7 +505,7 @@ export const createEletrodomesticos = async () => {
                 "tigre"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_tigre.jpg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_tigre.jpg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -526,7 +526,7 @@ export const createEletrodomesticos = async () => {
                 "urso"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_urso.jpg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_urso.jpg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -547,7 +547,7 @@ export const createEletrodomesticos = async () => {
                 "urso"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_urso.jpg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_urso.jpg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -568,7 +568,7 @@ export const createEletrodomesticos = async () => {
                 "veado"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletrodomesticos/ventilador_veado.jpg",
+            imageUrl: "/imgs/eletrodomesticos/ventilador_veado.jpg",
             weight: 1000,
             length: 30,
             width: 30,
@@ -605,7 +605,7 @@ export const createMobilia = async () => {
                 "sofá"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_abstrato.jpg",
+            imageUrl: "/imgs/mobilia/sofa_abstrato.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -623,7 +623,7 @@ export const createMobilia = async () => {
                 "sofá"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_cactos.jpg",
+            imageUrl: "/imgs/mobilia/sofa_cactos.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -641,7 +641,7 @@ export const createMobilia = async () => {
                 "sofá"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_carro_rosa.jpg",
+            imageUrl: "/imgs/mobilia/sofa_carro_rosa.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -659,7 +659,7 @@ export const createMobilia = async () => {
                 "sofá"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_carro_vermelho.jpg",
+            imageUrl: "/imgs/mobilia/sofa_carro_vermelho.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -677,7 +677,7 @@ export const createMobilia = async () => {
                 "sofá"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_coliseum.jpg",
+            imageUrl: "/imgs/mobilia/sofa_coliseum.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -697,7 +697,7 @@ export const createMobilia = async () => {
                 "hipopotamo"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_hipopotamo.jpg",
+            imageUrl: "/imgs/mobilia/sofa_hipopotamo.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -718,7 +718,7 @@ export const createMobilia = async () => {
                 "marinho"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_leao_marinho.jpg",
+            imageUrl: "/imgs/mobilia/sofa_leao_marinho.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -736,7 +736,7 @@ export const createMobilia = async () => {
                 "sofá",
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_nicolas_kage.jpg",
+            imageUrl: "/imgs/mobilia/sofa_nicolas_kage.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -754,7 +754,7 @@ export const createMobilia = async () => {
                 "sofá",
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_peixe.jpg",
+            imageUrl: "/imgs/mobilia/sofa_peixe.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -772,7 +772,7 @@ export const createMobilia = async () => {
                 "sofá",
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_pet.jpg",
+            imageUrl: "/imgs/mobilia/sofa_pet.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -790,7 +790,7 @@ export const createMobilia = async () => {
                 "sofá",
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_polvo.jpg",
+            imageUrl: "/imgs/mobilia/sofa_polvo.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -808,7 +808,7 @@ export const createMobilia = async () => {
                 "sofá",
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_tapete.jpg",
+            imageUrl: "/imgs/mobilia/sofa_tapete.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -828,7 +828,7 @@ export const createMobilia = async () => {
                 "vaca"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/mobilia/sofa_vacas.jpg",
+            imageUrl: "/imgs/mobilia/sofa_vacas.jpg",
             weight: 60000,
             length: 155,
             width: 190,
@@ -868,7 +868,7 @@ export const createEletronicos = async () => {
                 "dual"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletronicos/notebook_dual_screen.jpg",
+            imageUrl: "/imgs/eletronicos/notebook_dual_screen.jpg",
             weight: 1540,
             length: 24,
             width: 34,
@@ -888,7 +888,7 @@ export const createEletronicos = async () => {
                 "emergencia"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/eletronicos/notebook_emergencia.jpg",
+            imageUrl: "/imgs/eletronicos/notebook_emergencia.jpg",
             weight: 1540,
             length: 24,
             width: 34,
@@ -908,7 +908,7 @@ export const createEletronicos = async () => {
                 "enrola"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletronicos/notebook_enrola.jpg",
+            imageUrl: "/imgs/eletronicos/notebook_enrola.jpg",
             weight: 1540,
             length: 24,
             width: 34,
@@ -929,7 +929,7 @@ export const createEletronicos = async () => {
                 "dual"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletronicos/notebook_ergonomico_dual_screen.jpg",
+            imageUrl: "/imgs/eletronicos/notebook_ergonomico_dual_screen.jpg",
             weight: 1540,
             length: 24,
             width: 34,
@@ -949,7 +949,7 @@ export const createEletronicos = async () => {
                 "escrever"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/eletronicos/notebook_ergonomico_maquina_de_escrever.jpg",
+            imageUrl: "/imgs/eletronicos/notebook_ergonomico_maquina_de_escrever.jpg",
             weight: 1540,
             length: 24,
             width: 34,
@@ -987,7 +987,7 @@ export const createJardim = async () => {
                 "cubo"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/jardim/cadeira_bloco.jpg",
+            imageUrl: "/imgs/jardim/cadeira_bloco.jpg",
             weight: 2000,
             length: 53,
             width: 53,
@@ -1007,7 +1007,7 @@ export const createJardim = async () => {
                 "caveira"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/jardim/cadeira_caveira.jpeg",
+            imageUrl: "/imgs/jardim/cadeira_caveira.jpeg",
             weight: 2000,
             length: 53,
             width: 53,
@@ -1028,7 +1028,7 @@ export const createJardim = async () => {
                 "feminina"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/jardim/cadeira_caveira_feminina.jpg",
+            imageUrl: "/imgs/jardim/cadeira_caveira_feminina.jpg",
             weight: 2000,
             length: 53,
             width: 53,
@@ -1049,7 +1049,7 @@ export const createJardim = async () => {
                 "arvore"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/jardim/cadeira_madeira.jpg",
+            imageUrl: "/imgs/jardim/cadeira_madeira.jpg",
             weight: 2000,
             length: 53,
             width: 53,
@@ -1070,7 +1070,7 @@ export const createJardim = async () => {
                 "punisher"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/jardim/cadeira_punisher.jpg",
+            imageUrl: "/imgs/jardim/cadeira_punisher.jpg",
             weight: 2000,
             length: 53,
             width: 53,
@@ -1089,7 +1089,7 @@ export const createJardim = async () => {
                 "jardim"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/jardim/cadeira_verde.jpg",
+            imageUrl: "/imgs/jardim/cadeira_verde.jpg",
             weight: 2000,
             length: 53,
             width: 53,
@@ -1108,7 +1108,7 @@ export const createJardim = async () => {
                 "jardim"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/jardim/sofa_cinza.jpg",
+            imageUrl: "/imgs/jardim/sofa_cinza.jpg",
             weight: 30000,
             length: 83,
             width: 190,
@@ -1127,7 +1127,7 @@ export const createJardim = async () => {
                 "jardim"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/jardim/sofa_madeira.jpg",
+            imageUrl: "/imgs/jardim/sofa_madeira.jpg",
             weight: 30000,
             length: 83,
             width: 190,
@@ -1164,7 +1164,7 @@ export const createLivros = async () => {
                 "arte"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/livros/arte_fodase.jpeg",
+            imageUrl: "/imgs/livros/arte_fodase.jpeg",
             weight: 200,
             length: 2,
             width: 10,
@@ -1184,7 +1184,7 @@ export const createLivros = async () => {
                 "produto"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/livros/blaming_the_user.jpeg",
+            imageUrl: "/imgs/livros/blaming_the_user.jpeg",
             weight: 200,
             length: 2,
             width: 10,
@@ -1203,7 +1203,7 @@ export const createLivros = async () => {
                 "psicologia"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/livros/esquizofrenico.jpg",
+            imageUrl: "/imgs/livros/esquizofrenico.jpg",
             weight: 200,
             length: 2,
             width: 10,
@@ -1222,7 +1222,7 @@ export const createLivros = async () => {
                 "ciencia"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/livros/ese.jpeg",
+            imageUrl: "/imgs/livros/ese.jpeg",
             weight: 200,
             length: 2,
             width: 10,
@@ -1243,7 +1243,7 @@ export const createLivros = async () => {
                 "adams"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/livros/guia_do_mochileiro_1.jpg",
+            imageUrl: "/imgs/livros/guia_do_mochileiro_1.jpg",
             weight: 200,
             length: 2,
             width: 10,
@@ -1264,7 +1264,7 @@ export const createLivros = async () => {
                 "adams"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/livros/guia_do_mochileiro_2.jpg",
+            imageUrl: "/imgs/livros/guia_do_mochileiro_2.jpg",
             weight: 200,
             length: 2,
             width: 10,
@@ -1285,7 +1285,7 @@ export const createLivros = async () => {
                 "adams"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/livros/guia_do_mochileiro_3.jpg",
+            imageUrl: "/imgs/livros/guia_do_mochileiro_3.jpg",
             weight: 200,
             length: 2,
             width: 10,
@@ -1306,7 +1306,7 @@ export const createLivros = async () => {
                 "adams"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/livros/guia_do_mochileiro_4.jpg",
+            imageUrl: "/imgs/livros/guia_do_mochileiro_4.jpg",
             weight: 200,
             length: 2,
             width: 10,
@@ -1327,7 +1327,7 @@ export const createLivros = async () => {
                 "adams"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/livros/guia_do_mochileiro_5.jpg",
+            imageUrl: "/imgs/livros/guia_do_mochileiro_5.jpg",
             weight: 200,
             length: 2,
             width: 10,
@@ -1346,7 +1346,7 @@ export const createLivros = async () => {
                 "mochileiro"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/livros/guia_do_mochileiro_6.jpg",
+            imageUrl: "/imgs/livros/guia_do_mochileiro_6.jpg",
             weight: 200,
             length: 2,
             width: 10,
@@ -1365,7 +1365,7 @@ export const createLivros = async () => {
                 "software"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/livros/ignoring_deprecation_warnings.jpg",
+            imageUrl: "/imgs/livros/ignoring_deprecation_warnings.jpg",
             weight: 200,
             length: 2,
             width: 10,
@@ -1402,7 +1402,7 @@ export const createIluminacao = async () => {
                 "lhama"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_lhama.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_lhama.jpg",
             weight: 1100,
             length: 8,
             width: 18,
@@ -1422,7 +1422,7 @@ export const createIluminacao = async () => {
                 "baleia"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_baleia.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_baleia.jpg",
             weight: 1100,
             length: 9,
             width: 23,
@@ -1444,7 +1444,7 @@ export const createIluminacao = async () => {
                 "dachshund"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_cachorro_basset.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_cachorro_basset.jpg",
             weight: 1100,
             length: 9,
             width: 17,
@@ -1465,7 +1465,7 @@ export const createIluminacao = async () => {
                 "bulldog"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_cachorro_bulldog.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_cachorro_bulldog.jpg",
             weight: 680,
             length: 9,
             width: 17,
@@ -1485,7 +1485,7 @@ export const createIluminacao = async () => {
                 "cavalo"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_cavalo.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_cavalo.jpg",
             weight: 1500,
             length: 35,
             width: 30,
@@ -1505,7 +1505,7 @@ export const createIluminacao = async () => {
                 "coelho"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_coelho.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_coelho.jpg",
             weight: 500,
             length: 10,
             width: 20,
@@ -1526,7 +1526,7 @@ export const createIluminacao = async () => {
                 "elefante"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_elefante_circo.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_elefante_circo.jpg",
             weight: 1200,
             length: 12,
             width: 25,
@@ -1547,7 +1547,7 @@ export const createIluminacao = async () => {
                 "indiano"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_elefante_indiano.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_elefante_indiano.jpg",
             weight: 1000,
             length: 11,
             width: 19,
@@ -1567,7 +1567,7 @@ export const createIluminacao = async () => {
                 "esquilo"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_esquilo.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_esquilo.jpg",
             weight: 1500,
             length: 25,
             width: 25,
@@ -1587,7 +1587,7 @@ export const createIluminacao = async () => {
                 "gato"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_gatos.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_gatos.jpg",
             weight: 1350,
             length: 25,
             width: 20,
@@ -1607,7 +1607,7 @@ export const createIluminacao = async () => {
                 "girafa"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_gatos.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_gatos.jpg",
             weight: 1350,
             length: 25,
             width: 20,
@@ -1627,7 +1627,7 @@ export const createIluminacao = async () => {
                 "passaro"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_passaro.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_passaro.jpg",
             weight: 1350,
             length: 25,
             width: 20,
@@ -1647,7 +1647,7 @@ export const createIluminacao = async () => {
                 "rinoceronte"
             ],
             highlight: false,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_rinoceronte.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_rinoceronte.jpg",
             weight: 1350,
             length: 10,
             width: 20,
@@ -1669,7 +1669,7 @@ export const createIluminacao = async () => {
                 "alienígena"
             ],
             highlight: true,
-            imageUrl: "http://front.localhost/imgs/iluminacao/abajur_vaca.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_vaca.jpg",
             weight: 1050,
             length: 15,
             width: 15,
