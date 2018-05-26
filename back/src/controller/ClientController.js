@@ -89,7 +89,7 @@ export const getClient = async (token) => {
 
     if(!decoded) {
         return {
-            status: 401
+            status: 403
         }
     }
 
@@ -133,7 +133,7 @@ export const updateUser = async (token, info) => {
 
     if(!decoded) {
         return {
-            status: 401
+            status: 403
         }
     }
 
@@ -170,7 +170,7 @@ export const changePassword = async (token, info) => {
 
     if(!decoded) {
         return {
-            status: 401
+            status: 403
         }
     }
 
@@ -182,7 +182,7 @@ export const changePassword = async (token, info) => {
 
     if (!verified) {
         return {
-            status: 401
+            status: 403
         }
     }
 

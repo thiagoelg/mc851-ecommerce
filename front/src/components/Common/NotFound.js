@@ -12,24 +12,23 @@ class NotFound extends Component {
             textDecoration: "underline"
         };
 
+        const gridStyle = {
+            display: 'flex',
+            justifyContent: 'center',
+            padding: 10
+        };
+
         return (
-            <Grid container>
-                <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
-                    <Typography variant="headline">
-                        <SentimentDissatisfied style={{fontSize: 200}}/>
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
-                    <Typography variant="display3">
-                        404
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
+            <Grid container style={{padding: 20}}>
+                <Grid item xs={12} style={gridStyle}>
                     <Typography variant="title">
-                        Página não encontrada
+                        Erro 404: Página não encontrada
                     </Typography>
                 </Grid>
-                <Grid item xs={12} style={{display: 'flex', justifyContent: 'center', marginBottom: 20}}>
+                <Grid item xs={12} style={gridStyle}>
+                    <img src="/imgs/others/404.png" />
+                </Grid>
+                <Grid item xs={12} style={gridStyle}>
                     <Typography>
                         A página que você está procurando não existe, volte para
                         a <Link to="/" style={linkStyle}>página principal</Link> ou

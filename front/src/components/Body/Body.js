@@ -10,7 +10,7 @@ import SignIn from "../Clients/SignIn";
 import Profile from "../Clients/Profile";
 import UpdateProfile from "../Clients/UpdateProfile";
 import ChangePassword from "../Clients/ChangePassword";
-import NotFound from "../NotFound/NotFound";
+import NotFound from "../Common/NotFound";
 
 
 // Para <ProductFilter /> dentro do grid, tirar o style do grid:
