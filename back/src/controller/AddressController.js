@@ -6,7 +6,9 @@ export const getStates = async () => {
 
     if (!response || response.status !== 200) {
         console.error("getStates error - status: " + response.status);
-        return []
+        return {
+            status: 500
+        }
     }
 
     return {
@@ -21,7 +23,9 @@ export const getCities = async (uf) => {
 
     if (!response || response.status !== 200) {
         console.error("getCities error - status: " + response.status);
-        return []
+        return {
+            status: 500
+        }
     }
 
     return {
@@ -36,7 +40,9 @@ export const getCep = async (cep) => {
 
     if (!response || response.status !== 200) {
         console.error("getCEP error - status: " + response.status);
-        return []
+        return {
+            status: 500
+        }
     }
 
     return {

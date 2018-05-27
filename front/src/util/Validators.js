@@ -43,3 +43,7 @@ export const validateSamePass = (pass, samePass) => {
 export const validateNotEmpty = (str) => {
     return str && str !== null && str.length > 0;
 };
+
+export const validatePositiveFloatNumber = (str) => {
+    return str && str !== null && !isNaN(str) && parseFloat(str) >= 0;
+};

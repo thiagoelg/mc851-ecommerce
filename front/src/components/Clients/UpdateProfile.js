@@ -6,6 +6,9 @@ import Typography from "@material-ui/core/es/Typography/Typography";
 import Button from "@material-ui/core/es/Button/Button";
 import UserProfile from "../../state/UserProfile";
 import {getClient, updateClient} from "../../clients/ClientClient";
+import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
+import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import Close from "@material-ui/icons/es/Close";
 
 class UpdateProfile extends Component {
 
@@ -26,8 +29,8 @@ class UpdateProfile extends Component {
             neighborhood: '',
             city: '',
             state: '',
-            compliment: '',
-            validAddress: false,
+            complement: '',
+            validAddress: true,
 
             duplicateEmail: false,
 
@@ -38,6 +41,7 @@ class UpdateProfile extends Component {
         this.handleChangeAddress = this.handleChangeAddress.bind(this);
         this.handleCancelClick = this.handleCancelClick.bind(this);
         this.handleUpdateClick = this.handleUpdateClick.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
 
@@ -47,6 +51,7 @@ class UpdateProfile extends Component {
         getClient(token)
             .then(response => {
                 const data = response.data;
+                const hasAddress = data.address;
 
                 if (!data.address) {
                     data.address = {
@@ -57,8 +62,8 @@ class UpdateProfile extends Component {
                         neighborhood: '',
                         city: '',
                         state: '',
-                        compliment: ''
-                    }
+                        complement: ''
+                    };
                 }
 
                 this.setState({
@@ -74,13 +79,21 @@ class UpdateProfile extends Component {
                     neighborhood: data.address.neighborhood,
                     city: data.address.city,
                     state: data.address.state,
-                    compliment: data.address.compliment
+                    complement: data.address.complement,
+
+                    hasAddress: hasAddress
                 });
             }, () => console.log(this.state))
             .catch(error => {
                 //TODO treat error
             });
     }
+
+    handleClose = () => {
+        this.setState({
+            open: false
+        });
+    };
 
     handleCancelClick(e) {
         this.props.history.goBack();
@@ -109,13 +122,19 @@ class UpdateProfile extends Component {
             neighborhood: target.neighborhood,
             city: target.city,
             state: target.state,
-            compliment: target.compliment,
+            complement: target.complement,
             validAddress: target.valid
         });
     }
 
     handleUpdateClick(e) {
-        //TODO validate
+        if(!this.state.validBasicInfo || !this.state.validAddress) {
+            this.setState({
+                open: true
+            });
+            return;
+        }
+
         const client = {
             name: this.state.name,
             email: this.state.email,
@@ -130,7 +149,7 @@ class UpdateProfile extends Component {
                 neighborhood: this.state.neighborhood,
                 city: this.state.city,
                 state: this.state.state,
-                compliment: this.state.compliment,
+                complement: this.state.complement,
             }
         };
 
@@ -139,6 +158,7 @@ class UpdateProfile extends Component {
                 this.props.history.push('/profile');
             })
             .catch(error => {
+                console.log(error);
                 //TODO treat error
             });
     }
@@ -146,6 +166,30 @@ class UpdateProfile extends Component {
     render() {
         return (
             <Grid container>
+                <Grid item xs={12}>
+                    <Snackbar
+                        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                        open={this.state.open}
+                        onClose={this.handleClose}
+                        autoHideDuration={5000}
+                        message={
+                            <span id="message-id" color="error">
+                                {(!this.state.validBasicInfo || !this.state.validAddress) &&
+                                <p>Preencha todos os campos corretamente.<br/></p>
+                                }
+                                </span>}
+                        action={[
+                            <IconButton
+                                key="close"
+                                aria-label="Close"
+                                color="inherit"
+                                onClick={this.handleClose}
+                            >
+                                <Close/>
+                            </IconButton>,
+                        ]}
+                    />
+                </Grid>
                 <Grid item xs={6}>
                     <Grid container>
                         <Grid item xs={2}/>
@@ -190,8 +234,9 @@ class UpdateProfile extends Component {
                                          neighborhood={this.state.neighborhood}
                                          city={this.state.city}
                                          state={this.state.state}
-                                         compliment={this.state.compliment}
-                                         onChange={this.handleChangeAddress}/>
+                                         complement={this.state.complement}
+                                         onChange={this.handleChangeAddress}
+                                         edit={this.state.hasAddress}/>
                         </Grid>
                         <Grid item xs={2}/>
                     </Grid>

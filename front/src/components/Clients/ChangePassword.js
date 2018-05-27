@@ -23,7 +23,8 @@ class ChangePassword extends Component {
             },
 
             oldPassword: '',
-            wrongOldPassword: false
+            wrongOldPassword: false,
+            unauthorized: false
         };
 
         this.handleCancelClick = this.handleCancelClick.bind(this);
@@ -38,7 +39,7 @@ class ChangePassword extends Component {
     }
 
     handleChangePasswordClick(e) {
-        if(!this.state.password.valid || this.state.wrongOldPassword) {
+        if (!this.state.password.valid || this.state.wrongOldPassword) {
             this.setState({
                 open: true
             });
@@ -55,6 +56,13 @@ class ChangePassword extends Component {
                 this.props.history.push("/profile");
             })
             .catch(error => {
+                if (error.response && error.response.status === 401) {
+                    this.setState({
+                        open: true,
+                        unauthorized: true
+                    });
+                    return;
+                }
                 //TODO treat error
             });
     }
@@ -95,7 +103,10 @@ class ChangePassword extends Component {
                                 {(!this.state.password.valid || this.state.wrongOldPassword) &&
                                 <p>Preencha todos os campos corretamente.<br/></p>
                                 }
-                                </span>}
+                                {this.state.unauthorized &&
+                                <p>Senha inválida!</p>
+                                }
+                            </span>}
                         action={[
                             <IconButton
                                 key="close"

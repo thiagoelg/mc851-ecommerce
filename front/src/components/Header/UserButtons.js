@@ -17,7 +17,9 @@ class UserButtons extends Component {
         };
 
         this.handleMenuClick = this.handleMenuClick.bind(this);
-        this.handleClose = this.handleClose.bind(this);
+        this.handleProfile = this.handleProfile.bind(this);
+        this.handlePurchases = this.handlePurchases.bind(this);
+        this.handleCustomerService = this.handleCustomerService.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
 
     }
@@ -26,13 +28,24 @@ class UserButtons extends Component {
         this.setState({anchorEl: event.target});
     };
 
-    handleClose() {
-        this.close()
-    }
-
     handleLogout() {
         UserProfile.clear();
         this.props.history.push("/");
+        this.close();
+    };
+
+    handleProfile() {
+        this.props.history.push("/profile");
+        this.close();
+    };
+
+    handlePurchases() {
+        this.props.history.push("/purchases");
+        this.close();
+    };
+
+    handleCustomerService() {
+        this.props.history.push("/customerservice");
         this.close();
     };
 
@@ -60,14 +73,14 @@ class UserButtons extends Component {
                             open={Boolean(anchorEl)}
                             onClose={this.handleClose}
                         >
-                            <MenuItem name="profile" onClick={this.handleClose}>
-                                <Link to="/profile">Perfil</Link>
+                            <MenuItem name="profile" onClick={this.handleProfile}>
+                                Perfil
                             </MenuItem>
-                            <MenuItem name="purchases" onClick={this.handleClose}>
-                                <Link to="/purchases">Minhas Compras</Link>
+                            <MenuItem name="purchases" onClick={this.handlePurchases}>
+                                Minhas Compras
                             </MenuItem>
-                            <MenuItem name="customer-service" onClick={this.handleClose}>
-                                <Link to="/customerservice">Atendimento</Link>
+                            <MenuItem name="customer-service" onClick={this.handleCustomerService}>
+                                Atendimento
                             </MenuItem>
                             <MenuItem name="logout" onClick={this.handleLogout}>Logout</MenuItem>
                         </Menu>

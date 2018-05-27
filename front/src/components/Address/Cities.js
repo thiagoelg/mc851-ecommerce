@@ -38,6 +38,10 @@ class Cities extends Component {
     componentWillReceiveProps(props) {
         if(props.uf !== this.props.uf) {
             this.getCities(props);
+        } else {
+            this.setState({
+                value: props.value
+            });
         }
     }
 
@@ -45,15 +49,16 @@ class Cities extends Component {
         if (props.uf) {
             AddressClient.getCities(props.uf)
                 .then(response => {
-                    const cities = response.data.map(state => {
+                    const cities = response.data.map(city => {
                         return {
-                            value: state.nome,
-                            label: state.nome
+                            value: city.nome,
+                            label: city.nome
                         }
                     });
 
                     this.setState({
-                        cities: cities
+                        cities: cities,
+                        value: props.value
                     });
                 })
                 .catch(error => {

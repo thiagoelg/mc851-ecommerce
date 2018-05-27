@@ -72,7 +72,7 @@ class Products extends Component {
     handlePageChange(number) {
         this.setState({
             page: number
-        }, () => this.filter())
+        }, () => this.filter(this.props))
     }
 
     render() {

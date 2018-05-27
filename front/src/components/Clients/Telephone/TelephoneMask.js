@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import MaskedInput from "react-text-mask";
 
-class CepMask extends Component {
+class TelephoneMask extends Component {
 
     render() {
-        const { inputRef, ...other } = this.props;
+        const {inputRef, ...other} = this.props;
 
         return (
             <MaskedInput
                 {...other}
                 ref={inputRef}
-                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]}
+                mask={['(', /\d/, /\d/, ')', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                 placeholderChar={'_'}
             />
         );
@@ -18,4 +18,4 @@ class CepMask extends Component {
     }
 }
 
-export default CepMask;
+export default TelephoneMask;

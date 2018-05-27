@@ -9,6 +9,10 @@ import FormLabel from "@material-ui/core/es/FormLabel";
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Button from "@material-ui/core/es/Button/Button";
 import {getCategories} from "../../clients/ProductsClient";
+import {validatePositiveFloatNumber} from "../../util/Validators";
+import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
+import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import Close from "@material-ui/icons/es/Close";
 
 const drawerWidth = 240;
 
@@ -38,11 +42,15 @@ class ProductFilterFields extends Component {
             minPrice: '',
             maxPrice: '',
             selectedCategories: categoryId ? [categoryId] : [],
-            selectedBrands: []
+            selectedBrands: [],
+
+            validMinPrice: true,
+            validMaxPrice: true
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleFilterClick = this.handleFilterClick.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     };
 
 
@@ -56,6 +64,8 @@ class ProductFilterFields extends Component {
             .catch(error => {
                 //TODO treat error
             });
+
+        //TODO get brands
 
     }
 
@@ -79,22 +89,59 @@ class ProductFilterFields extends Component {
 
     handleChange(event) {
         const target = event.target;
-        this.setState({[target.name]: target.value});
+        const name = target.name;
+
+        this.setState({
+            [name]: target.value
+        }, () => {
+            let validMinPrice = this.state.validMinPrice;
+            let validMaxPrice = this.state.validMaxPrice;
+
+            if (name === "minPrice") {
+                validMinPrice = validatePositiveFloatNumber(this.state.minPrice);
+            } else if (name === "maxPrice") {
+                validMaxPrice = validatePositiveFloatNumber(this.state.maxPrice);
+            }
+
+            this.setState({
+                validMinPrice: validMinPrice,
+                validMaxPrice: validMaxPrice
+            })
+        });
     }
 
     handleFilterClick(event) {
         this.filter();
     }
 
+    handleClose = () => {
+        this.setState({
+            open: false,
+            duplicateEmail: false
+        });
+    };
+
     filter() {
 
         let filter = {};
 
         if (this.state.minPrice != null && this.state.minPrice.length > 0) {
+            if(!this.state.validMinPrice) {
+                this.setState({
+                    open: true
+                });
+                return;
+            }
             filter.min_price = this.state.minPrice;
         }
 
         if (this.state.maxPrice != null && this.state.maxPrice.length > 0) {
+            if(!this.state.validMaxPrice) {
+                this.setState({
+                    open: true
+                });
+                return;
+            }
             filter.max_price = this.state.maxPrice;
         }
 
@@ -114,50 +161,92 @@ class ProductFilterFields extends Component {
         const {classes} = this.props;
 
         return (
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: classes.drawerPaper,
-                }}>
+            <div>
+                <Drawer
+                    variant="permanent"
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}>
 
-                <div className={classes.toolbar}/>
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <Snackbar
+                                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                                open={this.state.open}
+                                onClose={this.handleClose}
+                                autoHideDuration={5000}
+                                message={
+                                    <span id="message-id" color="error">
+                                        {(!this.state.validMinPrice || !this.state.validMaxPrice) &&
+                                            <p>Preencha todos os campos corretamente.<br/></p>
+                                        }
+                                    </span>}
+                                action={[
+                                    <IconButton
+                                        key="close"
+                                        aria-label="Close"
+                                        color="inherit"
+                                        onClick={this.handleClose}
+                                    >
+                                        <Close/>
+                                    </IconButton>,
+                                ]}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <MultiSelectionCheckboxes label="Categorias"
+                                                      items={this.state.categories}
+                                                      name="selectedCategories"
+                                                      value={this.state.selectedCategories}
+                                                      onChange={this.handleChange}/>
+                            <Divider/>
+                            <br/>
+                        </Grid>
 
-                <MultiSelectionCheckboxes label="Categorias"
-                                          items={this.state.categories}
-                                          name="selectedCategories"
-                                          value={this.state.selectedCategories}
-                                          onChange={this.handleChange}/>
-                <Divider/>
-                <br/>
+                        <Grid item xs={12}>
+                            <MultiSelectionCheckboxes label="Marcas"
+                                                      content={this.state.brands}
+                                                      name="selectedBrands"
+                                                      value={this.state.selectedBrands}
+                                                      onChange={this.handleChange}/>
+                            <Divider/>
+                            <br/>
+                        </Grid>
 
-                <MultiSelectionCheckboxes label="Marcas"
-                                          content={this.state.brands}
-                                          name="selectedBrands"
-                                          value={this.state.selectedBrands}
-                                          onChange={this.handleChange}/>
-                <Divider/>
-                <br/>
 
-                <Grid container>
-                    <Grid item xs={4} style={{marginTop: 25}}>
-                        <FormLabel component="legend">Preço: </FormLabel>
+                        <Grid item xs={12}>
+                            <FormLabel component="legend">Preço: </FormLabel>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField name="minPrice"
+                                       type="number"
+                                       onChange={this.handleChange}
+                                       value={this.state.minPrice}
+                                       label="min"
+                                       error={!this.state.validMinPrice}
+                                       helperText={!this.state.validMinPrice && "Informe um valor em reais válido."}
+                                       fullWidth/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField name="maxPrice"
+                                       type="number"
+                                       onChange={this.handleChange}
+                                       value={this.state.maxPrice}
+                                       label="max"
+                                       error={!this.state.validMaxPrice}
+                                       helperText={!this.state.validMaxPrice && "Informe um valor em reais válido."}
+                                       fullWidth/>
+                        </Grid>
+
+                        <Grid item xs={12} style={{display: 'flex', justifyContent: 'center', paddingTop: 20}}>
+                            <Button variant="raised" color="secondary" className={classes.button} fullWidth
+                                    onClick={this.handleFilterClick}>
+                                Filtrar
+                            </Button>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={3}>
-                        <TextField name="minPrice" onChange={this.handleChange} value={this.state.minPrice}
-                                   label="min" fullWidth/>
-                    </Grid>
-                    <Grid item xs={1}/>
-                    <Grid item xs={3}>
-                        <TextField name="maxPrice" onChange={this.handleChange} value={this.state.maxPrice}
-                                   label="max" fullWidth/>
-                    </Grid>
-                </Grid>
-
-                <br/>
-                <Button variant="raised" color="secondary" className={classes.button} onClick={this.handleFilterClick}>
-                    Filtrar
-                </Button>
-            </Drawer>
+                </Drawer>
+            </div>
         );
     }
 
