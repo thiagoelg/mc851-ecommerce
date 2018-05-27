@@ -31,17 +31,15 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(imagem, produto, qtd, preco) {
+function createData(produto, qtd, preco) {
   id += 1;
-  return { id, imagem, produto, qtd, preco };
+  return { id, produto, qtd, preco };
 }
 
-let imagePath = "lhama.jpg"
-
 const data = [
-  createData(imagePath, 'Abajur Lhama', 1, 70.00),
-  createData(imagePath, 'Abajur Esquilo', 1, 70.00),
-  createData(imagePath, 'Abajur Baleia', 1, 70.00),
+  createData('Panda', 1, 70.00),
+  createData('Panda', 1, 70.00),
+  createData('Panda', 1, 70.00),
 ];
 
 class SimpleTable extends Component {
