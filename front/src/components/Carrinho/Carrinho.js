@@ -48,15 +48,15 @@ class SimpleTable extends Component {
   
   constructor(props) {
     super(props);
+
     this.state = {
-        product: {},
-        amount: 1
+        products: [],
     }
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange(event) {
-    const target = event.target
+    const target = event.target;
     this.setState({[target.name]: event.target.value})
   }
 
@@ -94,7 +94,7 @@ class SimpleTable extends Component {
                   <TableCell>
                     <TextField
                       id="amount"
-                      value={this.state.amount}
+                      value={n.qtd}
                       name="amount"
                       onChange={this.handleChange}
                       type="number"
