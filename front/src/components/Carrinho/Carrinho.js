@@ -18,6 +18,8 @@ import Divider from '@material-ui/core/Divider';
 import CardActions from "@material-ui/core/es/CardActions/CardActions";
 import Link from "../Link/Link";
 import Freight from "../Freight/Freight";
+import UserProfile from "../../state/UserProfile";
+
 
 const styles = theme => ({
   root: {
@@ -31,9 +33,9 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(produto, qtd, preco) {
+function createData(produto, amount, preco) {
   id += 1;
-  return { id, produto, qtd, preco };
+  return { id, produto, amount, preco };
 }
 
 const data = [
@@ -49,6 +51,7 @@ class SimpleTable extends Component {
 
     this.state = {
         products: [],
+        amount: 1
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -56,6 +59,7 @@ class SimpleTable extends Component {
   handleChange(event) {
     const target = event.target;
     this.setState({[target.name]: event.target.value})
+    
   }
 
   render() {
@@ -92,7 +96,7 @@ class SimpleTable extends Component {
                   <TableCell>
                     <TextField
                       id="amount"
-                      value={n.qtd}
+                      value={n.amount}
                       name="amount"
                       onChange={this.handleChange}
                       type="number"
@@ -138,11 +142,21 @@ class SimpleTable extends Component {
           </CardContent>
           <CardActions>
             <Grid item xs={12}>
-              <Link to="/carrinho">
-                <Button variant="raised" color="secondary" fullWidth>
-                 Comprar
-                </Button>
-              </Link>
+              <div>
+                {UserProfile.isLogged() ? (
+                  <Link to="/carrinho">
+                    <Button variant="raised" color="secondary" fullWidth>
+                      Comprar
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link to="/signIn">
+                    <Button variant="raised" color="secondary" fullWidth>
+                      Comprar
+                    </Button>
+                  </Link>
+                )}
+              </div> 
             </Grid>
           </CardActions>
         </Card>
