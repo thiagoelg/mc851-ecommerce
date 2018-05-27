@@ -9,7 +9,8 @@ router.post('/', async (req, res, next) => {
     try {
         let info = req.body;
 
-        if (!info.name ||
+        if (!info || 
+            !info.name ||
             !info.email ||
             !info.password ||
             !info.cpf ||
@@ -32,7 +33,8 @@ router.post('/login/', async (req, res, next) => {
     try {
         let info = req.body;
 
-        if (!info.email ||
+        if (!info ||
+            !info.email ||
             !info.password) {
             return res.sendStatus(400);
         }
@@ -89,7 +91,7 @@ router.put('/changepassword', async (req, res, next) => {
 
         let info = req.body;
 
-        if (!info.password || !info.oldPassword) {
+        if (!info || !info.password || !info.oldPassword) {
             return res.sendStatus(400)
         }
 

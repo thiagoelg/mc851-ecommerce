@@ -8,6 +8,7 @@ import LogisticRoutes from './routes/LogisticRoutes'
 import FixtureRoutes from './routes/FixtureRoutes'
 import ClientRoutes from "./routes/ClientRoutes";
 import AddressRoutes from "./routes/AddressRoutes"
+import SacRoutes from "./routes/SacRoutes"
 import Database from "./database/database";
 
 const app = express(),
@@ -30,7 +31,8 @@ app.use('/credit', CreditRoutes);
 app.use('/logistic', LogisticRoutes);
 app.use('/user', ClientRoutes);
 app.use('/address', AddressRoutes);
-// app.use('/fixtures', FixtureRoutes); // one time use only
+app.use('/sac', SacRoutes);
+//app.use('/fixtures', FixtureRoutes); // one time use only
 
 app.listen(port, () => {
     console.log("Listening on port " + port)
