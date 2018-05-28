@@ -44,7 +44,7 @@ const data = [
   createData('Panda', 1, 70.00),
 ];
 
-class SimpleTable extends Component {
+class Cart extends Component {
   
   constructor(props) {
     super(props);
@@ -111,7 +111,9 @@ class SimpleTable extends Component {
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                  <TableCell numeric>{n.preco}</TableCell>
+                  <TableCell numeric>
+                    <p>R$ {n.preco}</p>
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -144,7 +146,7 @@ class SimpleTable extends Component {
             <Grid item xs={12}>
               <div>
                 {UserProfile.isLogged() ? (
-                  <Link to="/carrinho">
+                  <Link to="/endShopping">
                     <Button variant="raised" color="secondary" fullWidth>
                       Comprar
                     </Button>
@@ -171,8 +173,8 @@ class SimpleTable extends Component {
   }
 }
 
-SimpleTable.propTypes = {
+Cart.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTable);
+export default withStyles(styles)(Cart);

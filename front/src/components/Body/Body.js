@@ -11,6 +11,7 @@ import Profile from "../Clients/Profile";
 import UpdateProfile from "../Clients/UpdateProfile";
 import ChangePassword from "../Clients/ChangePassword";
 import NotFound from "../Common/NotFound";
+import EndShopping from "../Carrinho/EndShopping";
 
 
 // Para <ProductFilter /> dentro do grid, tirar o style do grid:
@@ -35,6 +36,7 @@ class Body extends Component {
                     <Route exact path='/profile/update' component={UpdateProfile}/>
                     <Route exact path='/profile/changepassword' component={ChangePassword}/>
                     <Route path='/carrinho' component={Carrinho}/>
+                    <Route path='/endShopping' component={EndShopping}/>
                     <Route component={NotFound}/>
                 </Switch>
                 </Grid>
