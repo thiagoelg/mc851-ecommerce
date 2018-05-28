@@ -182,7 +182,7 @@ export const changePassword = async (token, info) => {
 
     if (!verified) {
         return {
-            status: 403
+            status: 401
         }
     }
 
