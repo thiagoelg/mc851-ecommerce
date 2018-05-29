@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import Tickets from "./Tickets";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import NewTicket from "./NewTicket";
+import UserProfile from "../../state/UserProfile";
 
 class CustomerService extends Component {
 
@@ -14,6 +15,11 @@ class CustomerService extends Component {
     }
 
     componentDidMount() {
+        if(!UserProfile.isLogged()) {
+            this.props.history.push('/signIn');
+            return;
+        }
+
         const purchaseId = this.props.match.params.purchaseId;
 
         if (purchaseId) {

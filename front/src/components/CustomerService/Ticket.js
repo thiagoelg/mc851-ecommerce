@@ -43,6 +43,11 @@ class Ticket extends Component {
     }
 
     componentDidMount() {
+        if(!UserProfile.isLogged()) {
+            this.props.history.push('/signIn');
+            return;
+        }
+
         const id = this.props.match.params.id;
 
         getTicket(id)
