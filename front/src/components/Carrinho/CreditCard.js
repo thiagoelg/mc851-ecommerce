@@ -69,6 +69,14 @@ class CreditCard extends Component {
         }, () => {
 
             const validationResult = this.validateFields([name]);
+
+            this.setState({
+                wrongCardNumber: validationResult.wrongCardNumber,
+                wrongIdentification: validationResult.wrongIdentification,
+                wrongMonthValid: validationResult.wrongMonthValid,
+                wrongYearValid: validationResult.wrongYearValid,
+                wrongSecurityCode: validationResult.wrongSecurityCode,
+            });
          });
     }
 
