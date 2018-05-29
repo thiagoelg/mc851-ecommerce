@@ -8,7 +8,19 @@ class CustomerService extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {}
+        this.state = {
+            purchaseId: undefined
+        }
+    }
+
+    componentDidMount() {
+        const purchaseId = this.props.match.params.purchaseId;
+
+        if (purchaseId) {
+            this.setState({
+                purchaseId: purchaseId
+            });
+        }
     }
 
     render() {

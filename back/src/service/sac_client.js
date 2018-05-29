@@ -22,6 +22,9 @@ export const ticketByClient = async (clientId, ticketId) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
         console.log(e)
     }
 };
@@ -32,6 +35,9 @@ export const ticketByPurchase = async (clientId, purchaseId) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
         console.log(e)
     }
 };
@@ -42,6 +48,9 @@ export const addTicket = async (clientId, ticket) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
         console.log(e)
     }
 };
@@ -52,6 +61,9 @@ export const addTicketByPurchase = async (clientId, ticket, purchaseId) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
         console.log(e)
     }
 };
@@ -62,6 +74,9 @@ export const updateTicket = async (clientId, ticketId, ticket) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
         console.log(e)
     }
 };
@@ -74,6 +89,9 @@ export const changeStatus = async (clientId, ticketId, message, statusId) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
         console.log(e)
     }
 };

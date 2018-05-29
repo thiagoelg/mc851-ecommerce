@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/es/Grid/Grid";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Button from "@material-ui/core/es/Button/Button";
-import {registerTicket} from "../../clients/CustomerServiceClient";
+import {registerPurchaseTicket, registerTicket} from "../../clients/CustomerServiceClient";
 import moment from "moment";
 import UserProfile from "../../state/UserProfile";
 
@@ -19,6 +19,17 @@ class NewTicket extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSendClick = this.handleSendClick.bind(this);
+        this.registerTicket = this.registerTicket.bind(this);
+    }
+
+    registerTicket(message) {
+        const purchaseId = this.props.match.params.purchaseId;
+
+        if(purchaseId) {
+            return registerPurchaseTicket(purchaseId, message);
+        }
+
+        return registerTicket(message);
     }
 
     handleChange(e) {
@@ -35,7 +46,7 @@ class NewTicket extends Component {
             message: this.state.message
         };
 
-        registerTicket(message)
+        this.registerTicket(message)
             .then(response => {
                 this.props.history.push(`/customerservice/ticket/${response.data.systemMessage}`);
             })
@@ -69,7 +80,7 @@ class NewTicket extends Component {
                         fullWidth
                     />
                 </Grid>
-                <Grid item xs={12} alignContent="flex-end" alignItems="flex-end">
+                <Grid item xs={12}>
                     <Button variant="raised" color="secondary" onClick={this.handleSendClick}>
                         Enviar
                     </Button>

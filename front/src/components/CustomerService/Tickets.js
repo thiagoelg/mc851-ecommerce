@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import {withRouter} from 'react-router-dom'
-import {getClientTickets, TICKET_STATUS_LABELS} from "../../clients/CustomerServiceClient";
+import {getClientTickets, getPurchaseTickets, TICKET_STATUS_LABELS} from "../../clients/CustomerServiceClient";
 import UserProfile from "../../state/UserProfile";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import List from "@material-ui/core/es/List/List";
@@ -17,13 +17,29 @@ class Tickets extends Component {
 
         this.state = {
             tickets: []
-        }
+        };
 
         this.handleTicketClick = this.handleTicketClick.bind(this);
+        this.getTickets = this.getTickets.bind(this);
+        this.loadTickets = this.loadTickets.bind(this);
     }
 
     componentDidMount() {
-        getClientTickets()
+        const purchaseId = this.props.match.params.purchaseId;
+        this.loadTickets(purchaseId);
+    }
+
+    getTickets(purchaseId) {
+
+        if(purchaseId) {
+            return getPurchaseTickets(purchaseId)
+        }
+
+        return getClientTickets();
+    }
+
+    loadTickets(purchaseId) {
+        this.getTickets(purchaseId)
             .then(response => {
                 let tickets = response.data.ticketsList;
 
@@ -65,6 +81,7 @@ class Tickets extends Component {
     }
 
     render() {
+        const purchaseId = this.props.match.params.purchaseId;
 
         return (
             <div>
@@ -73,7 +90,9 @@ class Tickets extends Component {
                 </Typography>
                 {this.state.tickets.length === 0 && (
                     <Typography variant="subheading" gutterBottom align="center">
-                        Você não abriu nenhum chamado na nossa loja.
+                        {purchaseId ?
+                            "Você não abriu nenhum chamado para essa compra." :
+                            "Você não abriu nenhum chamado na nossa loja."}
                     </Typography>
                 )}
                 {this.state.tickets.length > 0 && (

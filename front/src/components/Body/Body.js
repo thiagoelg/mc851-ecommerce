@@ -40,6 +40,7 @@ class Body extends Component {
                     <Route path='/carrinho' component={Carrinho}/>
                     <Route path='/endShopping' component={EndShopping}/>
                     <Route exact path='/customerservice' component={CustomerService}/>
+                    <Route path='/customerservice/purchase/:purchaseId' component={CustomerService}/>
                     <Route path='/customerservice/ticket/:id' component={Ticket}/>
                     <Route component={NotFound}/>
                 </Switch>
