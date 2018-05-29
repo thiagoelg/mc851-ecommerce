@@ -3,7 +3,6 @@ import Grid from "@material-ui/core/es/Grid/Grid";
 import TextField from "@material-ui/core/es/TextField/TextField";
 import {validateCpf, validateEmail, validateNotEmpty, validateTelephone} from "../../util/Validators";
 import CpfInput from "./Cpf/CpfInput";
-import Input from "@material-ui/core/es/Input/Input";
 import TelephoneInput from "./Telephone/TelephoneInput";
 
 class ClientBasicForm extends Component {
