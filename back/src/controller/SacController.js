@@ -1,81 +1,145 @@
 import SacClient from '../service/sac_client'
+import AuthTokenGenerator from '../utils/AuthTokenGenerator'
 
-export const ticketsByClient = async (clientId) => {
-    const response = await SacClient.ticketsByClient(clientId);
+export const ticketsByClient = async (token) => {
+    const user = AuthTokenGenerator.verify(token);
+    if(!user) {
+        return {
+            status: 403
+        }
+    }
 
-    if (!response || response.status != 200) {
+    const response = await SacClient.ticketsByClient(user.cid);
+
+    if (!response || (response.status >= 500 && response.status < 600)) {
         console.error("ticketsByClient error");
-        return {}
+        return {
+            status: response ? response.status : 500
+        }
     }
     
-    return response.data
-}
+    return response;
+};
 
-export const ticketByClient = async (clientId, ticketId) => {
-    const response = await SacClient.ticketByClient(clientId, ticketId);
+export const ticketByClient = async (token, ticketId) => {
+    const user = AuthTokenGenerator.verify(token);
+    if(!user) {
+        return {
+            status: 403
+        }
+    }
 
-    if (!response || response.status != 200) {
+    const response = await SacClient.ticketByClient(user.cid, ticketId);
+
+    if (!response || (response.status >= 500 && response.status < 600)) {
         console.error("ticketByClient error");
-        return {}
+        return {
+            status: response ? response.status : 500
+        }
     }
     
-    return response.data
-}
+    return response;
+};
 
-export const ticketByPurchase = async (clientId, purchaseId) => {
-    const response = await SacClient.ticketByPurchase(clientId, purchaseId);
+export const ticketByPurchase = async (token, purchaseId) => {
+    const user = AuthTokenGenerator.verify(token);
+    if(!user) {
+        return {
+            status: 403
+        }
+    }
 
-    if (!response || response.status != 200) {
+    const response = await SacClient.ticketByPurchase(user.cid, purchaseId);
+
+    if (!response || (response.status >= 500 && response.status < 600)) {
         console.error("ticketByPurchase error");
-        return {}
+        return {
+            status: response ? response.status : 500
+        }
     }
     
-    return response.data
-}
+    return response
+};
 
-export const addTicket = async (clientId, ticket) => {
-    const response = await SacClient.addTicket(clientId, ticket);
+export const addTicket = async (token, ticket) => {
+    const user = AuthTokenGenerator.verify(token);
+    if(!user) {
+        return {
+            status: 403
+        }
+    }
 
-    if (!response || response.status != 200) {
+    const response = await SacClient.addTicket(user.cid, ticket);
+
+    if (!response || (response.status >= 500 && response.status < 600)) {
         console.error("addTicket error");
-        return {}
+        return {
+            status: response ? response.status : 500
+        }
     }
     
-    return response.data
-}
+    return response
+};
 
-export const addTicketByPurchase = async (clientId, ticket, purchaseId) => {
-    const response = await SacClient.addTicketByPurchase(clientId, ticket, purchaseId);
+export const addTicketByPurchase = async (token, ticket, purchaseId) => {
+    const user = AuthTokenGenerator.verify(token);
+    if(!user) {
+        return {
+            status: 403
+        }
+    }
 
-    if (!response || response.status != 200) {
+    const response = await SacClient.addTicketByPurchase(user.cid, ticket, purchaseId);
+
+    if (!response || (response.status >= 500 && response.status < 600)) {
         console.error("addTicketByPurchase error");
-        return {}
+        return {
+            status: response ? response.status : 500
+        }
     }
     
-    return response.data
-}
+    return response
+};
 
-export const updateTicket = async (clientId, ticketId, ticket) => {
-    const response = await SacClient.updateTicket(clientId, ticketId, ticket);
+export const updateTicket = async (token, ticketId, ticket) => {
+    const user = AuthTokenGenerator.verify(token);
+    if(!user) {
+        return {
+            status: 403
+        }
+    }
 
-    if (!response || response.status != 200) {
+    const response = await SacClient.updateTicket(user.cid, ticketId, ticket);
+
+    if (!response || (response.status >= 500 && response.status < 600)) {
         console.error("updateTicket error");
-        return {}
+        return {
+            status: response ? response.status : 500
+        }
     }
     
-    return response.data
-}
+    return response
+};
 
-export const changeStatus = async (clientId, ticketId, ticket, params) => {
-    const response = await SacClient.changeStatus(clientId, ticketId, ticket, params);
+export const changeStatus = async (token, ticketId, message, statusId) => {
+    const user = AuthTokenGenerator.verify(token);
+    if(!user) {
+        return {
+            status: 403
+        }
+    }
 
-    if (!response || response.status != 200) {
+    const response = await SacClient.changeStatus(user.cid, ticketId, message, statusId);
+
+    if (!response || (response.status >= 500 && response.status < 600)) {
         console.error("changeStatus error");
-        return {}
+        return {
+            status: response ? response.status : 500
+        }
     }
     
-    return response.data
-}
+    return response
+};
 
 export default {
     ticketsByClient,

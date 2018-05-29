@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom'
 import Logo from "../Logo/Logo";
 import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
 import Grid from "@material-ui/core/es/Grid/Grid";
@@ -26,7 +27,7 @@ class Footer extends Component {
                                     <ListItem button>
                                         <ListItemText primary="Sobre nós"/>
                                     </ListItem>
-                                    <ListItem button>
+                                    <ListItem button onClick={(e) => this.props.history.push('/customerservice')}>
                                         <ListItemText primary="Central de Ajuda"/>
                                     </ListItem>
                                 </List>
@@ -54,4 +55,4 @@ class Footer extends Component {
     }
 }
 
-export default Footer;
+export default withRouter(Footer);

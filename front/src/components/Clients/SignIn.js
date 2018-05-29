@@ -57,7 +57,7 @@ class SignIn extends Component {
         login(param)
             .then(response => {
                 UserProfile.set(response.headers["x-auth-token"]);
-                this.props.history.push('/')
+                this.props.history.goBack();
             })
             .catch(error => {
                 if (error.response && error.response.status === 401) {

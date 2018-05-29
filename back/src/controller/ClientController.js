@@ -41,7 +41,13 @@ export const register = async (params) => {
         await Database.associateClientToUser(userId, response.data);
     }
 
-    const token = AuthTokenGenerator.create({id: response.data, name: params.name});
+    const token = AuthTokenGenerator.create({
+        id: response.data,
+        name: params.name,
+        email: params.email,
+        cpf: params.cpf
+    });
+
     return {
         status: response.status,
         data: token
@@ -76,7 +82,13 @@ export const login = async (params) => {
         };
     }
 
-    const token = AuthTokenGenerator.create({id: user.clientId, name: response.data.name});
+    let client = response.data;
+    const token = AuthTokenGenerator.create({
+        id: user.clientId,
+        name: client.name,
+        email: client.email,
+        cpf: client.cpf
+    });
     return {
         status: response.status,
         data: token
@@ -87,7 +99,7 @@ export const getClient = async (token) => {
 
     const decoded = AuthTokenGenerator.verify(token);
 
-    if(!decoded) {
+    if (!decoded) {
         return {
             status: 403
         }
@@ -131,7 +143,7 @@ export const updateUser = async (token, info) => {
 
     const decoded = AuthTokenGenerator.verify(token);
 
-    if(!decoded) {
+    if (!decoded) {
         return {
             status: 403
         }
@@ -168,7 +180,7 @@ export const updateUser = async (token, info) => {
 export const changePassword = async (token, info) => {
     const decoded = AuthTokenGenerator.verify(token);
 
-    if(!decoded) {
+    if (!decoded) {
         return {
             status: 403
         }
@@ -182,7 +194,7 @@ export const changePassword = async (token, info) => {
 
     if (!verified) {
         return {
-            status: 403
+            status: 401
         }
     }
 
