@@ -21,6 +21,7 @@ import Freight from "../Freight/Freight";
 import UserProfile from "../../state/UserProfile";
 
 
+
 const styles = theme => ({
   root: {
     width: '100%',

@@ -4,10 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
-import DeleteIcon from '@material-ui/icons/Delete';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -22,7 +20,11 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CreditCard from "../Carrinho/CreditCard";
 
 
 const styles = theme => ({
@@ -123,6 +125,38 @@ class EndShopping extends Component {
                 </Grid>
             </CardContent>
         </Card>
+        <p></p>
+        <Card>
+          <CardContent>
+            <p></p>
+            <Typography variant="headline" color="secondary">
+                <b>Formas de pagamento</b>
+            </Typography>
+            <p></p>
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant="Title">
+                    Cartão de crédito
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <CreditCard/>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant="Title">
+                    Boleto bancário
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography>
+                  Pagar em boleto
+                </Typography>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </CardContent>
+        </Card>
       </Grid>
       <Grid item xs={4}>
         <Card>
@@ -157,6 +191,18 @@ class EndShopping extends Component {
                     Alterar Endereço
                 </Button>
             </CardContent>
+        </Card>
+        <p></p>
+        <Card>
+          <CardContent>
+            <p></p>
+            <Typography variant="headline" color="secondary">
+                <b>Total</b>
+            </Typography>
+            <p></p>
+            <Divider/>
+            <p></p>
+          </CardContent>
         </Card>
       </Grid>
     </Grid>
