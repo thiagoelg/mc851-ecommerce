@@ -7,7 +7,9 @@ export const create = (client) => {
     return jwt.sign({
         exp: expirationTime,
         name: client.name,
-        cid: client.id
+        cid: client.id,
+        email: client.email,
+        cpf: client.cpf
     }, secret);
 };
 
