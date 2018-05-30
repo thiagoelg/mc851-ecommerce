@@ -1,5 +1,4 @@
 import React, {Component} from "react"
-import SentimentDissatisfied from "@material-ui/icons/es/SentimentDissatisfied";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import Link from "react-router-dom/es/Link";

@@ -10,6 +10,8 @@ import FixtureRoutes from './routes/FixtureRoutes'
 import ClientRoutes from "./routes/ClientRoutes";
 import AddressRoutes from "./routes/AddressRoutes"
 import CartRoutes from './routes/CartRoutes'
+import SacRoutes from "./routes/SacRoutes"
+import PaymentRoutes from "./routes/PaymentRoutes"
 import Database from "./database/database";
 import ProductController from "./controller/ProductController";
 import CartController from './controller/CartController'
@@ -35,7 +37,9 @@ app.use('/logistic', LogisticRoutes);
 app.use('/user', ClientRoutes);
 app.use('/address', AddressRoutes);
 app.use('/cart', CartRoutes)
-// app.use('/fixtures', FixtureRoutes); // one time use only
+app.use('/sac', SacRoutes);
+app.use('/payment', PaymentRoutes);
+//app.use('/fixtures', FixtureRoutes); // one time use only
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
