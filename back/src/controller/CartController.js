@@ -10,10 +10,8 @@ export const createCart = async (token) => {
             status: 403
         }
     }
-
-    let cartId;
-
-    cartId = await Database.createCart(decoded.cid);
+    
+    let cartId = await Database.createCart(decoded.cid);
 
     return {
         status: 200,
@@ -35,9 +33,13 @@ export const reserveProduct = async (token, cartId, product) => {
         return {
             status: 404
         }
-    }
+    } else if (cart.client_id !== decoded.cid) {
+        return {
+            status: 403
+        }
+    }  
 
-    const response = await ProductClient.reserveProduct(product.id, product.amount)
+    const response = await ProductClient.reserveProduct(product.productId, product.amount)
 
     if (response.status === 400 || response.status == 404) {
         const code = response.status === 404 ? 1 : 2
@@ -49,14 +51,14 @@ export const reserveProduct = async (token, cartId, product) => {
         }
     }
 
-    const oldProduct = await Database.getProductFromCart(cartId, product.id)
+    const oldProduct = await Database.getProductFromCart(cartId, product.productId)
 
     if (oldProduct) {
         product.amount += oldProduct.amount
 
-        await Database.addProduct(cartId, product.id, product.amount)
+        await Database.updateProduct(cartId, product.productId, product.amount)
     } else {
-        await Database.updateProduct(cartId, product.id, product.amount)
+        await Database.addProduct(cartId, product.productId, product.amount)
     }
 
     return {
@@ -78,9 +80,13 @@ export const releaseProduct = async (token, cartId, product) => {
         return {
             status: 404
         }
-    }
+    }  else if (cart.client_id !== decoded.cid) {
+        return {
+            status: 403
+        }
+    }  
 
-    const response = await ProductClient.releaseProduct(product.id, product.amount)
+    const response = await ProductClient.releaseProduct(product.productId, product.amount)
 
     if (response.status === 400 || response.status == 404) {
         const code = response.status === 404 ? 1 : 2
@@ -92,13 +98,13 @@ export const releaseProduct = async (token, cartId, product) => {
         }
     }
 
-    const oldProduct = await Database.getProductFromCart(cartId, product.id)
+    const oldProduct = await Database.getProductFromCart(cartId, product.productId)
 
     if (oldProduct) {
-        product.amount -= oldProduct.amount
+        product.amount = oldProduct.amount - product.amount
     }
 
-    await Database.updateProduct(cartId, product.id, product.amount)
+    await Database.updateProduct(cartId, product.productId, product.amount)
 
     return {
         status: 200
@@ -121,6 +127,7 @@ export const checkout = async (token, cartId) => {
 }
 
 export const handleExpiredCarts = async () => {
+
     const expiredCarts = await Database.getExpiredCarts()
 
     expiredCarts.forEach(async (cart) => {
@@ -128,6 +135,8 @@ export const handleExpiredCarts = async () => {
 
         expiredProducts.forEach(async (product) => {
             await ProductClient.releaseProduct(product.id, product.amount)
+
+            await Database.updateProduct(cart.id, product.id, 0)
         })
 
         await Database.expireCart(cart.id)

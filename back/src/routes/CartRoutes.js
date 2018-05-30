@@ -10,7 +10,7 @@ router.post('/', async (req, res, next) => {
             return res.sendStatus(401)
         }
 
-        const response = CartController.createCart(token)
+        const response = await CartController.createCart(token)
 
         return res.status(response.status).json(response.data);
     } catch (e) {
@@ -29,7 +29,7 @@ router.post('/:cartId/book', async (req, res, next) => {
             return res.sendStatus(400)
         }
         
-        const response = CartController.book(token, req.params.cartId, req.body)
+        const response = await CartController.reserveProduct(token, req.params.cartId, req.body)
 
         return res.status(response.status).json(response.data);
     } catch (e) {
@@ -48,7 +48,7 @@ router.post('/:cartId/unbook', async (req, res, next) => {
             return res.sendStatus(400)
         }
 
-        const response = CartController.unbook(token, req.params.cartId, req.body)
+        const response = await CartController.releaseProduct(token, req.params.cartId, req.body)
 
         return res.status(response.status).json(response.data);
     } catch (e) {
@@ -63,7 +63,7 @@ router.post('/:cartId/checkout', async (req, res, next) => {
             return res.sendStatus(401)
         }
 
-        const response = CartController.checkout(token, req.params.cartId)
+        const response = await CartController.checkout(token, req.params.cartId)
 
         return res.status(response.status).json(response.data);
     } catch (e) {

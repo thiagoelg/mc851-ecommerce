@@ -81,9 +81,11 @@ export const createCart = async (clientId) => {
         throw 'Missing database connection!'
 
     const [rows, field] = await pool.query(
-        `INSERT INTO cart(clientId, expires_at, expired)
+        `INSERT INTO cart(client_id, expires_at, expired)
          VALUES (?, ?, ?)`,
-         [clientId, moment().add('minutes', 30).toDate(), false])
+         [clientId, moment().add(30, 'minutes').toDate(), false])
+
+    return rows.insertId
 };
 
 export const getCartById = async (cartId) => {
@@ -91,7 +93,7 @@ export const getCartById = async (cartId) => {
         throw 'Missing database connection!';
 
     const [rows, fields] = await pool.query(
-        `SELECT id, clientId, expireds_at FROM cart
+        `SELECT id, client_id, expires_at FROM cart
          WHERE id = ?
          AND expired = false
          AND expires_at > now()`, [cartId]);
@@ -104,8 +106,8 @@ export const getCartByClientId = async (clientId) => {
         throw 'Missing database connection!';
 
     const [rows, fields] = await pool.query(
-        `SELECT id, clientId, expireds_at FROM cart
-         WHERE clientId = ?
+        `SELECT id, client_id, expires_at FROM cart
+         WHERE client_id = ?
          AND expired = false
          AND expires_at > now()`, [clientId]);
 
@@ -117,7 +119,7 @@ export const getExpiredCarts = async () => {
         throw 'Missing database connection!';
 
     const [rows, fields] = await pool.query(
-        `SELECT id, clientId, expireds_at, expired FROM cart
+        `SELECT id, client_id, expires_at, expired FROM cart
          WHERE expired = false
          AND expires_at < now()`);
 
@@ -130,7 +132,7 @@ export const expireCart = async (cartId) => {
 
     const [rows, fields] = await pool.query(
         `UPDATE cart SET expired = true 
-         WHERE cartId = ?`, [cartId]
+         WHERE id = ?`, [cartId]
     )
 }
 
@@ -153,7 +155,7 @@ export const getProductsFromCart = async (cartId) => {
     const [rows, fields] = await pool.query(
         `SELECT id, cart_id, product_id, amount FROM product_cart
          WHERE cart_id = ?
-         AND amount > 0`, [amount]);
+         AND amount > 0`, [cartId]);
 
     return rows;
 };

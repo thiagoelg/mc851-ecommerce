@@ -64,6 +64,7 @@ Database.connect(() => {
 const job = new CronJob('*/5 * * * *', () => {
         CartController.handleExpiredCarts()
     },
-    false, // true,
+    () => {},
+    true, // true,
     'America/Sao_Paulo'
 );

@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const PRODUTOS_URL = "https://ftt-catalog.herokuapp.com";
 const GROUP_ID = "ad244d5d-29d4-4da4-99ff-cf62a57534ec";
+const DEFAULT_TIMEOUT = 30000
 
 export const getProducts = async (params) => {
 
@@ -67,24 +68,26 @@ export const getCategory = async (id) => {
 export const reserveProduct = async (id, amount) => {
 
     try {
-        const response = await axios.put(`${PRODUTOS_URL}/reservation/reserve/${id}`, amount, {
-            params: {
-                id: id
+        const response = await axios.put(`${PRODUTOS_URL}/reservation/reserve/${id}`, `${amount}`, {
+            timeout: DEFAULT_TIMEOUT,
+            headers: {
+                'Content-Type': 'application/json'
             }
         });
 
         return {data: response.data, status: response.status}
     } catch (e) {
-        //console.log(e)
+        console.error(e)
     }
 };
 
 export const releaseProduct = async (id, amount) => {
 
     try {
-        const response = await axios.put(`${PRODUTOS_URL}/reservartion/release/${id}`, amount, {
-            params: {
-                id: id
+        const response = await axios.put(`${PRODUTOS_URL}/reservation/release/${id}`, `${amount}`, {
+            timeout: DEFAULT_TIMEOUT,
+            headers: {
+                'Content-Type': 'application/json'
             }
         });
 
