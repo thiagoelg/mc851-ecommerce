@@ -67,11 +67,10 @@ export const getCategory = async (id) => {
 export const reserveProduct = async (id, amount) => {
 
     try {
-        const response = await axios.get(`${PRODUTOS_URL}/${id}:reserve`, {
+        const response = await axios.put(`${PRODUTOS_URL}/reservation/reserve/${id}`, amount, {
             params: {
                 id: id
-            },
-            data: amount
+            }
         });
 
         return {data: response.data, status: response.status}
@@ -83,11 +82,10 @@ export const reserveProduct = async (id, amount) => {
 export const releaseProduct = async (id, amount) => {
 
     try {
-        const response = await axios.get(`${PRODUTOS_URL}/${id}:release`, {
+        const response = await axios.put(`${PRODUTOS_URL}/reservartion/release/${id}`, amount, {
             params: {
                 id: id
-            },
-            data: amount
+            }
         });
 
         return {data: response.data, status: response.status}
