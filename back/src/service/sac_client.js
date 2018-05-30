@@ -1,8 +1,7 @@
 import axios from 'axios'
 
-const REQUEST_TIMEOUT = 30000
-const ATENDIMENTO_URL = "https://centralatendimento-mc857.azurewebsites.net/"
-const SITE_ID = "67aecd253f0c9abd35cde4c4039af1f1a4d83eb5"
+const ATENDIMENTO_URL = "https://centralatendimento-mc857.azurewebsites.net/";
+const SITE_ID = "teste1";
 
 export const ticketsByClient = async (clientId) => {
     try {
@@ -10,9 +9,12 @@ export const ticketsByClient = async (clientId) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        //console.log(e)
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
+        console.log(e)
     }
-}
+};
 
 export const ticketByClient = async (clientId, ticketId) => {
     try {
@@ -20,9 +22,12 @@ export const ticketByClient = async (clientId, ticketId) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
-        //console.log(e)
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
+        console.log(e)
     }
-}
+};
 
 export const ticketByPurchase = async (clientId, purchaseId) => {
     try {
@@ -30,9 +35,12 @@ export const ticketByPurchase = async (clientId, purchaseId) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
-        //console.log(e)
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
+        console.log(e)
     }
-}
+};
 
 export const addTicket = async (clientId, ticket) => {
     try {
@@ -40,9 +48,12 @@ export const addTicket = async (clientId, ticket) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        //console.log(e)
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
+        console.log(e)
     }
-}
+};
 
 export const addTicketByPurchase = async (clientId, ticket, purchaseId) => {
     try {
@@ -50,9 +61,12 @@ export const addTicketByPurchase = async (clientId, ticket, purchaseId) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
-        //console.log(e)
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
+        console.log(e)
     }
-}
+};
 
 export const updateTicket = async (clientId, ticketId, ticket) => {
     try {
@@ -60,22 +74,27 @@ export const updateTicket = async (clientId, ticketId, ticket) => {
         
         return {data : response.data, status: response.status}
     } catch (e) {
-        //console.log(e)
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
+        console.log(e)
     }
-}
+};
 
-export const changeStatus = async (clientId, ticketId, ticket, params) => {
+export const changeStatus = async (clientId, ticketId, message, statusId) => {
     try {
-        const response = await axios.delete(`${ATENDIMENTO_URL}/tickets/${SITE_ID}/${clientId}/ticket/${ticketId}`, {
-            params,
-            data: ticket,
-        })
+        const response = await axios.delete(`${ATENDIMENTO_URL}/tickets/${SITE_ID}/${clientId}/ticket/${ticketId}?code=${statusId}`, {
+            data: message,
+        });
         
         return {data : response.data, status: response.status}
     } catch (e) {
-        //console.log(e)
+        if(e.response && e.response.status === 404) {
+            return e.response;
+        }
+        console.log(e)
     }
-}
+};
 
 export default {
     ticketsByClient,

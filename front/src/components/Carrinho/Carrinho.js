@@ -18,6 +18,9 @@ import Divider from '@material-ui/core/Divider';
 import CardActions from "@material-ui/core/es/CardActions/CardActions";
 import Link from "../Link/Link";
 import Freight from "../Freight/Freight";
+import UserProfile from "../../state/UserProfile";
+
+
 
 const styles = theme => ({
   root: {
@@ -31,33 +34,33 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(imagem, produto, qtd, preco) {
+function createData(produto, amount, preco) {
   id += 1;
-  return { id, imagem, produto, qtd, preco };
+  return { id, produto, amount, preco };
 }
 
-let imagePath = "lhama.jpg"
-
 const data = [
-  createData(imagePath, 'Abajur Lhama', 1, 70.00),
-  createData(imagePath, 'Abajur Esquilo', 1, 70.00),
-  createData(imagePath, 'Abajur Baleia', 1, 70.00),
+  createData('Panda', 1, 70.00),
+  createData('Panda', 1, 70.00),
+  createData('Panda', 1, 70.00),
 ];
 
-class SimpleTable extends Component {
+class Cart extends Component {
   
   constructor(props) {
     super(props);
+
     this.state = {
-        product: {},
+        products: [],
         amount: 1
     }
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange(event) {
-    const target = event.target
+    const target = event.target;
     this.setState({[target.name]: event.target.value})
+    
   }
 
   render() {
@@ -94,7 +97,7 @@ class SimpleTable extends Component {
                   <TableCell>
                     <TextField
                       id="amount"
-                      value={this.state.amount}
+                      value={n.amount}
                       name="amount"
                       onChange={this.handleChange}
                       type="number"
@@ -109,7 +112,9 @@ class SimpleTable extends Component {
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                  <TableCell numeric>{n.preco}</TableCell>
+                  <TableCell numeric>
+                    <p>R$ {n.preco}</p>
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -140,11 +145,21 @@ class SimpleTable extends Component {
           </CardContent>
           <CardActions>
             <Grid item xs={12}>
-              <Link to="/carrinho">
-                <Button variant="raised" color="secondary" fullWidth>
-                 Comprar
-                </Button>
-              </Link>
+              <div>
+                {UserProfile.isLogged() ? (
+                  <Link to="/endShopping">
+                    <Button variant="raised" color="secondary" fullWidth>
+                      Comprar
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link to="/signIn">
+                    <Button variant="raised" color="secondary" fullWidth>
+                      Comprar
+                    </Button>
+                  </Link>
+                )}
+              </div> 
             </Grid>
           </CardActions>
         </Card>
@@ -159,8 +174,8 @@ class SimpleTable extends Component {
   }
 }
 
-SimpleTable.propTypes = {
+Cart.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTable);
+export default withStyles(styles)(Cart);
