@@ -9,6 +9,7 @@ import FixtureRoutes from './routes/FixtureRoutes'
 import ClientRoutes from "./routes/ClientRoutes";
 import AddressRoutes from "./routes/AddressRoutes"
 import SacRoutes from "./routes/SacRoutes"
+import PaymentRoutes from "./routes/PaymentRoutes"
 import Database from "./database/database";
 
 const app = express(),
@@ -32,6 +33,7 @@ app.use('/logistic', LogisticRoutes);
 app.use('/user', ClientRoutes);
 app.use('/address', AddressRoutes);
 app.use('/sac', SacRoutes);
+app.use('/payment', PaymentRoutes);
 //app.use('/fixtures', FixtureRoutes); // one time use only
 
 app.listen(port, () => {
