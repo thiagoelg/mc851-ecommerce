@@ -5,21 +5,15 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Card from "@material-ui/core/es/Card/Card";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import Divider from '@material-ui/core/Divider';
-import CardActions from "@material-ui/core/es/CardActions/CardActions";
-import Link from "../Link/Link";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -63,10 +57,6 @@ class EndShopping extends Component {
     this.setState({ value: event.target.value });
   };
   
-  constructor(props) {
-    super(props);  
-  }
-
   render() {
     const {classes} = this.props;
 
@@ -92,7 +82,7 @@ class EndShopping extends Component {
                           <TableRow key={n.id}>
                             <TableCell component="th" scope="row">
                               <div>
-                                <img height={40} src={"https://media4.s-nbcnews.com/j/newscms/2016_36/1685951/ss-160826-twip-05_8cf6d4cb83758449fd400c7c3d71aa1f.nbcnews-ux-2880-1000.jpg"}/>
+                                <img height={40} src={"https://media4.s-nbcnews.com/j/newscms/2016_36/1685951/ss-160826-twip-05_8cf6d4cb83758449fd400c7c3d71aa1f.nbcnews-ux-2880-1000.jpg"} alt="Panda"/>
                               </div>
                             </TableCell>
                             <TableCell>
@@ -179,7 +169,7 @@ class EndShopping extends Component {
                     <br/>
                     Centro 
                     <br/>
-                    Amparo-SP
+                    Amparo - SP
                     <br/>
                     1390000
                 </Typography>
