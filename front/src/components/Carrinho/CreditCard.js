@@ -46,7 +46,7 @@ class CreditCard extends Component {
             monthValid: "",
             yearValid: "", 
             securityCode: "", 
-            installments: "", 
+            installments: "One", 
 
             wrongCardNumber: false,
             wrongIdentification: false,
@@ -54,7 +54,6 @@ class CreditCard extends Component {
             wrongYearValid: false,
             wrongSecurityCode: false,
 
-            states: []
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -231,6 +230,7 @@ class CreditCard extends Component {
                 <Grid item xs={12}>
                     <br/>
                     <TextField
+                        name="installments"
                         select
                         value={this.state.installments}
                         onChange={this.handleChange}
