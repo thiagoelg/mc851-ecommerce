@@ -72,14 +72,20 @@ class Freight extends Component {
             loading: true,
             shippingOptions: []
         }, () => {
-            const product = this.props.product;
+            const products = this.props.products;
+
+            let adder = (acc, value) => acc + value;
+            const weight = products.map(p => p.weight).reduce(adder);
+            const length = products.map(p => p.length).reduce(adder);
+            const height = products.map(p => p.height).reduce(adder);
+            const width = products.map(p => p.width).reduce(adder);
 
             let params = {
                 destinyCep: this.state.cep,
-                weight: product.weight,
-                length: product.length,
-                height: product.height,
-                width: product.width
+                weight: weight,
+                length: length,
+                height: height,
+                width: width
             };
 
             getShippingOptions(params)
