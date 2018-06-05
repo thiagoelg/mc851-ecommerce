@@ -29,7 +29,8 @@ export const initCart = async (cartId) => {
 
     // Load products
     if (cartId) {
-        return getCartById(cartId);
+        let response = getCartById(cartId);
+        return response;
     }
 }
 

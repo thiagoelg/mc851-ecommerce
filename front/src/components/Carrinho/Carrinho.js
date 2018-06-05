@@ -39,6 +39,9 @@ class Cart extends Component {
   
   constructor(props) {
     super(props);
+    this.state = {
+      products: []
+    }
 
     this.handleChange = this.handleChange.bind(this)
   }
@@ -48,7 +51,7 @@ class Cart extends Component {
     this.setState({[target.name]: event.target.value})
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState(
       {products: CartInstance.getProducts()}
     );

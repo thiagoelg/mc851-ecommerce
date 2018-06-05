@@ -13,9 +13,9 @@ let CartInstance = (function() {
         return localStorage.getItem(LOCAL_STORAGE_CART_ITEM_NAME);
     }
 
-    let init = function(reponse) {
-        id = reponse.data.id;
-        products = reponse.data.products;
+    let init = function(response) {
+        id = response.data.id;
+        products = response.data.products;
         localStorage.setItem(LOCAL_STORAGE_CART_ITEM_NAME, id);
     };
 
