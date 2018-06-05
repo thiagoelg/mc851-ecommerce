@@ -109,7 +109,8 @@ export const getCartByClientId = async (clientId) => {
         `SELECT id, client_id, expires_at FROM cart
          WHERE client_id = ?
          AND expired = false
-         AND expires_at > now()`, [clientId]);
+         AND expires_at > now()
+         ORDER BY expires_at DESC`, [clientId]);
 
     return rows[0];
 };
@@ -134,7 +135,17 @@ export const expireCart = async (cartId) => {
         `UPDATE cart SET expired = true 
          WHERE id = ?`, [cartId]
     )
-}
+};
+
+export const associateClientIdToCart = async (cartId, clientId) => {
+    if (!pool)
+        throw 'Missing database connection!';
+
+    const [rows, fields] = await pool.query(
+        `UPDATE cart SET client_id = ?, expires_at = expires_at
+         WHERE id = ?`, [clientId, cartId]
+    )
+};
 
 export const getProductFromCart = async (cartId, productId) => {
     if (!pool)
@@ -192,6 +203,7 @@ export default {
     getCartById, 
     getExpiredCarts,
     expireCart,
+    associateClientIdToCart,
     getProductsFromCart,
     getProductFromCart,
     addProduct, 

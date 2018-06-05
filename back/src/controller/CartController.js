@@ -3,121 +3,112 @@ import Database from "../database/database"
 import AuthTokenGenerator from "../utils/AuthTokenGenerator"
 
 export const createCart = async (token) => {
-    const decoded = AuthTokenGenerator.verify(token)
+    const user = AuthTokenGenerator.verify(token);
 
-    if(!decoded) {
-        return {
-            status: 403
-        }
-    }
-    
-    let cartId = await Database.createCart(decoded.cid);
+    const clientId = user ? user.cid : null;
+
+    let cartId = await Database.createCart(clientId);
 
     return {
         status: 200,
-        data: { cartId }
+        data: {cartId}
     }
-}
+};
 
-export const getCart = async (token, cartId) => {
-    const decoded = AuthTokenGenerator.verify(token)
+export const associateClient = async (token, cartId) => {
+    const user = AuthTokenGenerator.verify(token);
 
-    if(!decoded) {
-        return {
-            status: 403
-        }
-    }
-
-    const cart = await Database.getCartById(cartId)
+    const cart = await Database.getCartById(cartId);
     if (!cart) {
         return {
             status: 404
         }
-    } else if (cart.client_id !== decoded.cid) {
-        return {
-            status: 403
-        }
-    } else {
-        return {
-            status: 200,
-            data: cart
-        }
     }
-}
 
-export const reserveProduct = async (token, cartId, product) => {
-    const decoded = AuthTokenGenerator.verify(token)
+    const association = await checkUserToUseCart(token, user, cart);
+    if (association.status !== 200) {
+        return association;
+    }
 
-    if(!decoded) {
+    // associate user to cart if cart has no user
+    if (!cart.client_id) {
+        await Database.associateClientIdToCart(cart.id, user.cid);
         return {
-            status: 403
+            status: 200
         }
     }
 
-    const cart = await Database.getCartById(cartId)
+    return {
+        status: 403
+    }
+
+};
+
+export const reserveProduct = async (token, cartId, reservation) => {
+    const user = AuthTokenGenerator.verify(token);
+
+    const cart = await Database.getCartById(cartId);
     if (!cart) {
         return {
             status: 404
         }
-    } else if (cart.client_id !== decoded.cid) {
-        return {
-            status: 403
-        }
-    }  
+    }
 
-    const response = await ProductClient.reserveProduct(product.productId, product.amount)
+    const association = await checkUserToUseCart(token, user, cart);
+    if (association.status !== 200) {
+        return association;
+    }
 
-    if (response.status === 400 || response.status == 404) {
-        const code = response.status === 404 ? 1 : 2
+    const response = await ProductClient.reserveProduct(reservation.productId, reservation.amount);
+
+    if (response.status === 400 || response.status === 404) {
+        const code = response.status === 404 ? 1 : 2;
         return {
-            status: 400, 
+            status: 400,
             data: {
                 code
             }
         }
     }
 
-    const oldProduct = await Database.getProductFromCart(cartId, product.productId)
+    const oldProduct = await Database.getProductFromCart(cartId, reservation.productId);
 
     if (oldProduct) {
-        product.amount += oldProduct.amount
 
-        await Database.updateProduct(cartId, product.productId, product.amount)
+        reservation.amount = parseInt(reservation.amount) + parseInt(oldProduct.amount);
+
+        await Database.updateProduct(cartId, reservation.productId, reservation.amount)
+
     } else {
-        await Database.addProduct(cartId, product.productId, product.amount)
+        await Database.addProduct(cartId, reservation.productId, reservation.amount)
     }
 
     return {
         status: 200
     }
-}
+};
 
 export const releaseProduct = async (token, cartId, product) => {
-    const decoded = AuthTokenGenerator.verify(token)
+    const user = AuthTokenGenerator.verify(token);
 
-    if(!decoded) {
-        return {
-            status: 403
-        }
-    }
-
-    const cart = await Database.getCartById(cartId)
+    const cart = await Database.getCartById(cartId);
     if (!cart) {
         return {
             status: 404
         }
-    }  else if (cart.client_id !== decoded.cid) {
-        return {
-            status: 403
-        }
-    }  
+    }
 
-    const response = await ProductClient.releaseProduct(product.productId, product.amount)
+    const association = await checkUserToUseCart(token, user, cart);
+    if (association.status !== 200) {
+        return association;
+    }
 
-    if (response.status === 400 || response.status == 404) {
-        const code = response.status === 404 ? 1 : 2
+    const response = await ProductClient.releaseProduct(product.productId, product.amount);
+
+    if (response.status === 400 || response.status === 404) {
+        const code = response.status === 404 ? 1 : 2;
         return {
-            status: 400, 
+            status: 400,
             data: {
                 code
             }
@@ -127,7 +118,7 @@ export const releaseProduct = async (token, cartId, product) => {
     const oldProduct = await Database.getProductFromCart(cartId, product.productId)
 
     if (oldProduct) {
-        product.amount = oldProduct.amount - product.amount
+        product.amount = parseInt(oldProduct.amount) - parseInt(product.amount)
     }
 
     await Database.updateProduct(cartId, product.productId, product.amount)
@@ -135,22 +126,122 @@ export const releaseProduct = async (token, cartId, product) => {
     return {
         status: 200
     }
-}
+};
 
-// TODO
-export const checkout = async (token, cartId) => {
-    const decoded = AuthTokenGenerator.verify(token)
+export const getClientCartId = async (token) => {
+    const user = AuthTokenGenerator.verify(token)
 
-    if(!decoded) {
+    if (!user) {
         return {
             status: 403
         }
     }
 
+    const cart = await Database.getCartByClientId(user.cid);
+    if(!cart) {
+        return {
+            status: 404
+        }
+    }
+
+    let items = await Database.getProductsFromCart(cart.id);
+    items = items.reduce((acc, item) => acc + item.amount, 0);
+
+    return {
+        status: 200,
+        data: {
+            cartId: cart.id,
+            items: items
+        }
+    }
+};
+
+export const getCartById = async (token, cartId) => {
+    const user = AuthTokenGenerator.verify(token);
+
+    const cart = await Database.getCartById(cartId);
+
+    if (!cart) {
+        return {
+            status: 404
+        }
+    }
+
+    const association = await checkUserToUseCart(token, user, cart);
+    if (association.status !== 200) {
+        return association;
+    }
+
+    const reserves = await Database.getProductsFromCart(cartId);
+
+    const products = await Promise.all(reserves
+        .map(async p => {
+            const response = await ProductClient.getProduct(p.product_id);
+            const product = response.data;
+
+            if (!product || response.status !== 200) {
+                throw "couldnt find product";
+            }
+
+            return {
+                id: product.id,
+                name: product.name,
+                description: product.description,
+                price: product.price,
+                amount: p.amount,
+                brand: product.brand,
+                tags: product.tags,
+                categoryId: product.categoryId,
+                imageUrl: product.imageUrl,
+                weight: product.weight,
+                length: product.length,
+                width: product.width,
+                height: product.height
+            }
+        }));
+
+    return {
+        status: 200,
+        data: {
+            id: cart.id,
+            products: products
+        }
+    }
+};
+
+// TODO
+export const checkout = async (token, cartId) => {
+    const user = AuthTokenGenerator.verify(token)
+
+    if (!user) {
+        return {
+            status: 403
+        }
+    }
+
+    const cart = await Database.getCartById(cartId);
+    if (!cart) {
+        return {
+            status: 404
+        }
+    }
+
+    const association = await checkUserToUseCart(token, user, cart);
+    if (association.status !== 200) {
+        return association;
+    }
+
+    // TODO gerar codigo de rastreio com logistica
+    // TODO integrar com pagamentos
+    // TODO criar a compra
+    // TODO fechar carrinho para que ele nao possa expirar
+    // TODO enviar email
+
     return {
         status: 200
     }
-}
+};
+
 
 export const handleExpiredCarts = async () => {
 
@@ -163,17 +254,40 @@ export const handleExpiredCarts = async () => {
             await ProductClient.releaseProduct(product.id, product.amount)
 
             await Database.updateProduct(cart.id, product.id, 0)
-        })
+        });
 
         await Database.expireCart(cart.id)
     })
-}
+};
+
+export const checkUserToUseCart = async (token, user, cart) => {
+    if (token) {
+        if (!user) {
+            return {
+                status: 403
+            }
+        }
+
+        // check if cart belongs to another user
+        if (cart.client_id && cart.client_id !== user.cid) {
+            return {
+                status: 403
+            }
+        }
+    }
+
+    return {
+        status: 200
+    }
+};
 
 export default {
     createCart,
-    getCart,
+    associateClient,
     reserveProduct,
     releaseProduct,
     checkout,
-    handleExpiredCarts
+    handleExpiredCarts,
+    getCartById,
+    getClientCartId
 }

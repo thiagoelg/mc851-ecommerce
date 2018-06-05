@@ -107,7 +107,7 @@ class Product extends Component {
 
                     <Grid item xs={12}>
                         <br/>
-                        <Freight product={product}/>
+                        <Freight products={[product]}/>
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
