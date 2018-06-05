@@ -75,8 +75,9 @@ class Freight extends Component {
             const products = this.props.products;
 
             let adder = (acc, value) => acc + value;
+            let bigger = (val1, val2) => (val1 > val2) ? val1 : val2;
             const weight = products.map(p => p.weight).reduce(adder);
-            const length = products.map(p => p.length).reduce(adder);
+            const length = products.map(p => p.length).reduce(bigger);
             const height = products.map(p => p.height).reduce(adder);
             const width = products.map(p => p.width).reduce(adder);
 
