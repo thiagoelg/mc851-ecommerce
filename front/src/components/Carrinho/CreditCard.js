@@ -2,10 +2,8 @@ import React, {Component} from "react";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import TextField from '@material-ui/core/TextField';
 import {validateNotEmpty} from "../../util/Validators";
-import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import cardImage from '../Carrinho/cardImage.png'
-
 
 const installmentsOptions = [
   {
@@ -46,7 +44,7 @@ class CreditCard extends Component {
             monthValid: "",
             yearValid: "", 
             securityCode: "", 
-            installments: "", 
+            installments: "One", 
 
             wrongCardNumber: false,
             wrongIdentification: false,
@@ -54,7 +52,6 @@ class CreditCard extends Component {
             wrongYearValid: false,
             wrongSecurityCode: false,
 
-            states: []
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -225,12 +222,13 @@ class CreditCard extends Component {
                                fullWidth/>
                 </Grid>
                 <Grid item xs={4}>
-                    <img src={cardImage} alt="Security code image" style={{marginTop:36, marginLeft:20}} width="35" height="28"/>
+                    <img src={cardImage} alt="Security code" style={{marginTop:36, marginLeft:20}} width="35" height="28"/>
                 </Grid>
 
                 <Grid item xs={12}>
                     <br/>
                     <TextField
+                        name="installments"
                         select
                         value={this.state.installments}
                         onChange={this.handleChange}
