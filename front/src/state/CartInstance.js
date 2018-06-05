@@ -1,46 +1,27 @@
 import {getShippingOptions} from "../../clients/LogisticClient";
 
-class CartInstance {
+const LOCAL_STORAGE_ITEM_NAME = 'cart-id-ecommerce';
 
-    /**
-     * Builder.
-     * 
-     * Cria uma instância de carrinho, armazena nos cookies.
-     * 
-     * @param {user, products, timeout} params 
-     */
-    constructor({id, user, products, timeout}) {
-        this.id = id;
-        this.user = user;
-        this.products = products;
-        this.timeout = timeout;
-        this.created = Date.now();
-    }
+let cartInstance = (function() {
 
-    isExpired() {
-        if (Date.now() > this.created + this.timeout) {
-            return TRUE;
-        }
-    }
+    let id = null;
+    let user = null;
+    let products = null;
 
-    refresh() {
-        this.created = Date.now();
-    }
-
-    setUser(user) {
-        this.user = user;
-    }
+    let setUser = function(u) {
+        user = u;
+    };
     
-    getUser() {
-        return this.user;
-    }
+    let getUser = function() {
+        return user;
+    };
     
-    getProducts() {
-        return this.products;
+    let getProducts = function() {
+        return products;
     }
 
-    addProduct(product, quantity) {
-        this.products[] = {
+    let addProduct = function(product, quantity) {
+        products[] = {
             item: product,
             quantity: quantity
         };
