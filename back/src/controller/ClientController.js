@@ -75,11 +75,15 @@ export const login = async (params) => {
 
     const response = await ClientClient.getClient(user.clientId);
 
-    if (!response || response.status !== 200) {
+    if (response && response.status !== 200) {
         console.error("login error - status: " + response.status);
         return {
             status: response.status
         };
+    }
+    else if (!response) {
+        console.error("login error - non response");
+        return;
     }
 
     let client = response.data;

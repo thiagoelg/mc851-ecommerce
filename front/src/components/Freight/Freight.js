@@ -72,15 +72,34 @@ class Freight extends Component {
             loading: true,
             shippingOptions: []
         }, () => {
-            const product = this.props.product;
 
-            let params = {
-                destinyCep: this.state.cep,
-                weight: product.weight,
-                length: product.length,
-                height: product.height,
-                width: product.width
-            };
+            // Gets a CartInstance or a single product.
+            const cart = this.props.cart ? this.props.cart : null;
+            const product = this.props.product ? this.props.product : null;
+
+            let params = {};
+
+            if (cart) {
+                params = {
+                    destinyCep: this.state.cep,
+                    weight: cart.getWeight(),
+                    length: cart.getLenght(),
+                    height: cart.getHeight(),
+                    width: cart.getWidth()
+                }
+            }
+            else if(product) {
+                params = {
+                    destinyCep: this.state.cep,
+                    weight: product.weight,
+                    length: product.length,
+                    height: product.height,
+                    width: product.width
+                };
+            }
+            else {
+                return;
+            }
 
             getShippingOptions(params)
                 .then(response => {
