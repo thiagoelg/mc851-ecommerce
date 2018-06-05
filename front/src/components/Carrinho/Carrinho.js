@@ -19,6 +19,7 @@ import CardActions from "@material-ui/core/es/CardActions/CardActions";
 import Link from "../Link/Link";
 import Freight from "../Freight/Freight";
 import UserProfile from "../../state/UserProfile";
+import {initCart} from "../../clients/CartClient";
 import CartInstance from "../../state/CartInstance";
 
 
@@ -34,38 +35,25 @@ const styles = theme => ({
   },
 });
 
-let id = 0;
-function createData(produto, amount, preco) {
-  id += 1;
-  return { id, produto, amount, preco };
-}
-
-const data = [
-  createData('Panda', 1, 70.00),
-  createData('Panda', 1, 70.00),
-  createData('Panda', 1, 70.00),
-];
-
 class Cart extends Component {
   
   constructor(props) {
     super(props);
 
-    this.state = {
-      products: [],
-      amount: 1
-    }
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange(event) {
     const target = event.target;
     this.setState({[target.name]: event.target.value})
-    
   }
 
   componentWillMount() {
-    //CartInstance.init();
+    CartInstance.getProducts().then((products) => {
+      this.setState(
+        {products: products}
+      )
+    });
   }
 
   render() {
@@ -84,25 +72,28 @@ class Cart extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map(n => {
+            {this.state.products.forEach((product) => {
               return (
-                <TableRow key={n.id}>
+                <TableRow key={product.id}>
                   <TableCell component="th" scope="row">
                     <Grid container> 
+                      <Grid item xs={12} justify="center">
+                        <p>{product.name}</p>
+                      </Grid>
                       <Grid item xs={8} justify="center">
                         <div>
                           <img height={40} src={"https://media4.s-nbcnews.com/j/newscms/2016_36/1685951/ss-160826-twip-05_8cf6d4cb83758449fd400c7c3d71aa1f.nbcnews-ux-2880-1000.jpg"} alt="Panda"/>
                         </div>
                       </Grid>
                       <Grid item xs={4} justify="center">
-                        {n.produto}
+                        {product.produto}
                       </Grid>
                     </Grid> 
                   </TableCell>
                   <TableCell>
                     <TextField
                       id="amount"
-                      value={n.amount}
+                      value={product.amount}
                       name="amount"
                       onChange={this.handleChange}
                       type="number"
@@ -118,7 +109,7 @@ class Cart extends Component {
                     </IconButton>
                   </TableCell>
                   <TableCell numeric>
-                    <p>R$ {n.preco}</p>
+                    <p>R$ {product.preco}</p>
                   </TableCell>
                 </TableRow>
               );

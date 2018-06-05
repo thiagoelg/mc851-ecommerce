@@ -8,6 +8,7 @@ import Chip from "@material-ui/core/es/Chip/Chip";
 import Freight from "../Freight/Freight";
 import {getCategory, getProduct} from "../../clients/ProductsClient";
 import Typography from "@material-ui/core/es/Typography/Typography";
+import CartInstance from "../../state/CartInstance";
 
 class Product extends Component {
 
@@ -19,11 +20,16 @@ class Product extends Component {
             amount: 1
         };
         this.handleChange = this.handleChange.bind(this)
+        this.handleAddToCart = this.handleAddToCart.bind(this)
     }
 
     handleChange(event) {
         const target = event.target;
         this.setState({[target.name]: event.target.value})
+    }
+
+    handleAddToCart(event) {
+        CartInstance.addProduct(this.state.product.id, 1);
     }
 
     componentDidMount() {
@@ -96,7 +102,7 @@ class Product extends Component {
                         <Grid item xs={1}/>
                         <Grid item xs={9}>
                             <Link to="/carrinho">
-                                <Button variant="raised" color="secondary" style={{marginTop: '5%'}} disabled={product.stock === 0}>
+                                <Button variant="raised" color="secondary" style={{marginTop: '5%'}} disabled={product.stock === 0} onClick={this.handleAddToCart}>
                                     <ShoppingCart style={{marginRight: '10'}}/>
                                     Adicionar ao Carrinho
                                 </Button>
