@@ -19,6 +19,32 @@ export const createCart = async (token) => {
     }
 }
 
+export const getCart = async (token, cartId) => {
+    const decoded = AuthTokenGenerator.verify(token)
+
+    if(!decoded) {
+        return {
+            status: 403
+        }
+    }
+
+    const cart = await Database.getCartById(cartId)
+    if (!cart) {
+        return {
+            status: 404
+        }
+    } else if (cart.client_id !== decoded.cid) {
+        return {
+            status: 403
+        }
+    } else {
+        return {
+            status: 200,
+            data: cart
+        }
+    }
+}
+
 export const reserveProduct = async (token, cartId, product) => {
     const decoded = AuthTokenGenerator.verify(token)
 
@@ -145,6 +171,7 @@ export const handleExpiredCarts = async () => {
 
 export default {
     createCart,
+    getCart,
     reserveProduct,
     releaseProduct,
     checkout,

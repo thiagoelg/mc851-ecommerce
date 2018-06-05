@@ -18,6 +18,20 @@ router.post('/', async (req, res, next) => {
     }
 })
 
+router.get('/:cartId', async (req, res, next) => {
+    try {
+        let token = req.get("x-auth-token");
+        if (!token) {
+            return res.sendStatus(403)
+        }
+
+        let response = await CartController.getCart(token, req.params.cartId);
+        return res.status(response.status).json(response.data);
+    } catch (e) {
+        next(e)
+    }
+});
+
 router.post('/:cartId/book', async (req, res, next) => {
     try {
         let token = req.get("x-auth-token");

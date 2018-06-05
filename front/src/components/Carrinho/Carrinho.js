@@ -19,8 +19,7 @@ import CardActions from "@material-ui/core/es/CardActions/CardActions";
 import Link from "../Link/Link";
 import Freight from "../Freight/Freight";
 import UserProfile from "../../state/UserProfile";
-import { withCookies, Cookies } from 'react-cookie';
-import { instanceOf } from 'prop-types';
+import CartInstance from "../../state/CartInstance";
 
 
 
@@ -48,10 +47,6 @@ const data = [
 ];
 
 class Cart extends Component {
-
-  static propTypes = {
-    cookies: instanceOf(Cookies).isRequired
-  };
   
   constructor(props) {
     super(props);
@@ -70,15 +65,7 @@ class Cart extends Component {
   }
 
   componentWillMount() {
-    const { cookies } = this.props;
-    
-    if (cartId = cookies.get('cartId')) {
-      // TODO: Create a cart instance
-      this.state = {
-        cart: null
-      };
-    }
-
+    //CartInstance.init();
   }
 
   render() {

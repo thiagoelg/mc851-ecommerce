@@ -25,7 +25,7 @@ class NotFound extends Component {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} style={gridStyle}>
-                    <img src="/imgs/others/404.png" />
+                    <img src="/imgs/others/404.png"  alt=""/>
                 </Grid>
                 <Grid item xs={12} style={gridStyle}>
                     <Typography>

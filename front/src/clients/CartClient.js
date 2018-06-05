@@ -1,13 +1,16 @@
 import axios from 'axios'
 import ServerConfig from './ServerConfig'
+import UserProfile from '../state/UserProfile'
 
 const URL = ServerConfig.URL;
 
-export const getProducts = async (params) => {
+export const setCartClient = async (cartId, token) => {
     try {
 
-        const response = await axios.get(`${URL}/products`, {
-            params
+        const response = await axios.post(`${URL}/cart/${cartId}`, {}, {
+            headers: {
+                "x-auth-token": token
+            }
         });
 
         return {data: response.data, status: response.status};
@@ -17,11 +20,14 @@ export const getProducts = async (params) => {
     }
 };
 
-export const getProductsByFullSearch = async (params) => {
+export const getClientCartId = async () => {
     try {
 
-        const response = await axios.get(`${URL}/products/search`, {
-            params
+        let token = await UserProfile.getToken();
+        const response = await axios.get(`${URL}/cart`, {
+            headers: {
+                "x-auth-token": token
+            }
         });
 
         return {data: response.data, status: response.status};
@@ -31,11 +37,14 @@ export const getProductsByFullSearch = async (params) => {
     }
 };
 
-export const getCategories = async (params) => {
+export const getCartById = async (cartId) => {
     try {
 
-        const response = await axios.get(`${URL}/products/categories`, {
-            params
+        let token = await UserProfile.getToken();
+        const response = await axios.get(`${URL}/cart/${cartId}`, {
+            headers: {
+                "x-auth-token": token
+            }
         });
 
         return {data: response.data, status: response.status};
@@ -45,12 +54,14 @@ export const getCategories = async (params) => {
     }
 };
 
-
-export const getProduct = async (params) => {
+export const createCart = async () => {
     try {
 
-        const response = await axios.get(`${URL}/products/${params.id}`, {
-            params
+        let token = await UserProfile.getToken();
+        const response = await axios.post(`${URL}/cart`, {}, {
+            headers: {
+                "x-auth-token": token
+            }
         });
 
         return {data: response.data, status: response.status};
@@ -58,13 +69,19 @@ export const getProduct = async (params) => {
     } catch (e) {
         console.error(e);
     }
-};
+}
 
-export const getCategory = async (params) => {
+export const addProductToCart = async (cartId, productId, amount) => {
     try {
 
-        const response = await axios.get(`${URL}/products/categories/${params.id}`, {
-            params
+        let token = await UserProfile.getToken();
+        const response = await axios.post(`${URL}/cart/${cartId}/book`, {
+            productId: productId,
+            amount: amount
+        }, {
+            headers: {
+                "x-auth-token": token
+            },
         });
 
         return {data: response.data, status: response.status};
@@ -72,12 +89,34 @@ export const getCategory = async (params) => {
     } catch (e) {
         console.error(e);
     }
-};
+}
+
+export const removeProductFromCart = async (cartId, productId, amount) => {
+    try {
+
+        let token = await UserProfile.getToken();
+        const response = await axios.post(`${URL}/cart/${cartId}/unbook`, {
+            productId: productId,
+            amount: amount
+        }, {
+            headers: {
+                "x-auth-token": token
+            },
+        });
+
+        return {data: response.data, status: response.status};
+
+    } catch (e) {
+        console.error(e);
+    }
+}
+
 
 export default {
-    getProducts,
-    getProductsByFullSearch,
-    getCategories,
-    getProduct,
-    getCategory
+    setCartClient,
+    getClientCartId,
+    getCartById,
+    createCart,
+    addProductToCart,
+    removeProductFromCart
 }
