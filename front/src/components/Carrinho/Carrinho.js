@@ -49,11 +49,9 @@ class Cart extends Component {
   }
 
   componentWillMount() {
-    CartInstance.getProducts().then((products) => {
-      this.setState(
-        {products: products}
-      )
-    });
+    this.setState(
+      {products: CartInstance.getProducts()}
+    );
   }
 
   render() {
