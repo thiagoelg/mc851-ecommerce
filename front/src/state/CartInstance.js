@@ -1,5 +1,5 @@
 import {getShippingOptions} from "../clients/LogisticClient";
-import {initCart, setCartClient, addProductToCart, removeProductFromCart} from "../clients/CartClient";
+import {initCart, setCartClient, addProductToCart, removeProductFromCart, getCartById} from "../clients/CartClient";
 
 const LOCAL_STORAGE_CART_ITEM_NAME = 'cart-id-ecommerce';
 
@@ -24,22 +24,18 @@ let CartInstance = (function() {
         setCartClient(id, user);
     };
     
-    let getProducts = function() {
-        return products;
+    let getProducts = async() => {
+        let response = await getCartById(getId());
+        return response.data.products;
     };
 
-    let refresh = function() {
-        init(id);
-    }
 
     let addProduct = async(product, amount) => {
         await addProductToCart(id, product, amount);
-        refresh();
     };
 
     let removeProduct = async(product, amount) => {
         await removeProductFromCart(id, product, amount);
-        refresh();
     };
 
     const cartId = localStorage.getItem(LOCAL_STORAGE_CART_ITEM_NAME);

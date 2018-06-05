@@ -52,9 +52,7 @@ class Cart extends Component {
   }
 
   componentDidMount() {
-    this.setState(
-      {products: CartInstance.getProducts()}
-    );
+    CartInstance.getProducts().then((products) => { this.setState({products: products})});
   }
 
   render() {
@@ -73,7 +71,7 @@ class Cart extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.products.forEach((product) => {
+            {this.state.products.map((product) => {
               return (
                 <TableRow key={product.id}>
                   <TableCell component="th" scope="row">
@@ -83,7 +81,7 @@ class Cart extends Component {
                       </Grid>
                       <Grid item xs={8} justify="center">
                         <div>
-                          <img height={40} src={"https://media4.s-nbcnews.com/j/newscms/2016_36/1685951/ss-160826-twip-05_8cf6d4cb83758449fd400c7c3d71aa1f.nbcnews-ux-2880-1000.jpg"} alt="Panda"/>
+                          <img height={40} src={product.imageUrl} alt=""/>
                         </div>
                       </Grid>
                       <Grid item xs={4} justify="center">
@@ -110,7 +108,7 @@ class Cart extends Component {
                     </IconButton>
                   </TableCell>
                   <TableCell numeric>
-                    <p>R$ {product.preco}</p>
+                    <p>R$ {parseFloat(product.price).toFixed(2)}</p>
                   </TableCell>
                 </TableRow>
               );
