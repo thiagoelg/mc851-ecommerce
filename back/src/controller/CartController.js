@@ -1,6 +1,9 @@
 import ProductClient from '../service/produtos_client'
 import Database from "../database/database"
 import AuthTokenGenerator from "../utils/AuthTokenGenerator"
+import LogisticaClient from '../service/logistica_client'
+import PaymentClient from '../service/pagamento_client'
+import EnderecoClient from '../service/endereco_client'
 
 export const createCart = async (token) => {
     const user = AuthTokenGenerator.verify(token);
@@ -210,7 +213,7 @@ export const getCartById = async (token, cartId) => {
 };
 
 // TODO
-export const checkout = async (token, cartId) => {
+export const checkout = async (token, cartId, data) => {
     const user = AuthTokenGenerator.verify(token)
 
     if (!user) {
@@ -231,17 +234,152 @@ export const checkout = async (token, cartId) => {
         return association;
     }
 
-    // TODO gerar codigo de rastreio com logistica
-    // TODO integrar com pagamentos
-    // TODO criar a compra
-    // TODO fechar carrinho para que ele nao possa expirar
+    const address = EnderecoClient.getCEP(data.shipping.address.cep)
+    if (address.status !== 200 || !address.data) {
+        return {
+            status: 400,
+            data: {
+                code: 2
+            }
+        }
+    }
+
+    const products = getProductsTO(cartId)
+
+    if (parseInt(data.payment.price) !== await getTotalPrice(products)) {
+        return {
+            status: 400,
+            data: {
+                code: 3
+            }
+        }
+    }
+
+    // PAYMENT
+    let paymentData
+    let paymentResponse
+
+    if (data.payment.boleto) {
+        const paymentData = {
+            clientName: data.payment.name,
+            cpf: data.payment.name,
+            address: data.payment.address,
+            cep: data.payment.cep,
+            value: data.payment.price
+        }
+        paymentResponse = await PaymentClient.paymentByBankTicket(paymentData)
+     
+    } else {
+        paymentData = {
+            clientCardName: data.payment.card.name,
+            cpf: data.payment.card.cpf,
+            cardNumber: data.payment.card.number,
+            month: data.payment.card.expiryMonth,
+            year: data.payment.card.expiryYear,
+            securityCode: data.payment.card.cvc,
+            value: data.payment.price,
+            instalments: data.payment.card.installments
+        }
+
+        paymentResponse = await PaymentClient.paymentByCreditCard(paymentData)
+    }    
+    if (paymentResponse.status !== 200) {
+        return {
+            status: 404
+        }
+    }
+    if (paymentResponse.data.result === "UNAUTHORIZED") {
+        return {
+            status: 400,
+            data: {
+                code: 1
+            }
+        }
+    }
+
+    let paymentResultCode
+    if (data.payment.boleto) {
+        paymentResultCode = paymentResponse.data.code
+    } else {
+        paymentResultCode = paymentResponse.data.operationHash
+    }
+
+    // SHIPPING
+    const measures = await calculateMeasures(cartId)
+    const shippingData = {
+        tipoEntrega: data.shipping.type,
+        cepOrigem: '13083-852',
+        cepDestino: data.shipping.address.cep,
+        peso: measures.weight,
+        tipoPacote: 'Caixa',
+        comprimento: measures.length,
+        altura: measures.height,
+        largura: measures.width
+    }
+
+    const trackingResponse = await LogisticaClient.postShipment(shippingData)
+    if (trackingResponse.status !== 200) {
+        return {
+            status: 404
+        }
+    }
+
+    // CREATE PURCHASE
+    const purchaseId = Database.createPurchase(cartId, user.cid, 1, trackingResponse.codigoRastreio, paymentResultCode)
+
+    Database.expireCart(cartId)
+    
     // TODO enviar email
 
     return {
-        status: 200
+        status: 200,
+        data: {
+            purchaseId 
+        }
     }
 };
 
+getProductsTO = async (cartId) => {
+    const reserves = await Database.getProductsFromCart(cartId);
+
+    const products = await Promise.all(reserves
+        .map(async p => {
+            const response = await ProductClient.getProduct(p.product_id);
+            const product = response.data;
+
+            if (!product || response.status !== 200) {
+                throw "couldnt find product";
+            }
+
+            return {
+                id: product.id,
+                price: product.price,
+                amount: p.amount,
+                weight: product.weight,
+                length: product.length,
+                width: product.width,
+                height: product.height
+            }
+        }))
+    return products
+}
+
+getTotalPrice = async (products) => {
+    let sum = 0
+    products.forEach(product => {
+        sum = (parseInt(parseFloat(product.price) * 100.0) * parseInt(product.amount)) + sum
+    })
+
+    return sum
+}
+
+calculateMeasures = async (products) => {
+    let measures = {}
+    measures.weight = products.map(product => product.weight).reduce((a, b) => a + b)
+    measures.height = products.map(product => product.height).reduce((a, b) => a + b)
+    measures.width = products.map(product => product.width).reduce((a, b) => a + b)
+    measures.length = Math.max(...products.map(product => product.length))
+}
 
 export const handleExpiredCarts = async () => {
 
