@@ -13,6 +13,9 @@ import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProg
 import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
+import Radio from "@material-ui/core/es/Radio/Radio";
+import MoneyFormatter from "../Formatters/MoneyFormatter";
+import {validateCep} from "../../util/Validators";
 
 class Freight extends Component {
 
@@ -21,18 +24,63 @@ class Freight extends Component {
 
         this.state = {
             cep: '',
-            valid: false,
+            shipping: {},
+            valid: true,
             open: false,
 
             loading: false,
-            shippingOptions: []
+            shippingOptions: [],
+
+            firstTimeReceiveProps: true
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleOkClick = this.handleOkClick.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleShippingClick = this.handleShippingClick.bind(this);
+        this.selectShippingCallback = this.selectShippingCallback.bind(this);
 
+    }
+
+    handleShippingClick(shipping) {
+        if (!this.props.enableSelection)
+            return;
+
+        const shippingOptions = this.setShippingAsSelected(shipping);
+
+        this.setState({
+                shippingOptions: shippingOptions,
+                shipping: shipping
+            }, () => this.invokeOnChange()
+        )
+    }
+
+    setShippingAsSelected(shipping) {
+        return this.state.shippingOptions.map(s => {
+            let newShipping = {
+                type: s.type,
+                price: s.price,
+                deliveryTime: s.deliveryTime,
+                selected: false
+            };
+
+            if (newShipping.type === shipping.type) {
+                newShipping.selected = true;
+            }
+
+            return newShipping
+        });
+    }
+
+    invokeOnChange() {
+        if (this.props.onChange) {
+            this.props.onChange({
+                name: this.props.name,
+                value: this.state.shipping,
+                cep: this.state.cep
+            });
+        }
     }
 
     handleChange(e) {
@@ -41,11 +89,11 @@ class Freight extends Component {
         this.setState({
             [target.name]: target.value,
             valid: target.valid
-        });
+        }, () => this.invokeOnChange());
     }
 
     handleKeyPress(e) {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && !this.state.loading) {
             this.getShippingOptions();
         }
     }
@@ -54,14 +102,81 @@ class Freight extends Component {
         this.getShippingOptions();
     }
 
+    componentDidMount() {
+        this.selectCepAndShippingParameters(this.selectShippingCallback)
+    }
+
+    selectShippingCallback() {
+        const shipping = this.props.shipping;
+
+        if (shipping) {
+            const foundOption = this.state.shippingOptions
+                .filter(sh => sh.type === shipping.type &&
+                    sh.price === shipping.price &&
+                    sh.deliveryTime === shipping.deliveryTime)[0];
+
+            if (foundOption) {
+                const shippingOptions = this.setShippingAsSelected(shipping);
+
+                this.setState({
+                    shippingOptions: shippingOptions,
+                    shipping: shipping
+                });
+            }
+        }
+    }
+
+    selectCepAndShippingParameters(callback) {
+
+            this.setState({
+                cep: this.props.cep,
+                valid: validateCep(this.props.cep),
+                shippingOptions: [],
+                shipping: {},
+            }, () => {
+                if (this.state.valid) {
+                    this.getShippingOptions(callback);
+                }
+            });
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.cep && this.props.cep !== prevProps.cep) {
+            this.selectCepAndShippingParameters(this.selectShippingCallback)
+        }
+
+        if (!prevProps.products ||
+            Object.keys(prevProps.products[0]).length === 0 ||
+            !prevState.shippingOptions ||
+            prevState.shippingOptions.length === 0) {
+            return;
+        }
+
+        const addedOrRemovedAnyProduct = this.props.products.length !== prevProps.products.length;
+
+        const addedOrRemoveAmountOfAnyProduct = this.props.products.some(product => {
+            let newProduct = prevProps.products.filter(p => p.id === product.id)[0];
+            return newProduct.amount !== product.amount;
+        });
+
+
+        if (addedOrRemovedAnyProduct ||
+            addedOrRemoveAmountOfAnyProduct) {
+            this.getShippingOptions();
+        }
+    }
+
     handleClose = () => {
         this.setState({
             open: false
         });
     };
 
-    getShippingOptions() {
-        if(!this.state.valid) {
+    getShippingOptions(callback) {
+        const products = this.props.products;
+
+        if (!this.state.valid) {
             this.setState({
                 open: true
             });
@@ -70,15 +185,22 @@ class Freight extends Component {
 
         this.setState({
             loading: true,
-            shippingOptions: []
+            shippingOptions: [],
+            shipping: {}
         }, () => {
-            const products = this.props.products;
+            let amount = p => {
+                if (!p.amount) {
+                    return 1;
+                }
+
+                return p.amount;
+            };
 
             let adder = (acc, value) => acc + value;
-            const weight = products.map(p => p.weight).reduce(adder);
-            const length = products.map(p => p.length).reduce(adder);
-            const height = products.map(p => p.height).reduce(adder);
-            const width = products.map(p => p.width).reduce(adder);
+            const weight = products.map(p => p.weight * amount(p)).reduce(adder);
+            const length = products.map(p => p.length * amount(p)).reduce(adder);
+            const height = products.map(p => p.height * amount(p)).reduce(adder);
+            const width = products.map(p => p.width * amount(p)).reduce(adder);
 
             let params = {
                 destinyCep: this.state.cep,
@@ -90,10 +212,20 @@ class Freight extends Component {
 
             getShippingOptions(params)
                 .then(response => {
+                    const data = response.data;
+                    const shippingOptions = data.map(s => {
+                        return {
+                            type: s.type,
+                            price: s.price,
+                            deliveryTime: s.deliveryTime,
+                            selected: false
+                        }
+                    });
+
                     this.setState({
                         loading: false,
-                        shippingOptions: response.data
-                    })
+                        shippingOptions: shippingOptions
+                    }, () => callback && callback())
                 })
                 .catch(error => {
                     //TODO treat error
@@ -130,19 +262,25 @@ class Freight extends Component {
                         ]}
                     />
                 </Grid>
-                <Grid item xs={4} style={{paddingTop: 10}}>
-                    <p>
-                        Calcular Frete e Prazo:
-                    </p>
-                </Grid>
-                <Grid item xs={4}>
+                {this.props.label && (
+                    <Grid item xs={4} style={{paddingTop: 10}}>
+                        <p>
+                            {this.props.label}
+                        </p>
+                    </Grid>
+                )}
+                <Grid item xs={this.props.label ? 4 : 9}>
                     <CepInput name="cep"
                               value={this.state.cep}
                               onChange={this.handleChange}
-                              onKeyPress={this.handleKeyPress}/>
+                              onKeyPress={this.handleKeyPress}
+                              disabled={this.props.disableCep}/>
                 </Grid>
                 <Grid item xs={3} style={{paddingTop: 10}}>
-                    <Button variant="raised" color="default" onClick={this.handleOkClick}>
+                    <Button variant="raised"
+                            color="default"
+                            disabled={this.state.loading || this.props.disableCep}
+                            onClick={this.handleOkClick}>
                         OK
                     </Button>
                 </Grid>
@@ -159,30 +297,45 @@ class Freight extends Component {
                         </Fade>
                     )}
 
-                    {this.state.shippingOptions.length > 0 &&
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Tipo</TableCell>
-                                <TableCell>Preço</TableCell>
-                                <TableCell>Prazo</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.state.shippingOptions.map(shipping => {
-                                return (
-                                    <TableRow key={shipping.id}>
-                                        <TableCell component="th" scope="row">
-                                            {shipping.type}
-                                        </TableCell>
-                                        <TableCell numeric>R$ {parseFloat(shipping.price / 100).toFixed(2)}</TableCell>
-                                        <TableCell numeric>{shipping.deliveryTime}</TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                    }
+                    {this.state.shippingOptions.length > 0 && (
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    {this.props.enableSelection && (
+                                        <TableCell/>
+                                    )}
+                                    <TableCell>Tipo</TableCell>
+                                    <TableCell>Preço</TableCell>
+                                    <TableCell>Prazo</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {this.state.shippingOptions.map(shipping => {
+                                    return (
+                                        <TableRow key={shipping.type} hover
+                                                  onClick={e => this.handleShippingClick(shipping)}>
+                                            {this.props.enableSelection && (
+                                                <TableCell>
+                                                    <Radio
+                                                        id={shipping.id}
+                                                        checked={shipping.selected}/>
+                                                </TableCell>
+                                            )}
+                                            <TableCell component="th" scope="row">
+                                                {shipping.type}
+                                            </TableCell>
+                                            <TableCell numeric>
+                                                <MoneyFormatter value={shipping.price / 100}/>
+                                            </TableCell>
+                                            <TableCell numeric>
+                                                {shipping.deliveryTime} dias úteis
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    )}
 
                 </Grid>
             </Grid>

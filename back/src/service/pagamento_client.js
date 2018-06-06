@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const REQUEST_TIMEOUT = 30000
-const PAGAMENTO_URL = "https://payment-server-mc851.herokuapp.com/"
+const PAGAMENTO_URL = "https://payment-server-mc851.herokuapp.com"
 
 export const paymentByCreditCard = async (payment) => {
     try {
