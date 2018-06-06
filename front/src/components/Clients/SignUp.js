@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
 import ClientBasicForm from "./ClientBasicForm";
 import PasswordForm from "./PasswordForm";
+import {cart} from "../../cart/Cart";
 
 
 class SignUp extends Component {
@@ -61,7 +62,11 @@ class SignUp extends Component {
         register(params)
             .then(response => {
                 UserProfile.set(response.headers["x-auth-token"]);
-                this.props.history.push('/')
+                cart.addClient()
+                    .then(result => {
+                        console.log(result);
+                        this.props.history.goBack();
+                    });
             })
             .catch(error => {
                 if (error.response && error.response.status === 400) {

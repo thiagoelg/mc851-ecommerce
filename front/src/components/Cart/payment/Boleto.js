@@ -1,16 +1,16 @@
 import React, {Component} from "react";
 import Grid from "@material-ui/core/es/Grid/Grid";
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import MoneyFormatter from "../../Formatters/MoneyFormatter";
 
-class Ticket extends Component {
-    
-     render() {
+class Boleto extends Component {
+
+    render() {
         return (
             <Grid container>
                 <Grid item xs={12}>
                     <Typography variant="title">
-                        <b>R$ 210,00</b>
+                        <b><MoneyFormatter value={this.props.price}/></b>
                     </Typography>
                 </Grid>
                 <p></p>
@@ -20,16 +20,11 @@ class Ticket extends Component {
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                        <p></p>
+                    <p></p>
                 </Grid>
-                <Grid item xs={12} align="right">
-                    <Button variant="raised" color="secondary">
-                        Concluir pedido
-                    </Button>
-                </Grid> 
             </Grid>
         );
     }
 }
 
-export default Ticket;
+export default Boleto;

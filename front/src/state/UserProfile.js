@@ -1,3 +1,5 @@
+import {cart} from "../cart/Cart";
+
 const jwt = require('jsonwebtoken');
 
 const LOCAL_STORAGE_ITEM_NAME = 'auth-token-ecommerce';
@@ -33,11 +35,22 @@ let UserProfile = (function () {
     };
 
     let getToken = function () {
-        return token;
+        if(isLogged()) {
+            return token;
+        }
     };
 
     let isLogged = function () {
         return logged;
+    };
+
+    let getAuthHeader = function () {
+        let headers = {};
+        if(isLogged()) {
+            headers["x-auth-token"] = token;
+        }
+
+        return headers;
     };
 
     let set = function (t) {
@@ -61,6 +74,7 @@ let UserProfile = (function () {
         token = null;
         logged = false;
         localStorage.removeItem(LOCAL_STORAGE_ITEM_NAME);
+        cart.clear();
     };
 
     const savedToken = localStorage.getItem(LOCAL_STORAGE_ITEM_NAME);
@@ -76,6 +90,7 @@ let UserProfile = (function () {
         getCpf: getCpf,
         getToken: getToken,
         isLogged: isLogged,
+        getAuthHeader: getAuthHeader,
         set: set,
         clear: clear
     }

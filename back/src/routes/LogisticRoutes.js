@@ -39,7 +39,7 @@ router.get('/shipping', async (req, res, next) => {
             allShipping.push({
                 price: shipping.preco,
                 type: shippingType,
-                //TODO deliveryTime
+                deliveryTime: shipping.prazo
             });
 
         }
