@@ -1,20 +1,20 @@
 import LogisticClient from '../service/logistica_client'
 
-export const getShipment = async (params) => {
+export const getShipments = async (params) => {
 
-    const response = await LogisticClient.getShipment(params)
+    const response = await LogisticClient.getShipments(params)
 
     if (!response || response.status != 200) {
-        console.error("getShipment error - status: " + response.status)
+        console.error("getShipments error - status: " + response.status)
         return 0
     }
 
     return response.data
 }
 
-export const getTracking = async (params, codRastreio) => {
+export const getTracking = async (codRastreio) => {
 
-    const response = await LogisticClient.getTracking(params, codRastreio)
+    const response = await LogisticClient.getTracking(codRastreio)
 
     if (!response || response.status != 200) {
         console.error("getTracking error - status: " + response.status)
@@ -37,7 +37,7 @@ export const postShipment = async (info) => {
 }
 
 export default {
-    getShipment,
+    getShipments,
     getTracking,
     postShipment,
 }
