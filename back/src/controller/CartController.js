@@ -264,7 +264,7 @@ export const checkout = async (token, cartId, data) => {
     if (data.payment.boleto) {
         const paymentData = {
             clientName: data.payment.name,
-            cpf: data.payment.name,
+            cpf: data.payment.cpf,
             address: data.payment.address,
             cep: data.payment.cep,
             value: data.payment.price
@@ -274,7 +274,7 @@ export const checkout = async (token, cartId, data) => {
     } else {
         paymentData = {
             clientCardName: data.payment.card.name,
-            cpf: data.payment.card.cpf,
+            cpf: data.payment.cpf,
             cardNumber: data.payment.card.number,
             month: data.payment.card.expiryMonth,
             year: data.payment.card.expiryYear,

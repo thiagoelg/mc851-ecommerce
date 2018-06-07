@@ -6,6 +6,7 @@ CREATE TABLE `purchase` (
     price int,
     shippingCode VARCHAR(255),
     paymentCode VARCHAR(255),
+    bankTicketText TEXT,
     createdAt TIMESTAMP
 
     PRIMARY KEY(id)
