@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-import Body from '../Body/Body';
-import Header from '../Header/Header'
-import Footer from '../Footer/Footer'
-import {Grid} from "@material-ui/core";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import {createMuiTheme} from "@material-ui/core/styles/index";
 import Boleto from "../Purchase/Boleto/Boleto";

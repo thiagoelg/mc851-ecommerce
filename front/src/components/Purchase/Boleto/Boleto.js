@@ -54,7 +54,7 @@ class Boleto extends Component {
                             <td colSpan={11} className="BoletoPontilhado">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td colSpan={4} className="BoletoLogo"><img src='/imgs/others/caixa.jpg'/></td>
+                            <td colSpan={4} className="BoletoLogo"><img src='/imgs/others/caixa.jpg' alt="caixa"/></td>
                             <td colSpan={2} className="BoletoCodigoBanco">104-0</td>
                             <td colSpan={6} className="BoletoLinhaDigitavel">LinhaDigitavel</td>
                         </tr>
@@ -179,7 +179,7 @@ class Boleto extends Component {
                             <td colSpan={11} className="BoletoPontilhado">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td colSpan={4} className="BoletoLogo"><img src='/imgs/others/caixa.jpg'/></td>
+                            <td colSpan={4} className="BoletoLogo"><img src='/imgs/others/caixa.jpg' alt="caixa"/></td>
                             <td colSpan={2} className="BoletoCodigoBanco">104-0</td>
                             <td colSpan={6} className="BoletoLinhaDigitavel">LinhaDigitavel</td>
                         </tr>

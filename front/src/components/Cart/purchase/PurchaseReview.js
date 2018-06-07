@@ -6,10 +6,6 @@ import PaymentSummary from "./PaymentSummary";
 
 class PurchaseReview extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <Grid container spacing={24}>
