@@ -26,11 +26,13 @@ export const getShipment = async (params) => {
     }
 };
 
-export const getTracking = async (params, codRastreio) => {
+export const getTracking = async (codRastreio) => {
 
     try {
         const response = await axios.get(`${LOGISTICA_URL}/rastrearentrega/${codRastreio}`, {
-            params
+            params: {
+                apiKey: API_KEY
+            }
         });
 
         return {data : response.data, status: response.status}

@@ -3,9 +3,10 @@ CREATE TABLE `purchase` (
     cartId int NOT NULL REFERENCES cart(id),
     clientId VARCHAR(255),
     status int NOT NULL,
-    trackingCode VARCHAR(255),
+    price int,
+    shippingCode VARCHAR(255),
     paymentCode VARCHAR(255),
-    createdTime TIMESTAMP
+    createdAt TIMESTAMP
 
     PRIMARY KEY(id)
 );

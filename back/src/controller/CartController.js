@@ -4,6 +4,7 @@ import AuthTokenGenerator from "../utils/AuthTokenGenerator"
 import LogisticaClient from '../service/logistica_client'
 import PaymentClient from '../service/pagamento_client'
 import EnderecoClient from '../service/endereco_client'
+import PurchaseController from './PurchaseController'
 
 export const createCart = async (token) => {
     const user = AuthTokenGenerator.verify(token);
@@ -245,8 +246,9 @@ export const checkout = async (token, cartId, data) => {
     }
 
     const products = getProductsTO(cartId)
+    const price = parseInt(data.payment.price)
 
-    if (parseInt(data.payment.price) !== await getTotalPrice(products)) {
+    if (price !== await getTotalPrice(products)) {
         return {
             status: 400,
             data: {
@@ -297,10 +299,12 @@ export const checkout = async (token, cartId, data) => {
         }
     }
 
+    let status = PurchaseController.STATUS_PURCHASE.order_ok
     let paymentResultCode
     if (data.payment.boleto) {
         paymentResultCode = paymentResponse.data.code
     } else {
+        status = PurchaseController.STATUS_PURCHASE.payment_approved
         paymentResultCode = paymentResponse.data.operationHash
     }
 
@@ -325,7 +329,7 @@ export const checkout = async (token, cartId, data) => {
     }
 
     // CREATE PURCHASE
-    const purchaseId = Database.createPurchase(cartId, user.cid, 1, trackingResponse.codigoRastreio, paymentResultCode)
+    const purchaseId = Database.createPurchase(cartId, user.cid, status, price, trackingResponse.codigoRastreio, paymentResultCode)
 
     Database.expireCart(cartId)
     
