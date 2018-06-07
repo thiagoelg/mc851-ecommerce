@@ -6,6 +6,10 @@ import Footer from '../Footer/Footer'
 import {Grid} from "@material-ui/core";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import {createMuiTheme} from "@material-ui/core/styles/index";
+import Boleto from "../Purchase/Boleto/Boleto";
+import Route from "react-router-dom/es/Route";
+import Switch from "react-router-dom/es/Switch";
+import GlobalLayout from "./GlobalLayout";
 
 
 class App extends Component {
@@ -31,15 +35,10 @@ class App extends Component {
         return (
             <MuiThemeProvider theme={theme}>
                 <div style={{padding: 20}}>
-                    <Grid container spacing={24}>
-                        <Header/>
-                    </Grid>
-                    <Grid container spacing={24}>
-                        <Body/>
-                    </Grid>
-                    <Grid container spacing={24}>
-                        <Footer/>
-                    </Grid>
+                    <Switch>
+                        <Route exact path='/boleto' component={Boleto}/>
+                        <Route component={GlobalLayout}/>
+                    </Switch>
                 </div>
             </MuiThemeProvider>
         );

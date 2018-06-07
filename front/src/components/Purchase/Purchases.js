@@ -4,8 +4,6 @@ import Typography from "@material-ui/core/es/Typography/Typography";
 import {getPurchases, PURCHASE_STATUS_LABEL} from "../../clients/PurchaseClient";
 import List from "@material-ui/core/es/List/List";
 import ListItem from "@material-ui/core/es/ListItem/ListItem";
-import Avatar from "@material-ui/core/es/Avatar/Avatar";
-import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
 import MoneyFormatter from "../Formatters/MoneyFormatter";
 import Divider from "@material-ui/core/es/Divider/Divider";
 import Card from "@material-ui/core/es/Card/Card";
