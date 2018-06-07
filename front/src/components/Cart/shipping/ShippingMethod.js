@@ -46,6 +46,7 @@ class ShippingMethod extends Component {
                 city: address.city,
                 state: address.state,
                 complement: address.complement,
+                validAddress: true,
 
                 hasAddress: !!address
             });

@@ -16,6 +16,7 @@ import {CartResult} from "../../cart/CartResult";
 import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
+import {scrollToTop} from "../../util/ScrollUtils";
 
 const styles = theme => ({
     backButton: {
@@ -189,6 +190,7 @@ class Checkout extends Component {
     }
 
     handleNext() {
+        scrollToTop();
         const {activeStep} = this.state;
         this.setState({
             activeStep: activeStep + 1,
@@ -196,6 +198,7 @@ class Checkout extends Component {
     };
 
     handleBack() {
+        scrollToTop();
         const {activeStep} = this.state;
 
         this.setState({
@@ -208,12 +211,14 @@ class Checkout extends Component {
     }
 
     handleShippingClick() {
+        scrollToTop();
         this.setState({
             activeStep: 0,
         });
     }
 
     handlePaymentClick() {
+        scrollToTop();
         this.setState({
             activeStep: 1,
         });
