@@ -343,7 +343,7 @@ export const checkout = async (token, cartId, data) => {
     }
 };
 
-getProductsTO = async (cartId) => {
+const getProductsTO = async (cartId) => {
     const reserves = await Database.getProductsFromCart(cartId);
 
     const products = await Promise.all(reserves
@@ -368,7 +368,7 @@ getProductsTO = async (cartId) => {
     return products
 }
 
-getTotalPrice = async (products) => {
+const getTotalPrice = async (products) => {
     let sum = 0
     products.forEach(product => {
         sum = (parseInt(parseFloat(product.price) * 100.0) * parseInt(product.amount)) + sum
@@ -377,7 +377,7 @@ getTotalPrice = async (products) => {
     return sum
 }
 
-calculateMeasures = async (products) => {
+const calculateMeasures = async (products) => {
     let measures = {}
     measures.weight = products.map(product => product.weight).reduce((a, b) => a + b)
     measures.height = products.map(product => product.height).reduce((a, b) => a + b)

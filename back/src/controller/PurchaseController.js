@@ -36,7 +36,7 @@ export const getPurchases = async (token) => {
     }
 
     let response = []
-    purchases.forEach((purchase) => {
+    purchases.forEach(async (purchase) => {
         const reserves = await Database.getProductsFromCart(purchase.cartId)
 
         const products = await Promise.all(reserves
