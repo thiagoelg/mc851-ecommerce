@@ -38,6 +38,7 @@ app.use('/logistic', LogisticRoutes);
 app.use('/user', ClientRoutes);
 app.use('/address', AddressRoutes);
 app.use('/cart', CartRoutes)
+app.use('/purchase', PurchaseRoutes)
 app.use('/sac', SacRoutes);
 app.use('/payment', PaymentRoutes);
 app.use('/purchase', PurchaseRotues)

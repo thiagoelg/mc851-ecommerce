@@ -10,6 +10,7 @@ import Pagination from "../Pagination/Pagination";
 import Grid from "@material-ui/core/es/Grid";
 import {getProducts, getProductsByFullSearch} from "../../clients/ProductsClient";
 import Link from "../Link/Link";
+import MoneyFormatter from "../Formatters/MoneyFormatter";
 
 class Products extends Component {
 
@@ -86,7 +87,7 @@ class Products extends Component {
                         style={{maxHeight: '100%', maxWidth: '100%', margin: '0 auto', display: 'block'}}/>
                     <GridListTileBar
                         title={product.name}
-                        subtitle={<span>Por R${product.price}</span>}
+                        subtitle={<span>Por <MoneyFormatter value={product.price}/></span>}
                         actionIcon={
                             <IconButton>
                                 <InfoIcon/>

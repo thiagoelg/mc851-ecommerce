@@ -1,5 +1,4 @@
 import express from 'express'
-
 import PurchaseController from '../controller/PurchaseController'
 
 const router = express.Router();

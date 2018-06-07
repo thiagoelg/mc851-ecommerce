@@ -49,7 +49,7 @@ class Profile extends Component {
         const address = user.address;
 
         return (
-            <div style={{display: "flex"}}>
+            <div style={{display: "flex", justifyContent: "center"}}>
                 <Card style={cardStyle}>
                     <CardContent>
                         <Grid container>

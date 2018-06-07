@@ -31,6 +31,15 @@ class AddressForm extends Component {
             wrongState: false,
             wrongComplement: false,
 
+            touchedIdentification: false,
+            touchedCep: false,
+            touchedStreet: false,
+            touchedNumber: false,
+            touchedNeighborhood: false,
+            touchedCity: false,
+            touchedState: false,
+            touchedComplement: false,
+
             states: []
         };
 
@@ -41,12 +50,16 @@ class AddressForm extends Component {
         const target = e.target;
         const name = target.name;
 
+        let capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
+        const touchedFieldName = "touched" + capitalizedName;
+
         this.setState({
-            [name]: target.value
+            [name]: target.value,
+            [touchedFieldName]: true
         }, () => {
 
             const validationResult = this.validateFields([name]);
-            const wrongFieldName = 'wrong' + name.charAt(0).toUpperCase() + name.slice(1);
+            const wrongFieldName = 'wrong' + capitalizedName;
 
             this.setState({
                 [wrongFieldName]: validationResult[wrongFieldName],
@@ -180,7 +193,7 @@ class AddressForm extends Component {
             complement: props.complement,
         }, () => {
 
-            if(props.edit) {
+            if (props.edit) {
                 const validationResult = this.validateFields(
                     ["identification", "cep", "street", "number", "neighborhood", "city", "state", "complement"]);
 
@@ -193,6 +206,14 @@ class AddressForm extends Component {
                     wrongCity: validationResult.wrongCity,
                     wrongState: validationResult.wrongState,
                     wrongComplement: validationResult.wrongComplement,
+                }, () => {
+                    if (props.cep && !props.street
+                        && !props.number
+                        && !props.neighborhood
+                        && !props.city
+                        && !props.state) {
+                        this.setAddressByCep();
+                    }
                 });
             }
 
@@ -208,7 +229,7 @@ class AddressForm extends Component {
                     <TextField label="Identificação" name="identification"
                                value={this.state.identification}
                                onChange={this.handleChange}
-                               error={this.state.wrongIdentification}
+                               error={this.state.wrongIdentification && this.state.touchedIdentification}
                                helperText={this.state.wrongIdentification && "Informe a identificação."}
                                fullWidth/>
                 </Grid>
@@ -229,7 +250,7 @@ class AddressForm extends Component {
                                name="street"
                                value={this.state.street}
                                onChange={this.handleChange}
-                               error={this.state.wrongStreet}
+                               error={this.state.wrongStreet && this.state.touchedStreet}
                                helperText={this.state.wrongStreet && "Informe um logradouro."}
                                fullWidth/>
                 </Grid>
@@ -241,7 +262,7 @@ class AddressForm extends Component {
                                name="number"
                                value={this.state.number}
                                onChange={this.handleChange}
-                               error={this.state.wrongNumber}
+                               error={this.state.wrongNumber && this.state.touchedNumber}
                                helperText={this.state.wrongNumber && "Informe um número."}
                                fullWidth/>
                 </Grid>
@@ -253,7 +274,7 @@ class AddressForm extends Component {
                                name="neighborhood"
                                value={this.state.neighborhood}
                                onChange={this.handleChange}
-                               error={this.state.wrongNeighborhood}
+                               error={this.state.wrongNeighborhood && this.state.touchedNeighborhood}
                                helperText={this.state.wrongNeighborhood && "Informe um bairro."}
                                fullWidth/>
                 </Grid>
@@ -265,7 +286,7 @@ class AddressForm extends Component {
                                name="complement"
                                value={this.state.complement}
                                onChange={this.handleChange}
-                               error={this.state.wrongComplement}
+                               error={this.state.wrongComplement && this.state.touchedComplement}
                                helperText={this.state.wrongComplement && "Informe um complemento."}
                                fullWidth/>
                 </Grid>
@@ -277,7 +298,7 @@ class AddressForm extends Component {
                     <States name="state"
                             value={this.state.state}
                             onChange={this.handleChange}
-                            error={this.state.wrongState}
+                            error={this.state.wrongState && this.state.touchedState}
                             helperText={this.state.wrongState && "Informe um estado brasileito."}/>
                 </Grid>
 
@@ -288,7 +309,7 @@ class AddressForm extends Component {
                             name="city"
                             value={this.state.city}
                             onChange={this.handleChange}
-                            error={this.state.wrongCity}
+                            error={this.state.wrongCity && this.state.touchedCity}
                             helperText={this.state.wrongCity && "Informe ums cidade brasileira."}/>
                 </Grid>
 

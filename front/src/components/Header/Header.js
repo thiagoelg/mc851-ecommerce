@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 
-import {AppBar, Badge, Button, Grid, Toolbar} from "@material-ui/core";
+import {AppBar, Button, Grid, Toolbar} from "@material-ui/core";
 import SearchInput from '../Products/SearchInput'
 import Logo from "../Logo/Logo";
-import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
 import {withStyles} from '@material-ui/core/styles';
 import Link from "../Link/Link";
 import UserButtons from "./UserButtons";
+import CartButton from "./CartButton";
 
 const toolBarBottonHeader = {
     backgroundColor: '#F5F5F5',
@@ -69,14 +69,7 @@ class Header extends Component {
                                     <UserButtons/>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <Badge badgeContent={0} color="secondary">
-                                        <Link to="/carrinho">
-                                            <Button color="inherit">
-                                                <ShoppingCart/>
-                                                Carrinho
-                                            </Button>
-                                        </Link>
-                                    </Badge>
+                                    <CartButton/>
                                 </Grid>
                                 <Grid item xs={false} sm={1}/>
                             </Grid>

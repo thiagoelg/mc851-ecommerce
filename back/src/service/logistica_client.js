@@ -13,10 +13,11 @@ export const PACKET_TYPE = {
     BOX: "Caixa",
     ENVELOPE: "envelope"
 };
-export const getShipment = async (params) => {
+
+export const getShipments = async (params) => {
 
     try {
-        const response = await axios.get(`${LOGISTICA_URL}/calculafrete`, {
+        const response = await axios.get(`${LOGISTICA_URL}/calculatodosfretes`, {
             params
         });
 
@@ -26,7 +27,11 @@ export const getShipment = async (params) => {
     }
 };
 
-export const getTracking = async (params, codRastreio) => {
+export const getTracking = async (codRastreio) => {
+
+    let params = {
+        apiKey: APIKEY
+    }
 
     try {
         const response = await axios.get(`${LOGISTICA_URL}/rastrearentrega/${codRastreio}`, {
@@ -43,7 +48,7 @@ export const postShipment = async (info) => {
 
     try {
         info.apiKey = API_KEY
-        const response = await axios.post(`${LOGISTICA_URL}/calculafrete`, info)
+        const response = await axios.post(`${LOGISTICA_URL}/cadastrarentrega`, info)
 
         return {data : response.data, status: response.status}
     } catch (e) {
@@ -52,7 +57,7 @@ export const postShipment = async (info) => {
 };
 
 export default {
-    getShipment,
+    getShipments,
     getTracking,
     postShipment,
     SHIPPING_TYPE,

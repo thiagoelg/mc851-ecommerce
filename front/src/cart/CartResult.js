@@ -1,0 +1,11 @@
+export const CartResult = {
+    SUCCESS: 0,
+    OUT_OF_STOCK: 1,
+    PRODUCT_NOT_FOUND: 2,
+    EXPIRED: 3,
+    UNSUPPORTED_INSTALLMENTS: 4,
+    INVALID_CEP: 5,
+    UNAUTHORIZED_PAYMENT: 6,
+    ERROR: 7,
+    INTERNAL_ERROR: 8
+};

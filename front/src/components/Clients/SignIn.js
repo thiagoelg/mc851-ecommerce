@@ -7,6 +7,7 @@ import Link from "react-router-dom/es/Link";
 import {login} from '../../clients/ClientClient'
 import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import UserProfile from "../../state/UserProfile";
+import {cart} from "../../cart/Cart"
 import {validateEmail, validateNotEmpty} from "../../util/Validators";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
@@ -57,7 +58,10 @@ class SignIn extends Component {
         login(param)
             .then(response => {
                 UserProfile.set(response.headers["x-auth-token"]);
-                this.props.history.goBack();
+                cart.addClient()
+                    .then(result => {
+                        this.props.history.goBack();
+                    });
             })
             .catch(error => {
                 if (error.response && error.response.status === 401) {

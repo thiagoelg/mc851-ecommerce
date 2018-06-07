@@ -21,6 +21,7 @@ class UserButtons extends Component {
         this.handlePurchases = this.handlePurchases.bind(this);
         this.handleCustomerService = this.handleCustomerService.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleClose = this.handleClose.bind(this);
 
     }
 
@@ -47,6 +48,10 @@ class UserButtons extends Component {
     handleCustomerService() {
         this.props.history.push("/customerservice");
         this.close();
+    };
+
+    handleClose = () => {
+        this.setState({ anchorEl: null });
     };
 
     close() {
