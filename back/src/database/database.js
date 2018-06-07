@@ -191,13 +191,13 @@ export const updateProduct = async (cartId, productId, amount) => {
          [amount, cartId, productId])
 };
 
-export const createPurchase = async (cartId, clientId, status, trackingCode, paymentCode) => {
+export const createPurchase = async (cartId, clientId, status, price, shippingCode, paymentCode) => {
     if (!pool)
         throw 'Missing database connection!'
 
     const [rows, field] = await pool.query(
-        `INSERT INTO purchase(cartId, clientId, status, trackingCode, paymentCode, createdTime)
-         VALUES (?, ?, ?, ?, ?)`,
+        `INSERT INTO purchase(cartId, clientId, status, price, shippingCode, paymentCode, createdAt)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
          [cartId, clientId, status, trackingCode, , paymentCode, moment().toDate()])
 
     return rows.insertId
@@ -208,7 +208,7 @@ export const getPurchaseById = async (purchaseId) => {
         throw 'Missing database connection!';
 
     const [rows, fields] = await pool.query(
-        `SELECT cartId, clientId, status, trackingCode, paymentCode, createdTime FROM purchase
+        `SELECT id, cartId, clientId, status, price, shippingCode, paymentCode, createdAt FROM purchase
          WHERE id = ?`, [cartId]);
 
     return rows[0];
@@ -219,7 +219,7 @@ export const getPurchasesByClientId = async (clientId) => {
         throw 'Missing database connection!';
 
     const [rows, fields] = await pool.query(
-        `SELECT cartId, clientId, status, trackingCode, paymentCode, createdTime FROM purchase
+        `SELECT id, cartId, clientId, status, price, shippingCode, paymentCode, createdAt FROM purchase
          WHERE client_id = ?`, [clientId]);
 
     return rows;

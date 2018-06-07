@@ -4,6 +4,7 @@ import AuthTokenGenerator from "../utils/AuthTokenGenerator"
 import LogisticaClient from '../service/logistica_client'
 import PaymentClient from '../service/pagamento_client'
 import EnderecoClient from '../service/endereco_client'
+import PurchaseController from './PurchaseController'
 
 export const createCart = async (token) => {
     const user = AuthTokenGenerator.verify(token);
@@ -245,8 +246,9 @@ export const checkout = async (token, cartId, data) => {
     }
 
     const products = getProductsTO(cartId)
+    const price = parseInt(data.payment.price)
 
-    if (parseInt(data.payment.price) !== await getTotalPrice(products)) {
+    if (price !== await getTotalPrice(products)) {
         return {
             status: 400,
             data: {
@@ -262,7 +264,7 @@ export const checkout = async (token, cartId, data) => {
     if (data.payment.boleto) {
         const paymentData = {
             clientName: data.payment.name,
-            cpf: data.payment.name,
+            cpf: data.payment.cpf,
             address: data.payment.address,
             cep: data.payment.cep,
             value: data.payment.price
@@ -272,7 +274,7 @@ export const checkout = async (token, cartId, data) => {
     } else {
         paymentData = {
             clientCardName: data.payment.card.name,
-            cpf: data.payment.card.cpf,
+            cpf: data.payment.cpf,
             cardNumber: data.payment.card.number,
             month: data.payment.card.expiryMonth,
             year: data.payment.card.expiryYear,
@@ -297,10 +299,12 @@ export const checkout = async (token, cartId, data) => {
         }
     }
 
+    let status = PurchaseController.STATUS_PURCHASE.order_ok
     let paymentResultCode
     if (data.payment.boleto) {
         paymentResultCode = paymentResponse.data.code
     } else {
+        status = PurchaseController.STATUS_PURCHASE.payment_approved
         paymentResultCode = paymentResponse.data.operationHash
     }
 
@@ -325,7 +329,7 @@ export const checkout = async (token, cartId, data) => {
     }
 
     // CREATE PURCHASE
-    const purchaseId = Database.createPurchase(cartId, user.cid, 1, trackingResponse.codigoRastreio, paymentResultCode)
+    const purchaseId = Database.createPurchase(cartId, user.cid, status, price, trackingResponse.codigoRastreio, paymentResultCode)
 
     Database.expireCart(cartId)
     
@@ -339,7 +343,7 @@ export const checkout = async (token, cartId, data) => {
     }
 };
 
-getProductsTO = async (cartId) => {
+const getProductsTO = async (cartId) => {
     const reserves = await Database.getProductsFromCart(cartId);
 
     const products = await Promise.all(reserves
@@ -364,7 +368,7 @@ getProductsTO = async (cartId) => {
     return products
 }
 
-getTotalPrice = async (products) => {
+const getTotalPrice = async (products) => {
     let sum = 0
     products.forEach(product => {
         sum = (parseInt(parseFloat(product.price) * 100.0) * parseInt(product.amount)) + sum
@@ -373,7 +377,7 @@ getTotalPrice = async (products) => {
     return sum
 }
 
-calculateMeasures = async (products) => {
+const calculateMeasures = async (products) => {
     let measures = {}
     measures.weight = products.map(product => product.weight).reduce((a, b) => a + b)
     measures.height = products.map(product => product.height).reduce((a, b) => a + b)
