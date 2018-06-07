@@ -9,25 +9,20 @@ import TableRow from "@material-ui/core/es/TableRow/TableRow";
 import TableCell from "@material-ui/core/es/TableCell/TableCell";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import MoneyFormatter from "../Formatters/MoneyFormatter";
+import {PURCHASE_STATUS_LABEL} from "../../clients/PurchaseClient";
 
 class PurchaseDetail extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            value: ''
-        }
-    }
-
     render() {
-        const products = this.props.products;
+        let purchase = this.props.purchase;
+
+        const products = purchase.products;
 
         const subTotal = products.reduce((acc, product) => acc + product.price * product.amount, 0);
 
         const numberOfProducts = products ? products.reduce((acc, p) => acc + p.amount, 0) : 0;
 
-        const freight = this.props.shipping.price / 100;
+        const freight = purchase.shipping.price / 100;
 
         const total = freight ? freight + subTotal : subTotal;
 
@@ -39,15 +34,19 @@ class PurchaseDetail extends Component {
                             <Typography variant="headline" color="secondary">
                                 <b>Detalhes da compra</b>
                             </Typography>
-                            <p></p>
+                            <br/>
                             <Divider/>
-                            <p></p>
+                            <br/>
                         </Grid>
                         <Grid item xs={12}>
                             <Typography variant="subheading">
+                                <b>Status</b>: {PURCHASE_STATUS_LABEL[purchase.status]}
+                            </Typography>
+                            <br/>
+                            <Typography variant="subheading">
                                 Produtos
                             </Typography>
-                            <p></p>
+                            <br/>
                             <Table width="auto">
                                 <TableBody>
                                     {products.map(product => {

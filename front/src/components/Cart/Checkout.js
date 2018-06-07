@@ -87,7 +87,7 @@ class Checkout extends Component {
             .then(checkoutResult => {
                 switch (checkoutResult.result) {
                     case CartResult.SUCCESS: {
-                        this.props.history.push(`/purchase/${checkoutResult.purchaseId}`);
+                        this.props.history.push(`/purchases/${checkoutResult.purchaseId}`);
                         break;
                     }
 

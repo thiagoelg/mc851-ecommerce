@@ -64,7 +64,6 @@ class SignUp extends Component {
                 UserProfile.set(response.headers["x-auth-token"]);
                 cart.addClient()
                     .then(result => {
-                        console.log(result);
                         this.props.history.goBack();
                     });
             })

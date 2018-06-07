@@ -108,7 +108,6 @@ class Purchases extends Component {
                                 <List>
                                     <Divider/>
                                     {purchases.map(purchase => {
-                                        console.log(purchase);
                                         return (
                                             <div>
                                                 <ListItem button

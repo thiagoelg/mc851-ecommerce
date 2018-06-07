@@ -92,7 +92,7 @@ class Purchase extends Component {
         return (
             <Grid container spacing={24} style={{marginBottom: 20}}>
                 <Grid item xs={8}>
-                    <PurchaseDetail products={purchase.products} shipping={purchase.shipping}/>
+                    <PurchaseDetail purchase={purchase}/>
 
                     <br/>
 

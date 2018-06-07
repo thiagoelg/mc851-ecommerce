@@ -83,7 +83,7 @@ class UpdateProfile extends Component {
 
                     hasAddress: hasAddress
                 });
-            }, () => console.log(this.state))
+            })
             .catch(error => {
                 //TODO treat error
             });

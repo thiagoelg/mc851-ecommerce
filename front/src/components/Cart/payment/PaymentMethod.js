@@ -36,7 +36,7 @@ class PaymentMethod extends Component {
                 creditCard: payment.isCreditCard,
                 boleto: payment.isBoleto,
                 card: payment.card
-            }, () => console.log("card: ", this.state.card));
+            });
         }
 
     }
