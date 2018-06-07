@@ -34,7 +34,9 @@ export const register = async (params) => {
 
     if (!response || response.status !== 200) {
         console.error("register error - status: ", response.status);
-        return;
+        return {
+            status: response ? response.status : 500
+        };
     }
 
     if (response.status === 200) {
@@ -78,7 +80,7 @@ export const login = async (params) => {
     if (!response || response.status !== 200) {
         console.error("login error - status: " + response.status);
         return {
-            status: response.status
+            status: response ? response.status : 500
         };
     }
 
@@ -109,7 +111,9 @@ export const getClient = async (token) => {
 
     if (!response || response.status !== 200) {
         console.error("getClient error");
-        return 0
+        return {
+            status: response ? response.status : 500
+        }
     }
 
     return {
@@ -167,7 +171,7 @@ export const updateUser = async (token, info) => {
     if (!response || response.status !== 200) {
         console.error("updateUser error");
         return {
-            status: response.status
+            status: response ? response.status : 500
         }
     }
 
