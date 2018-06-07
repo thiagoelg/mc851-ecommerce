@@ -11,10 +11,12 @@ import Profile from "../Clients/Profile";
 import UpdateProfile from "../Clients/UpdateProfile";
 import ChangePassword from "../Clients/ChangePassword";
 import NotFound from "../Common/NotFound";
-import EndShopping from "../Carrinho/EndShopping";
 import CustomerService from "../CustomerService/CustomerService";
 import Ticket from "../CustomerService/Ticket";
 import Checkout from "../Cart/Checkout";
+import Purchases from "../Purchase/Purchases";
+import Purchase from "../Purchase/Purchase";
+import Tracking from "../Purchase/Tracking";
 
 
 // Para <ProductFilter /> dentro do grid, tirar o style do grid:
@@ -38,9 +40,11 @@ class Body extends Component {
                     <Route exact path='/profile' component={Profile}/>
                     <Route exact path='/profile/update' component={UpdateProfile}/>
                     <Route exact path='/profile/changepassword' component={ChangePassword}/>
-                    <Route path='/cart' component={Carrinho}/>
-                    <Route path='/checkout' component={Checkout}/>
-                    <Route path='/endShopping' component={EndShopping}/>
+                    <Route exact path='/cart' component={Carrinho}/>
+                    <Route exact path='/checkout' component={Checkout}/>
+                    <Route exact path='/purchases' component={Purchases}/>
+                    <Route path='/purchases/:purchaseId/tracking' component={Tracking}/>
+                    <Route path='/purchases/:purchaseId' component={Purchase}/>
                     <Route exact path='/customerservice' component={CustomerService}/>
                     <Route path='/customerservice/purchase/:purchaseId' component={CustomerService}/>
                     <Route path='/customerservice/ticket/:id' component={Ticket}/>

@@ -8,7 +8,7 @@ import TableBody from "@material-ui/core/es/TableBody/TableBody";
 import TableRow from "@material-ui/core/es/TableRow/TableRow";
 import TableCell from "@material-ui/core/es/TableCell/TableCell";
 import Grid from "@material-ui/core/es/Grid/Grid";
-import MoneyFormatter from "../../Formatters/MoneyFormatter";
+import MoneyFormatter from "../Formatters/MoneyFormatter";
 
 class PurchaseDetail extends Component {
 
