@@ -85,6 +85,7 @@ router.post('/:cartId/unbook', async (req, res, next) => {
 
 router.post('/:cartId/checkout', async (req, res, next) => {
     try {
+
         let token = req.get("x-auth-token");
         if (!token) {
             return res.sendStatus(403)

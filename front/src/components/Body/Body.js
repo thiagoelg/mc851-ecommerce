@@ -49,7 +49,7 @@ class Body extends Component {
                     <Route exact path='/customerservice' component={CustomerService}/>
                     <Route path='/customerservice/purchase/:purchaseId' component={CustomerService}/>
                     <Route path='/customerservice/ticket/:id' component={Ticket}/>
-                    <Route path='/confirmation'component={Confirmation}/>
+                    <Route path='/confirmation/:purchaseId' component={Confirmation}/>
                     <Route component={NotFound}/>
                 </Switch>
                 </Grid>

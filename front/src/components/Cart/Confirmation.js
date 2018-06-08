@@ -9,6 +9,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from "@material-ui/core/es/StepButton/StepButton";
 import Divider from '@material-ui/core/Divider';
+import {PURCHASE_STATUS_LABEL} from '../../clients/PurchaseClient'
 
 function getSteps() {
     return ['Pedido Recebido', 'Aguardando Pagamento', 'Produto em Transporte', 'Produto Entregue'];
@@ -20,6 +21,9 @@ class Confirmation extends Component {
     render() {
         const steps = getSteps();
 
+        let locationState = this.props.location.state;
+        const purchaseId = locationState.purchaseId;
+
         return (
             <Grid container height="auto">
                 <Grid item xs={0} style={{padding: 20}}>
@@ -27,7 +31,7 @@ class Confirmation extends Component {
                 </Grid>
                 <Grid item xs={8} style={{paddingTop: 22}}>
                     <Typography variant="display1"> 
-                         Recebemos seu pedido: 178920558102
+                         Recebemos seu pedido: {purchaseId}
                     </Typography>
                 </Grid>
                 <Grid item xs={12} style={{padding: 20}}>
@@ -44,7 +48,7 @@ class Confirmation extends Component {
                 </Grid>
                 <Grid item xs={12}>
                     <Stepper nonLinear activeStep={0}>
-                        {steps.map((label, index) => {
+                        {Object.values(PURCHASE_STATUS_LABEL).map((label, index) => {
                             return (
                                 <Step key={label}>
                                     <StepButton disabled="true" >
@@ -62,7 +66,7 @@ class Confirmation extends Component {
                     <p></p>
                     <p></p>
                     <Grid container justify="flex-end">
-                        <Link to={`/purchases/`}>
+                        <Link to={`/purchases/${purchaseId}`}>
                             <Button color="primary" variant="raised">
                                 Detalhes da compra
                             </Button>
