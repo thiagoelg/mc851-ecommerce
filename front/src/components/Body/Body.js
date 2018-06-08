@@ -17,6 +17,7 @@ import Checkout from "../Cart/Checkout";
 import Purchases from "../Purchase/Purchases";
 import Purchase from "../Purchase/Purchase";
 import Tracking from "../Purchase/Tracking";
+import Confirmation from "../Cart/Confirmation";
 
 
 // Para <ProductFilter /> dentro do grid, tirar o style do grid:
@@ -48,6 +49,7 @@ class Body extends Component {
                     <Route exact path='/customerservice' component={CustomerService}/>
                     <Route path='/customerservice/purchase/:purchaseId' component={CustomerService}/>
                     <Route path='/customerservice/ticket/:id' component={Ticket}/>
+                    <Route path='/confirmation'component={Confirmation}/>
                     <Route component={NotFound}/>
                 </Switch>
                 </Grid>
