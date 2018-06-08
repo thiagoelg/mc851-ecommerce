@@ -235,7 +235,7 @@ export const checkout = async (token, cartId, data) => {
         return association;
     }
 
-    const address = EnderecoClient.getCEP(data.shipping.address.cep)
+    const address = await EnderecoClient.getCEP(data.shipping.address.cep)
     if (address.status !== 200 || !address.data) {
         return {
             status: 400,
@@ -245,17 +245,19 @@ export const checkout = async (token, cartId, data) => {
         }
     }
 
-    const products = getProductsTO(cartId)
+    const products = await getProductsTO(cartId)
     const price = parseInt(data.payment.price)
+    const product_sum = await getTotalPrice(products)
 
-    if (price !== await getTotalPrice(products)) {
-        return {
-            status: 400,
-            data: {
-                code: 3
-            }
-        }
-    }
+    // TODO: Somar frete no product_sum
+    // if (price !== product_sum) {
+    //     return {
+    //         status: 400,
+    //         data: {
+    //             code: 3
+    //         }
+    //     }
+    // }
 
     // PAYMENT
     let paymentData
@@ -285,6 +287,12 @@ export const checkout = async (token, cartId, data) => {
 
         paymentResponse = await PaymentClient.paymentByCreditCard(paymentData)
     }    
+    // TODO: paymentResponse esta nulo, erro 404 em paymentByBankTicketq
+    if (!paymentResponse) {
+        return {
+            status: 404
+        }
+    }
     if (paymentResponse.status !== 200) {
         return {
             status: 404
@@ -370,9 +378,9 @@ const getProductsTO = async (cartId) => {
 
 const getTotalPrice = async (products) => {
     let sum = 0
-    products.forEach(product => {
-        sum = (parseInt(parseFloat(product.price) * 100.0) * parseInt(product.amount)) + sum
-    })
+    for(let p of products) {
+        sum += parseFloat(p.price) * parseInt(p.amount)
+    }
 
     return sum
 }
