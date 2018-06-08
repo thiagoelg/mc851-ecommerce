@@ -29,7 +29,17 @@ router.get('/shipping', async (req, res, next) => {
         }
 
         let shipping = await LogisticController.getShipments(params);
-        return res.json(shipping)
+
+        let formated_shipping = []
+        Object.keys(shipping).forEach(function(key) {
+            formated_shipping.push({
+                type: key,
+                price: shipping[key].preco,
+                deliveryTime: shipping[key].prazo
+            })
+        });
+
+        return res.json(formated_shipping)
 
     } catch(e) {
         next(e)
