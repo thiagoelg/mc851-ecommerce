@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const REQUEST_TIMEOUT = 30000
 const LOGISTICA_URL = "https://hidden-basin-50728.herokuapp.com";
-const APIKEY = "1d9e536e-44cd-56e3-838c-a9622a812ab4"
+const API_KEY = "1d9e536e-44cd-56e3-838c-a9622a812ab4"
 
 export const SHIPPING_TYPE = {
     PAC: "PAC",
@@ -29,13 +29,11 @@ export const getShipments = async (params) => {
 
 export const getTracking = async (codRastreio) => {
 
-    let params = {
-        apiKey: APIKEY
-    }
-
     try {
         const response = await axios.get(`${LOGISTICA_URL}/rastrearentrega/${codRastreio}`, {
-            params
+            params: {
+                apiKey: API_KEY
+            }
         });
 
         return {data : response.data, status: response.status}
@@ -46,9 +44,8 @@ export const getTracking = async (codRastreio) => {
 
 export const postShipment = async (info) => {
 
-    info.apiKey = APIKEY
-
     try {
+        info.apiKey = API_KEY
         const response = await axios.post(`${LOGISTICA_URL}/cadastrarentrega`, info)
 
         return {data : response.data, status: response.status}
