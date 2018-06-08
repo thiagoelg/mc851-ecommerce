@@ -198,7 +198,7 @@ export const createPurchase = async (cartId, clientId, status, price, shippingCo
     const [rows, field] = await pool.query(
         `INSERT INTO purchase(cartId, clientId, status, price, shippingCode, paymentCode, createdAt)
          VALUES (?, ?, ?, ?, ?, ?, ?)`,
-         [cartId, clientId, status, trackingCode, , paymentCode, moment().toDate()])
+         [cartId, clientId, status, price, shippingCode, paymentCode, moment().toDate()])
 
     return rows.insertId
 };

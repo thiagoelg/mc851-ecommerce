@@ -59,6 +59,16 @@ services:
         aliases:
           - db.localhost
 
+  flyway-repair:
+    image: boxfuse/flyway
+    command: repair
+    volumes:
+      - .:/flyway/sql
+    depends_on:
+      - db
+    networks:
+      mc851:
+
   flyway:
     image: boxfuse/flyway
     command: -url=jdbc:mysql://db.localhost:3306 -schemas=ecommerce -user=root -password=P4ssword! migrate
@@ -66,6 +76,7 @@ services:
       - .:/flyway/sql
     depends_on:
       - db
+      - flyway-repair
     networks:
       mc851:
 

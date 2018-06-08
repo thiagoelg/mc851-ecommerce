@@ -286,8 +286,9 @@ export const checkout = async (token, cartId, data) => {
         }
 
         paymentResponse = await PaymentClient.paymentByCreditCard(paymentData)
-    }    
-    // TODO: paymentResponse esta nulo, erro 404 em paymentByBankTicketq
+    } 
+
+    //TODO: paymentResponse esta nulo, erro 404 em paymentByBankTicketq
     if (!paymentResponse) {
         return {
             status: 404
@@ -317,7 +318,7 @@ export const checkout = async (token, cartId, data) => {
     }
 
     // SHIPPING
-    const measures = await calculateMeasures(cartId)
+    const measures = await calculateMeasures(products)
     const shippingData = {
         tipoEntrega: data.shipping.type,
         cepOrigem: '13083-852',
@@ -391,6 +392,7 @@ const calculateMeasures = async (products) => {
     measures.height = products.map(product => product.height).reduce((a, b) => a + b)
     measures.width = products.map(product => product.width).reduce((a, b) => a + b)
     measures.length = Math.max(...products.map(product => product.length))
+    return measures
 }
 
 export const handleExpiredCarts = async () => {
