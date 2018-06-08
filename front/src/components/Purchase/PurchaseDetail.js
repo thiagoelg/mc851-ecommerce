@@ -32,7 +32,7 @@ class PurchaseDetail extends Component {
                     <Grid container>
                         <Grid item xs={12}>
                             <Typography variant="headline" color="secondary">
-                                <b>Detalhes da compra</b>
+                                <b>Compra: </b>{purchase.id}
                             </Typography>
                             <br/>
                             <Divider/>
