@@ -209,7 +209,7 @@ export const getPurchaseById = async (purchaseId) => {
 
     const [rows, fields] = await pool.query(
         `SELECT id, cartId, clientId, status, price, shippingCode, paymentCode, createdAt FROM purchase
-         WHERE id = ?`, [cartId]);
+         WHERE id = ?`, [purchaseId]);
 
     return rows[0];
 };
