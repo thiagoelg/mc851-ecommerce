@@ -2,10 +2,17 @@ import PaymentClient from '../service/pagamento_client'
 
 export const paymentByCreditCard = async (payment) => {
     const response = await PaymentClient.paymentByCreditCard(payment);
-
-    if (!response || response.status != 200) {
-        console.error("paymentByCreditCard error");
-        return []
+    
+    if (!response) {
+        console.error("paymentByCreditCard Error");
+        return {}
+    }
+    else if(response.status !== 200) {
+        console.error("paymentByCreditCard Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -13,10 +20,17 @@ export const paymentByCreditCard = async (payment) => {
 
 export const getCreditCardInstallments = async (info) => {
     const response = await PaymentClient.getCreditCardInstallments(info);
-
-    if (!response || response.status != 200) {
-        console.error("getCreditCardInstallments error");
-        return []
+ 
+    if (!response) {
+        console.error("getCreditCardInstallments Error");
+        return {}
+    }
+    else if(response.status !== 200) {
+        console.error("getCreditCardInstallments Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -25,9 +39,16 @@ export const getCreditCardInstallments = async (info) => {
 export const paymentByBankTicket = async (payment) => {
     const response = await PaymentClient.paymentByBankTicket(payment);
 
-    if (!response || response.status != 200) {
-        console.error("paymentByBankTicket error");
-        return []
+    if (!response) {
+        console.error("paymentByBankTicket Error");
+        return {}
+    }
+    else if(response.status !== 200) {
+        console.error("paymentByBankTicket Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -37,9 +58,16 @@ export const paymentByBankTicket = async (payment) => {
 export const getBankTicketStatus = async (bankTicketId) => {
     const response = await PaymentClient.getBankTicketStatus(bankTicketId);
 
-    if (!response || response.status != 200) {
-        console.error("getBankTicketStatus error");
-        return []
+    if (!response) {
+        console.error("getBankTicketStatus Error");
+        return {}
+    }
+    else if(response.status !== 200) {
+        console.error("getBankTicketStatus Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -49,9 +77,16 @@ export const getBankTicketStatus = async (bankTicketId) => {
 export const generateInvoice = async (info) => {
     const response = await PaymentClient.generateInvoice(info);
 
-    if (!response || response.status != 200) {
-        console.error("generateInvoice error");
-        return []
+    if (!response) {
+        console.error("generateInvoice Error");
+        return {}
+    }
+    else if(response.status !== 200) {
+        console.error("generateInvoice Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data

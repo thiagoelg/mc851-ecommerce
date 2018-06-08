@@ -31,7 +31,7 @@ router.get('/', async (req, res, next) => {
     try {
         let token = req.get("x-auth-token");
 
-        const response = await CartController.getClientCartId(token, req.params.cartId);
+        const response = await CartController.getClientCartId(token);
 
         return res.status(response.status).json(response.data);
     } catch (e) {
@@ -90,7 +90,12 @@ router.post('/:cartId/checkout', async (req, res, next) => {
             return res.sendStatus(403)
         }
 
-        const response = await CartController.checkout(token, req.params.cartId)
+
+        if (!req.body) {
+            return res.sendStatus(400)
+        }
+
+        const response = await CartController.checkout(token, req.params.cartId, req.body)
 
         return res.status(response.status).json(response.data);
     } catch (e) {

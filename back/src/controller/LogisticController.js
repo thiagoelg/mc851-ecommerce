@@ -4,9 +4,16 @@ export const getShipments = async (params) => {
 
     const response = await LogisticClient.getShipments(params)
 
-    if (!response || response.status != 200) {
-        console.error("getShipments error - status: " + response.status)
-        return 0
+    if (!response) {
+        console.error("getShipments Error");
+        return {}
+    }
+    else if(response.status !== 200) {
+        console.error("getShipments Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -16,9 +23,16 @@ export const getTracking = async (codRastreio) => {
 
     const response = await LogisticClient.getTracking(codRastreio)
 
-    if (!response || response.status != 200) {
-        console.error("getTracking error - status: " + response.status)
-        return []
+    if (!response) {
+        console.error("getTracking Error");
+        return {}
+    }
+    else if(response.status !== 200) {
+        console.error("getTracking Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -28,9 +42,16 @@ export const postShipment = async (info) => {
 
     const response = await LogisticClient.postShipment(info)
 
-    if (!response || response.status != 200) {
-        console.error("postShipment error - status: " + response.status)
+    if (!response) {
+        console.error("postShipment Error");
         return {}
+    }
+    else if(response.status !== 200) {
+        console.error("postShipment Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data

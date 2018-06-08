@@ -191,6 +191,40 @@ export const updateProduct = async (cartId, productId, amount) => {
          [amount, cartId, productId])
 };
 
+export const createPurchase = async (cartId, clientId, status, price, shippingCode, paymentCode) => {
+    if (!pool)
+        throw 'Missing database connection!'
+
+    const [rows, field] = await pool.query(
+        `INSERT INTO purchase(cartId, clientId, status, price, shippingCode, paymentCode, createdAt)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+         [cartId, clientId, status, price, shippingCode, paymentCode, moment().toDate()])
+
+    return rows.insertId
+};
+
+export const getPurchaseById = async (purchaseId) => {
+    if (!pool)
+        throw 'Missing database connection!';
+
+    const [rows, fields] = await pool.query(
+        `SELECT id, cartId, clientId, status, price, shippingCode, paymentCode, createdAt FROM purchase
+         WHERE id = ?`, [cartId]);
+
+    return rows[0];
+};
+
+export const getPurchasesByClientId = async (clientId) => {
+    if (!pool)
+        throw 'Missing database connection!';
+
+    const [rows, fields] = await pool.query(
+        `SELECT id, cartId, clientId, status, price, shippingCode, paymentCode, createdAt FROM purchase
+         WHERE client_id = ?`, [clientId]);
+
+    return rows;
+};
+
 export default {
     connect,
     createUser,
@@ -207,5 +241,8 @@ export default {
     getProductsFromCart,
     getProductFromCart,
     addProduct, 
-    updateProduct
+    updateProduct,
+    createPurchase,
+    getPurchaseById,
+    getPurchasesByClientId
 };

@@ -1,8 +1,8 @@
 import React, {Component} from "react"
 import Grid from "@material-ui/core/es/Grid/Grid";
-import PurchaseDetail from "../../Purchase/PurchaseDetail";
 import ShippingSummary from "./ShippingSummary";
 import PaymentSummary from "./PaymentSummary";
+import PurchaseDetail from "./PurchaseDetail";
 
 class PurchaseReview extends Component {
 
