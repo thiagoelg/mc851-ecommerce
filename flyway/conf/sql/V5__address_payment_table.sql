@@ -37,6 +37,3 @@ ALTER TABLE `purchase` ADD COLUMN shippingId int REFERENCES shipping(id);
 ALTER TABLE `purchase` ADD COLUMN paymentId int REFERENCES payment(id);
 ALTER TABLE `purchase` DROP COLUMN shippingCode;
 ALTER TABLE `purchase` DROP COLUMN paymentCode;
-
-
-name, number, expiryMonth, expiryYear, cvc, brand, instalments, cpf, bankTicketText, paymentCode, boleto, dueDate
