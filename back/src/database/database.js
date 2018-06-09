@@ -196,9 +196,9 @@ export const createPurchase = async (cartId, clientId, status, price, shippingId
         throw 'Missing database connection!'
 
     const [rows, field] = await pool.query(
-        `INSERT INTO purchase(cartId, clientId, status, price, shippingId, paymentCode, createdAt)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-         [cartId, clientId, status, price, shippingId, paymentId, moment().toDate()])
+        `INSERT INTO purchase(cartId, clientId, status, price, shippingCode, paymentId, createdAt)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+         [cartId, clientId, status, price, shippingCode, paymentCode, moment().toDate()])
 
     return rows.insertId
 };
