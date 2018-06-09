@@ -191,14 +191,14 @@ export const updateProduct = async (cartId, productId, amount) => {
          [amount, cartId, productId])
 };
 
-export const createPurchase = async (cartId, clientId, status, price, shippingCode, paymentCode) => {
+export const createPurchase = async (cartId, clientId, status, price, shippingId, paymentId) => {
     if (!pool)
         throw 'Missing database connection!'
 
     const [rows, field] = await pool.query(
-        `INSERT INTO purchase(cartId, clientId, status, price, shippingCode, paymentCode, createdAt)
-         VALUES (?, ?, ?, ?, ?, ?, ?)`,
-         [cartId, clientId, status, trackingCode, , paymentCode, moment().toDate()])
+        `INSERT INTO purchase(cartId, clientId, status, price, shippingId, paymentCode, createdAt)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+         [cartId, clientId, status, price, shippingId, paymentId, moment().toDate()])
 
     return rows.insertId
 };
@@ -208,7 +208,11 @@ export const getPurchaseById = async (purchaseId) => {
         throw 'Missing database connection!';
 
     const [rows, fields] = await pool.query(
-        `SELECT id, cartId, clientId, status, price, shippingCode, paymentCode, createdAt FROM purchase
+        `SELECT p.id, p.cartId, p.clientId, p.status, p.price, p.createdAt, a.shippingCode, a.deliveryTime, a.type, a.identification, a.cep,
+            a.street, a.number, a.neighborhood, a.city, a.state, a.complement,
+            pay.boleto, pay.dueDate, pay.paymentCode, pay.documentRep, pay.number, pay.brand, pay.instalments FROM purchase p
+         JOIN shipping a ON a.id = p.shippingId
+         JOIN payment pay ON pay.id = p.paymentId
          WHERE id = ?`, [cartId]);
 
     return rows[0];
@@ -219,10 +223,40 @@ export const getPurchasesByClientId = async (clientId) => {
         throw 'Missing database connection!';
 
     const [rows, fields] = await pool.query(
-        `SELECT id, cartId, clientId, status, price, shippingCode, paymentCode, createdAt FROM purchase
+        `SELECT p.id, p.cartId, p.clientId, p.status, p.price, p.createdAt, a.shippingCode, a.deliveryTime, a.type, a.identification, a.cep,
+            a.street, a.number, a.neighborhood, a.city, a.state, a.complement,
+            pay.boleto, pay.dueDate, pay.paymentCode, pay.documentRep, pay.number, pay.brand, pay.instalments FROM purchase p
+         JOIN shipping a ON a.id = p.shippingId
+         JOIN payment pay ON pay.id = p.paymentId
          WHERE client_id = ?`, [clientId]);
 
     return rows;
+};
+
+export const createShipping = async (address, shippingCode) => {
+    if (!pool)
+        throw 'Missing database connection!'
+
+    const [rows, field] = await pool.query(
+        `INSERT INTO shipping(cep, identification, street, number, neighborhood, city, state, complement, deliveryTime, type, shippingCode)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         [address.cep, address.identification, address.street, address.number, address.neighborhood, address.city, 
+            address.state, address.complement, address.deliveryTime, address.type, shippingCode])
+
+    return rows.insertId
+};
+
+export const createPayment = async (payment, paymentCode) => {
+    if (!pool)
+        throw 'Missing database connection!'
+
+    const [rows, field] = await pool.query(
+        `INSERT INTO payment(name, number, expiryMonth, expiryYear, cvc, brand, instalments, cpf, bankTicketText, paymentCode, boleto, dueDate)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         [payment.name, payment.number, payment.expiryMonth, payment.expiryYear, payment.cvc, payment.brand, payment.instalments, payment.cpf, 
+            payment.bankTicketText, paymentCode, payment.boleto, payment.dueDate])
+
+    return rows.insertId
 };
 
 export default {
@@ -244,5 +278,7 @@ export default {
     updateProduct,
     createPurchase,
     getPurchaseById,
-    getPurchasesByClientId
+    getPurchasesByClientId,
+    createShipping,
+    createPayment
 };

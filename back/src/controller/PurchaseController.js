@@ -65,19 +65,47 @@ export const getPurchases = async (token) => {
                 }
             }));
 
-        response.push ({
-            id: purchase.id,
-            status: purchase.status,
-            createdAt: moment(purchase.createdAt).format('DD-MM-YYYY'),
-            shipping: {
-                code: purchase.shippingCode    
-            },
-            payment: {
-                price: purchase.price,
-                code: purchase.paymentCode
-            },
-            products
-        })
+            const data =  {
+                id: purchase.id,
+                status: purchase.status,
+                createdAt: moment(purchase.createdAt).format('DD-MM-YYYY'),
+                shipping: {
+                    trackingCode: purchase.shippingCode,
+                    deliverytime: purchase.deliveryTime,
+                    price: purchase.price,
+                    type: purchase.type,
+                    address: {
+                        identification: purchase.identification,
+                        cep: purchase.cep,
+                        street: purchase.street,
+                        number: purchase.number,
+                        neighborhood: purchase.neighborhood,
+                        city: purchase.city,
+                        state: purchase.state,
+                        complement: purchase.complement
+                    }    
+                },
+                payment: {
+                    price: purchase.price,
+                },
+                products
+            }
+        
+            if (data.boleto) {
+                response.boleto = {
+                    dueDate: purchase.dueDate,
+                    barCode: purchase.paymentCode,
+                    documentRep: purchase.documentRep
+                }
+            } else {
+                data.card = {
+                    number: purchase.number,
+                    brand: purchase.brand,
+                    instalments: purchase.instalments
+                }
+            }
+
+        response.push (data)
     })
 
     return {
@@ -136,22 +164,49 @@ export const getPurchaseById = async (token, purchaseId) => {
             }
         }));
 
+        const response =  {
+        id: purchase.id,
+        status: purchase.status,
+        createdAt: moment(purchase.createdAt).format('DD-MM-YYYY'),
+        shipping: {
+            trackingCode: purchase.shippingCode,
+            deliverytime: purchase.deliveryTime,
+            price: purchase.price,
+            type: purchase.type,
+            address: {
+                identification: purchase.identification,
+                cep: purchase.cep,
+                street: purchase.street,
+                number: purchase.number,
+                neighborhood: purchase.neighborhood,
+                city: purchase.city,
+                state: purchase.state,
+                complement: purchase.complement
+            }    
+        },
+        payment: {
+            price: purchase.price,
+        },
+        products
+    }
+
+    if (purchase.boleto) {
+        response.boleto = {
+            dueDate: purchase.dueDate,
+            barCode: purchase.paymentCode,
+            documentRep: purchase.documentRep
+        }
+    } else {
+        response.card = {
+            number: purchase.number,
+            brand: purchase.brand,
+            instalments: purchase.instalments
+        }
+    }
 
     return {
         status: 200,
-        data: {
-            id: purchase.id,
-            status: purchase.status,
-            createdAt: moment(purchase.createdAt).format('DD-MM-YYYY'),
-            shipping: {
-                code: purchase.shippingCode    
-            },
-            payment: {
-                price: purchase.price,
-                code: purchase.paymentCode
-            },
-            products
-        }
+        data: response
     }
 }
 

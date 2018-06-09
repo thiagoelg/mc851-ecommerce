@@ -7,7 +7,7 @@ CREATE TABLE `purchase` (
     shippingCode VARCHAR(255),
     paymentCode VARCHAR(255),
     bankTicketText TEXT,
-    createdAt TIMESTAMP
+    createdAt TIMESTAMP,
 
     PRIMARY KEY(id)
 );
