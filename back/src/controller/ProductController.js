@@ -4,9 +4,16 @@ export const getProducts = async (params) => {
 
     const response = await ProductClient.getProducts(params);
 
-    if (!response || response.status != 200) {
-        console.error("getProducts error - status: " + response.status);
-        return []
+    if (!response) {
+        console.error("getProducts Error");
+        return {}
+    }
+    else if(response.status !== 200) {
+        console.error("getProducts Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -16,9 +23,16 @@ export const getProductsByFullSearch = async (params) => {
 
     const response = await ProductClient.getProductsByFullSearch(params);
 
-    if (!response || response.status != 200) {
-        console.error("getProducts error - status: " + response.status);
-        return []
+    if (!response) {
+        console.error("getProductsByFullSearch Error");
+        return {}
+    }
+    else if(response.status !== 200) {
+        console.error("getProductsByFullSearch Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -27,9 +41,16 @@ export const getProductsByFullSearch = async (params) => {
 export const getCategories = async (params) => {
     const response = await ProductClient.getCategories(params);
 
-    if (!response || response.status != 200) {
-        console.error("getCategories error - status: " + response.status);
-        return []
+    if (!response) {
+        console.error("getCategories Error");
+        return {}
+    }
+    else if(response.status !== 200) {
+        console.error("getCategories Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -38,9 +59,16 @@ export const getCategories = async (params) => {
 export const getCategory = async (id) => {
     const response = await ProductClient.getCategory(id);
 
-    if (!response || response.status != 200) {
-        console.error("getCategory error - status: " + response.status);
+    if (!response) {
+        console.error("getCategory Error");
         return {}
+    }
+    else if(response.status !== 200) {
+        console.error("getCategory Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -49,9 +77,16 @@ export const getCategory = async (id) => {
 export const getProduct = async (id) => {
     const response = await ProductClient.getProduct(id)
 
-    if (!response || response.status != 200) {
-        console.error("getProduct error - status: " + response.status);
+    if (!response) {
+        console.error("getProduct Error");
         return {}
+    }
+    else if(response.status !== 200) {
+        console.error("getProduct Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -60,9 +95,16 @@ export const getProduct = async (id) => {
 export const reserveProduct = async (id, amount) => {
     const response = await ProductClient.reserveProduct(id, amount);
 
-    if (!response || response.status != 200) {
-        console.error("reserveProduct error - status: " + response.status);
+    if (!response) {
+        console.error("reserveProduct Error");
         return {}
+    }
+    else if(response.status !== 200) {
+        console.error("reserveProduct Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     return response.data
@@ -71,10 +113,17 @@ export const reserveProduct = async (id, amount) => {
 
 export const releaseProduct = async (id, amount) => {
     const response = await ProductClient.releaseProduct(id, amount);
-
-    if (!response || response.status != 200) {
-        console.error("releaseProduct error - status: " + response.status);
+  
+    if (!response) {
+        console.error("releaseProduct Error");
         return {}
+    }
+    else if(response.status !== 200) {
+        console.error("releaseProduct Error with status " + response.status);
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
     
     return response.data

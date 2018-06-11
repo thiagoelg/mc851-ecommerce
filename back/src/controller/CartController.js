@@ -266,29 +266,28 @@ export const checkout = async (token, cartId, data) => {
     if (data.payment.boleto) {
         const paymentData = {
             clientName: data.payment.name,
-            cpf: data.payment.cpf,
+            cpf: user.cpf, 
             address: data.payment.address,
             cep: data.payment.cep,
-            value: data.payment.price
+            value: `${data.payment.price}`
         }
         paymentResponse = await PaymentClient.paymentByBankTicket(paymentData)
      
     } else {
         paymentData = {
             clientCardName: data.payment.card.name,
-            cpf: data.payment.cpf,
+            cpf: user.cpf,
             cardNumber: data.payment.card.number,
             month: data.payment.card.expiryMonth,
             year: data.payment.card.expiryYear,
             securityCode: data.payment.card.cvc,
-            value: data.payment.price,
+            value: `${data.payment.price}`,
             instalments: data.payment.card.installments
         }
 
         paymentResponse = await PaymentClient.paymentByCreditCard(paymentData)
     } 
 
-    //TODO: paymentResponse esta nulo, erro 404 em paymentByBankTicketq
     if (!paymentResponse) {
         return {
             status: 404
@@ -338,9 +337,8 @@ export const checkout = async (token, cartId, data) => {
     }
 
     // CREATE PURCHASE
-    const purchaseId = Database.createPurchase(cartId, user.cid, status, price, trackingResponse.codigoRastreio, paymentResultCode)
-
-    Database.expireCart(cartId)
+    const purchaseId = await Database.createPurchase(cartId, user.cid, status, price, trackingResponse.codigoRastreio, paymentResultCode)
+    await Database.expireCart(cartId)
     
     // TODO enviar email
 
