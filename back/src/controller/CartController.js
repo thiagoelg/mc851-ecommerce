@@ -6,6 +6,8 @@ import PaymentClient from '../service/pagamento_client'
 import EnderecoClient from '../service/endereco_client'
 import PurchaseController from './PurchaseController'
 
+import moment from 'moment'
+
 export const createCart = async (token) => {
     const user = AuthTokenGenerator.verify(token);
 
@@ -284,7 +286,7 @@ export const checkout = async (token, cartId, data) => {
             cpf: user.cpf
         }
     } else {
-        paymentData = {
+        const paymentData = {
             clientCardName: data.payment.card.name,
             cpf: data.payment.cpf,
             cardNumber: data.payment.card.number,
@@ -295,33 +297,26 @@ export const checkout = async (token, cartId, data) => {
             instalments: data.payment.card.installments
         }
 
-        paymentResponse = await PaymentClient.paymentByCreditCard(paymentData)
-<<<<<<< HEAD
-
         status = PurchaseController.STATUS_PURCHASE.payment_approved
+
+        paymentResponse = await PaymentClient.paymentByCreditCard(paymentData)
 
         payment = {
             boleto: false,
             paymentCode: paymentResponse.data.operationHash,
-            name: paymentData.clientCardName,
             cpf: user.cpf,
-            number: paymentData.cardNumber,
-            expiryMonth: paymentData.month,
-            expiryYear: paymentData.year, 
-            cvc: paymentData.securityCode, 
-            brand: data.payment.card.brand, 
-            instalments: data.payment.card.instalments
+            name: data.payment.card.name,
+            cpf: data.payment.cpf,
+            number: data.payment.card.number,
+            expiryMonth: data.payment.card.expiryMonth,
+            expiryYear: data.payment.card.expiryYear,
+            cvc: data.payment.card.cvc,
+            brand: data.payment.card.brand,
+            instalments: data.payment.card.installments
         }
     }
-    // TODO: paymentResponse esta nulo, erro 404 em paymentByBankTicketq
-||||||| merged common ancestors
-    }    
-    // TODO: paymentResponse esta nulo, erro 404 em paymentByBankTicketq
-=======
-    } 
 
     //TODO: paymentResponse esta nulo, erro 404 em paymentByBankTicketq
->>>>>>> 476f69b8dac4b1626cffd8ba94981fb120d6d87f
     if (!paymentResponse) {
         return {
             status: 404
@@ -366,12 +361,12 @@ export const checkout = async (token, cartId, data) => {
     shipping.type = data.shipping.type
     shipping.deliveryTime = data.shipping.deliveryTime
 
-    const shippingId = Database.createShipping(shipping, trackingResponse.codigoRastreio)
-    const paymentId = Database.createPayment(payment, paymentResultCode)
+    const shippingId = await Database.createShipping(shipping, trackingResponse.data.codigoRastreio)
+    const paymentId = await Database.createPayment(payment, payment.paymentCode)
 
-    const purchaseId = Database.createPurchase(cartId, user.cid, status, price, shippingId, paymentId)
+    const purchaseId = await Database.createPurchase(cartId, user.cid, status, price, shippingId, paymentId)
 
-    Database.expireCart(cartId)
+    await Database.expireCart(cartId)
     
     // TODO enviar email
 

@@ -196,9 +196,9 @@ export const createPurchase = async (cartId, clientId, status, price, shippingId
         throw 'Missing database connection!'
 
     const [rows, field] = await pool.query(
-        `INSERT INTO purchase(cartId, clientId, status, price, shippingCode, paymentId, createdAt)
+        `INSERT INTO purchase(cartId, clientId, status, price, shippingId, paymentId, createdAt)
          VALUES (?, ?, ?, ?, ?, ?, ?)`,
-         [cartId, clientId, status, price, shippingCode, paymentCode, moment().toDate()])
+         [cartId, clientId, status, price, shippingId, paymentId, moment().toDate()])
 
     return rows.insertId
 };
@@ -210,10 +210,10 @@ export const getPurchaseById = async (purchaseId) => {
     const [rows, fields] = await pool.query(
         `SELECT p.id, p.cartId, p.clientId, p.status, p.price, p.createdAt, a.shippingCode, a.deliveryTime, a.type, a.identification, a.cep,
             a.street, a.number, a.neighborhood, a.city, a.state, a.complement,
-            pay.boleto, pay.dueDate, pay.paymentCode, pay.documentRep, pay.number, pay.brand, pay.instalments FROM purchase p
+            pay.boleto, pay.dueDate, pay.paymentCode, pay.bankTicketText as documentRep, pay.number, pay.brand, pay.instalments FROM purchase p
          JOIN shipping a ON a.id = p.shippingId
          JOIN payment pay ON pay.id = p.paymentId
-         WHERE id = ?`, [cartId]);
+         WHERE p.id = ?`, [purchaseId]);
 
     return rows[0];
 };
@@ -225,10 +225,10 @@ export const getPurchasesByClientId = async (clientId) => {
     const [rows, fields] = await pool.query(
         `SELECT p.id, p.cartId, p.clientId, p.status, p.price, p.createdAt, a.shippingCode, a.deliveryTime, a.type, a.identification, a.cep,
             a.street, a.number, a.neighborhood, a.city, a.state, a.complement,
-            pay.boleto, pay.dueDate, pay.paymentCode, pay.documentRep, pay.number, pay.brand, pay.instalments FROM purchase p
+            pay.boleto, pay.dueDate, pay.paymentCode, pay.bankTicketText as documentRep, pay.number, pay.brand, pay.instalments FROM purchase p
          JOIN shipping a ON a.id = p.shippingId
          JOIN payment pay ON pay.id = p.paymentId
-         WHERE client_id = ?`, [clientId]);
+         WHERE p.clientId = ?`, [clientId]);
 
     return rows;
 };
@@ -239,7 +239,7 @@ export const createShipping = async (address, shippingCode) => {
 
     const [rows, field] = await pool.query(
         `INSERT INTO shipping(cep, identification, street, number, neighborhood, city, state, complement, deliveryTime, type, shippingCode)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
          [address.cep, address.identification, address.street, address.number, address.neighborhood, address.city, 
             address.state, address.complement, address.deliveryTime, address.type, shippingCode])
 
