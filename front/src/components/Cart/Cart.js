@@ -14,6 +14,8 @@ import MoneyFormatter from "../Formatters/MoneyFormatter";
 import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
+import UserProfile from "../../state/UserProfile";
+import Link from "../Link/Link";
 
 class Cart extends Component {
 
@@ -51,7 +53,7 @@ class Cart extends Component {
             });
             return;
         }
-
+       
         this.props.history.push({
             pathname: "/checkout",
             state: {
@@ -60,6 +62,8 @@ class Cart extends Component {
                 products: this.state.products
             }
         });
+
+
     }
 
     handleFreightClick(event) {
@@ -206,9 +210,17 @@ class Cart extends Component {
                               alignItems="center"
                               style={{marginTop: 20, marginBottom: 20}}>
                             <Grid item>
-                                <Button variant="raised" color="secondary" onClick={this.handlePurchaseClick}>
-                                    Comprar
-                                </Button>
+                                {UserProfile.isLogged() ? (
+                                    <Button variant="raised" color="secondary" onClick={this.handlePurchaseClick}>
+                                        Comprar
+                                    </Button>
+                                ) : (
+                                    <Link to="/signIn">
+                                        <Button variant="raised" color="secondary" >
+                                            Comprar
+                                        </Button>
+                                    </Link>
+                                )}
                             </Grid>
                         </Grid>
                     </Grid>

@@ -1,10 +1,13 @@
 import React, {Component} from "react"
 import Grid from "@material-ui/core/es/Grid/Grid";
-import {getPurchase} from "../../clients/PurchaseClient";
+import {getPurchase, PURCHASE_STATUS_LABEL} from "../../clients/PurchaseClient";
 import PurchaseDetail from "./PurchaseDetail";
 import Payment from "./Payment";
 import Shipping from "./Shipping";
 import PurchaseCustomerService from "./PurchaseCustomerService";
+import Stepper from "@material-ui/core/es/Stepper/Stepper";
+import Step from "@material-ui/core/es/Step/Step";
+import StepButton from "@material-ui/core/es/StepButton/StepButton";
 
 class Purchase extends Component {
 
@@ -35,7 +38,7 @@ class Purchase extends Component {
         //FIXME remove this
         purchase = {
             "id": 15244,
-            "status": 1,
+            "status": 2,
             "createdAt": "05/08/2018",
             "shipping": {
                 "trackingCode": "RN625161646435464BR",
@@ -91,6 +94,20 @@ class Purchase extends Component {
 
         return (
             <Grid container spacing={24} style={{marginBottom: 20}}>
+                <Grid item xs={12}>
+                    <Stepper nonLinear activeStep={purchase.status}>
+                        {Object.values(PURCHASE_STATUS_LABEL).map((label, index) => {
+                            return (
+                                <Step key={label}
+                                        completed={index < purchase.status}>
+                                    <StepButton disabled={true} >
+                                        {label}
+                                    </StepButton>
+                                </Step>
+                            );
+                        })}
+                    </Stepper>
+                </Grid>
                 <Grid item xs={8}>
                     <PurchaseDetail purchase={purchase}/>
 

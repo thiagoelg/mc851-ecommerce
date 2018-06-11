@@ -34,16 +34,16 @@ class Checkout extends Component {
         super(props);
 
         this.state = {
-            shipping: this.props.location.state.shipping,
+            shipping: props.location.state.shipping,
             address: null,
             validShippingInfo: false,
 
             payment: null,
             validPaymentInfo: false,
 
-            cep: this.props.location.state.cep,
+            cep: props.location.state.cep,
 
-            products: this.props.location.state.products,
+            products: props.location.state.products,
             activeStep: 0,
             steps: ['Forma de Entrega', 'Forma de Pagamento', 'Resumo da Compra'],
 
@@ -87,7 +87,16 @@ class Checkout extends Component {
             .then(checkoutResult => {
                 switch (checkoutResult.result) {
                     case CartResult.SUCCESS: {
-                        this.props.history.push(`/purchases/${checkoutResult.purchaseId}`);
+                        this.props.history.push({
+                            pathname: `/confirmation/${checkoutResult.purchaseId}`,
+                            state: {
+                                shipping: this.state.shipping,
+                                address: this.state.address,
+                                payment: this.state.payment,
+                                products: this.state.products,
+                                purchaseId: checkoutResult.purchaseId
+                            }
+                        });
                         break;
                     }
 
