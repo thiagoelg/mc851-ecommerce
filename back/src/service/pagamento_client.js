@@ -36,7 +36,7 @@ export const paymentByBankTicket = async (payment) => {
 
 export const getBankTicketStatus = async (bankTicketId) => {
     try {
-        const response = await axios.get(`${PAGAMENTO_URL}/bankTicket/${bankTicketId}`)
+        const response = await axios.get(`${PAGAMENTO_URL}/bankTicket/${bankTicketId}/status`)
 
         return {data : response.data, status: response.status}
     } catch (e) {
