@@ -4,6 +4,7 @@ import ProductClient from '../service/produtos_client'
 import Database from "../database/database"
 import AuthTokenGenerator from "../utils/AuthTokenGenerator"
 import LogisticaClient from '../service/logistica_client'
+import PaymentClient from '../service/pagamento_client'
 
 export const STATUS_PURCHASE = {
     order_ok: 1,
@@ -86,7 +87,10 @@ export const getPurchases = async (token) => {
             }
         
             if (purchase.boleto) {
+                const boletoStatus = await PaymentClient.getBankTicketStatus(purchase.paymentCode)
+
                 data.payment.boleto = {
+                    status: boletoStatus.status,
                     dueDate: moment(purchase.dueDate).format('DD-MM-YYYY'),
                     barCode: purchase.paymentCode,
                     documentRep: purchase.documentRep
@@ -184,8 +188,12 @@ export const getPurchaseById = async (token, purchaseId) => {
         products
     }
 
+    
     if (purchase.boleto) {
+        const boletoStatus = await PaymentClient.getBankTicketStatus(purchase.paymentCode)
+
         response.payment.boleto = {
+            status: boletoStatus.status,
             dueDate: moment(purchase.dueDate).format('DD-MM-YYYY'),
             barCode: purchase.paymentCode,
             documentRep: purchase.documentRep
