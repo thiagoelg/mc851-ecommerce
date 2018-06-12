@@ -87,10 +87,11 @@ export const getPurchases = async (token) => {
             }
         
             if (purchase.boleto) {
-                const boletoStatus = await PaymentClient.getBankTicketStatus(purchase.paymentCode)
+                const boletoRes = await PaymentClient.getBankTicketStatus(purchase.paymentCode)
+                const status = boletoRes.data.status
 
                 data.payment.boleto = {
-                    status: boletoStatus.status,
+                    status: status,
                     dueDate: moment(purchase.dueDate).format('DD-MM-YYYY'),
                     barCode: purchase.paymentCode,
                     documentRep: purchase.documentRep
@@ -190,10 +191,11 @@ export const getPurchaseById = async (token, purchaseId) => {
 
     
     if (purchase.boleto) {
-        const boletoStatus = await PaymentClient.getBankTicketStatus(purchase.paymentCode)
+        const boletoRes = await PaymentClient.getBankTicketStatus(purchase.paymentCode)
+        const status = boletoRes.data.status
 
         response.payment.boleto = {
-            status: boletoStatus.status,
+            status: status,
             dueDate: moment(purchase.dueDate).format('DD-MM-YYYY'),
             barCode: purchase.paymentCode,
             documentRep: purchase.documentRep
