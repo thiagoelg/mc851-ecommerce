@@ -1,0 +1,1 @@
+ALTER TABLE payment MODIFY `number` VARCHAR(24);
