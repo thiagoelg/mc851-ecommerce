@@ -22,20 +22,14 @@ export const getPurchases = async (token) => {
         }
     }
 
-    const purchases = await Database.getPurchasesByClientId(user.cid)
+    let purchases = await Database.getPurchasesByClientId(user.cid)
     if (!purchases) {
         return {
             status: 404
         }
     }
 
-    if (purchase.clientId && purchase.clientId !== user.cid) {
-        return {
-            status: 403
-        }
-    }
-
-    let response = []
+    let responseData = []
     purchases.forEach(async (purchase) => {
         const reserves = await Database.getProductsFromCart(purchase.cartId)
 
@@ -65,24 +59,52 @@ export const getPurchases = async (token) => {
                 }
             }));
 
-        response.push ({
-            id: purchase.id,
-            status: purchase.status,
-            createdAt: moment(purchase.createdAt).format('DD-MM-YYYY'),
-            shipping: {
-                code: purchase.shippingCode    
-            },
-            payment: {
-                price: purchase.price,
-                code: purchase.paymentCode
-            },
-            products
-        })
+        let data =  {
+                id: purchase.id,
+                status: purchase.status,
+                createdAt: moment(purchase.createdAt).format('DD-MM-YYYY'),
+                shipping: {
+                    trackingCode: purchase.shippingCode,
+                    deliverytime: purchase.deliveryTime,
+                    price: purchase.price,
+                    type: purchase.type,
+                    address: {
+                        identification: purchase.identification,
+                        cep: purchase.cep,
+                        street: purchase.street,
+                        number: purchase.number,
+                        neighborhood: purchase.neighborhood,
+                        city: purchase.city,
+                        state: purchase.state,
+                        complement: purchase.complement
+                    }    
+                },
+                payment: {
+                    price: purchase.price,
+                },
+                products: products
+            }
+        
+            if (purchase.boleto) {
+                data.payment.boleto = {
+                    dueDate: moment(purchase.dueDate).format('DD-MM-YYYY'),
+                    barCode: purchase.paymentCode,
+                    documentRep: purchase.documentRep
+                }
+            } else {
+                data.payment.card = {
+                    number: purchase.number,
+                    brand: purchase.brand,
+                    instalments: purchase.instalments
+                }
+            }
+        
+        responseData.push(data)
     })
 
     return {
         status: 200,
-        data: response
+        data: responseData
     }
 }
 
@@ -136,22 +158,49 @@ export const getPurchaseById = async (token, purchaseId) => {
             }
         }));
 
+    const response =  {
+        id: purchase.id,
+        status: purchase.status,
+        createdAt: moment(purchase.createdAt).format('DD-MM-YYYY'),
+        shipping: {
+            trackingCode: purchase.shippingCode,
+            deliverytime: purchase.deliveryTime,
+            price: purchase.price,
+            type: purchase.type,
+            address: {
+                identification: purchase.identification,
+                cep: purchase.cep,
+                street: purchase.street,
+                number: purchase.number,
+                neighborhood: purchase.neighborhood,
+                city: purchase.city,
+                state: purchase.state,
+                complement: purchase.complement
+            }    
+        },
+        payment: {
+            price: purchase.price,
+        },
+        products
+    }
+
+    if (purchase.boleto) {
+        response.payment.boleto = {
+            dueDate: moment(purchase.dueDate).format('DD-MM-YYYY'),
+            barCode: purchase.paymentCode,
+            documentRep: purchase.documentRep
+        }
+    } else {
+        response.payment.card = {
+            number: purchase.number,
+            brand: purchase.brand,
+            instalments: purchase.instalments
+        }
+    }
 
     return {
         status: 200,
-        data: {
-            id: purchase.id,
-            status: purchase.status,
-            createdAt: moment(purchase.createdAt).format('DD-MM-YYYY'),
-            shipping: {
-                code: purchase.shippingCode    
-            },
-            payment: {
-                price: purchase.price,
-                code: purchase.paymentCode
-            },
-            products
-        }
+        data: response
     }
 }
 
@@ -177,16 +226,42 @@ export const getPurchaseTrackingById = async (token, purchaseId) => {
         }
     }
 
-    const trackingResponse = LogisticaClient.getTracking(purchase.shippingCode)
+    const trackingResponse = await LogisticaClient.getTracking(purchase.shippingCode)
     if (trackingResponse.status !== 200) {
         return {
             status: trackingResponse.status
         }
     }
 
+    const response = {
+        status: trackingResponse.data.status,
+        purchaseId: purchaseId,
+        type: purchase.type,
+        price: purchase.price,
+        deliveryTime: moment(purchase.deliveryTime).format('DD-MM-YYYY'),
+        originCep: trackingResponse.data.cepOrigem,
+        destinyCep: trackingResponse.data.cepDestino,
+        weigth: trackingResponse.data.peso,
+        packageType: trackingResponse.data.tipoPacote,
+        heigth: trackingResponse.data.altura,
+        width: trackingResponse.data.largura,
+        length: trackingResponse.data.comprimento,
+    }
+
+    let history = []
+    trackingResponse.data.historicoRastreio.forEach((item) => {
+        history.push({
+            datetime: item.hora,
+            location: item.local,
+            message: item.mensagem
+        })
+    })
+
+    response.history = history
+
     return {
         status: 200,
-        data: trackingResponse.data
+        data: response
     }
 }
 

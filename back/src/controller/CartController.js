@@ -6,6 +6,8 @@ import PaymentClient from '../service/pagamento_client'
 import EnderecoClient from '../service/endereco_client'
 import PurchaseController from './PurchaseController'
 
+import moment from 'moment'
+
 export const createCart = async (token) => {
     const user = AuthTokenGenerator.verify(token);
 
@@ -260,35 +262,60 @@ export const checkout = async (token, cartId, data) => {
     // }
 
     // PAYMENT
-    let paymentData
     let paymentResponse
-
+    let payment
+    let status
     if (data.payment.boleto) {
         const paymentData = {
-            clientName: data.payment.name,
-            cpf: data.payment.cpf,
-            address: data.payment.address,
-            cep: data.payment.cep,
-            value: data.payment.price
+            clientName: user.name,
+            cpf: user.cpf,
+            address: data.shipping.address.street,
+            cep: data.shipping.address.cep,
+            value: `${data.payment.price}`
         }
         paymentResponse = await PaymentClient.paymentByBankTicket(paymentData)
-     
+
+        status = PurchaseController.STATUS_PURCHASE.order_ok
+
+        payment = {
+            boleto: true,
+            dueDate: moment().add(5, 'days').toDate(),
+            bankTicketText: paymentResponse.data.documentRep,
+            paymentCode: paymentResponse.data.code,
+            name: user.name,
+            cpf: user.cpf
+        }
     } else {
-        paymentData = {
+        const paymentData = {
             clientCardName: data.payment.card.name,
-            cpf: data.payment.cpf,
+            cpf: user.cpf,
             cardNumber: data.payment.card.number,
             month: data.payment.card.expiryMonth,
             year: data.payment.card.expiryYear,
             securityCode: data.payment.card.cvc,
-            value: data.payment.price,
+            value: `${data.payment.price}`,
             instalments: data.payment.card.installments
         }
 
-        paymentResponse = await PaymentClient.paymentByCreditCard(paymentData)
-    } 
+        status = PurchaseController.STATUS_PURCHASE.payment_approved
 
-    //TODO: paymentResponse esta nulo, erro 404 em paymentByBankTicketq
+        paymentResponse = await PaymentClient.paymentByCreditCard(paymentData)
+
+        payment = {
+            boleto: false,
+            paymentCode: paymentResponse.data.operationHash,
+            cpf: user.cpf,
+            name: data.payment.card.name,
+            cpf: data.payment.cpf,
+            number: data.payment.card.number,
+            expiryMonth: data.payment.card.expiryMonth,
+            expiryYear: data.payment.card.expiryYear,
+            cvc: data.payment.card.cvc,
+            brand: data.payment.card.brand,
+            instalments: data.payment.card.installments
+        }
+    }
+
     if (!paymentResponse) {
         return {
             status: 404
@@ -306,15 +333,6 @@ export const checkout = async (token, cartId, data) => {
                 code: 1
             }
         }
-    }
-
-    let status = PurchaseController.STATUS_PURCHASE.order_ok
-    let paymentResultCode
-    if (data.payment.boleto) {
-        paymentResultCode = paymentResponse.data.code
-    } else {
-        status = PurchaseController.STATUS_PURCHASE.payment_approved
-        paymentResultCode = paymentResponse.data.operationHash
     }
 
     // SHIPPING
@@ -338,9 +356,16 @@ export const checkout = async (token, cartId, data) => {
     }
 
     // CREATE PURCHASE
-    const purchaseId = Database.createPurchase(cartId, user.cid, status, price, trackingResponse.codigoRastreio, paymentResultCode)
+    const shipping = data.shipping.address
+    shipping.type = data.shipping.type
+    shipping.deliveryTime = data.shipping.deliveryTime
 
-    Database.expireCart(cartId)
+    const shippingId = await Database.createShipping(shipping, trackingResponse.data.codigoRastreio)
+    const paymentId = await Database.createPayment(payment, payment.paymentCode)
+
+    const purchaseId = await Database.createPurchase(cartId, user.cid, status, price, shippingId, paymentId)
+    
+    await Database.expireCart(cartId)
     
     // TODO enviar email
 

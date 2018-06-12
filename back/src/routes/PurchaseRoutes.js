@@ -52,7 +52,7 @@ router.get('/:purchaseId/tracking', async (req, res, next) => {
             return res.sendStatus(400);
         }
 
-        let response = await PurchaseController.getPurchaseTracking(token, purchaseId);
+        let response = await PurchaseController.getPurchaseTrackingById(token, purchaseId);
         return res.status(response.status).json(response.data)
         
     } catch (e) {
