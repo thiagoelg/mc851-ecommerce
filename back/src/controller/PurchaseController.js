@@ -30,7 +30,7 @@ export const getPurchases = async (token) => {
     }
 
     let responseData = []
-    purchases.forEach(async (purchase) => {
+    for (let purchase of purchases) {
         const reserves = await Database.getProductsFromCart(purchase.cartId)
 
         const products = await Promise.all(reserves
@@ -100,7 +100,7 @@ export const getPurchases = async (token) => {
             }
         
         responseData.push(data)
-    })
+    }
 
     return {
         status: 200,
