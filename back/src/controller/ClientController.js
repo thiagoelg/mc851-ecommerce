@@ -3,6 +3,7 @@ import ClientClient from "../service/cliente_client"
 import Database from "../database/database"
 import AuthTokenGenerator from "../utils/AuthTokenGenerator"
 import AddressConverter from "../utils/AddressConverter"
+import UserRegisterMail from '../mail/UserRegisterMail'
 
 export const register = async (params) => {
 
@@ -49,6 +50,8 @@ export const register = async (params) => {
         email: params.email,
         cpf: params.cpf
     });
+
+    await UserRegisterMail.sendWelcomeEmail(params.name, params.email)
 
     return {
         status: response.status,

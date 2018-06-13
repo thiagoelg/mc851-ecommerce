@@ -13,18 +13,18 @@ services:
     labels:
       - 'traefik.backend=front'
       - 'traefik.port=3000'
-      - 'traefik.frontend.rule=Host:front.localhost'
+      - 'traefik.frontend.rule=Host:front.thiagoelg.com'
     ports:
       - 3000
     environment:
-      - NODE_ENV=development
-      - REACT_APP_BACK_URL=back.localhost
-      - REACT_APP_FRONT_URL=front.localhost
+      - NODE_ENV=production
+      - REACT_APP_BACK_URL=back.thiagoelg.com
+      - REACT_APP_FRONT_URL=front.thiagoelg.com
       - CHOKIDAR_USEPOLLING=true
     networks:
       mc851:
         aliases:
-          - front.localhost
+          - front.thiagoelg.com
 
   back:
     container_name: back
@@ -32,16 +32,16 @@ services:
     user: node
     working_dir: /home/node
     environment:
-      - NODE_ENV=development
-      - BACK_URL=back.localhost
-      - FRONT_URL=front.localhost
+      - NODE_ENV=production
+      - BACK_URL=back.thiagoelg.com
+      - FRONT_URL=front.thiagoelg.com
     volumes:
       - ./back:/home/node/
     command: /home/node/run.sh
     labels:
       - 'traefik.backend=back'
       - 'traefik.port=3001'
-      - 'traefik.frontend.rule=Host:back.localhost'
+      - 'traefik.frontend.rule=Host:back.thiagoelg.com'
     ports:
       - 3001
     depends_on:
@@ -49,7 +49,7 @@ services:
     networks:
       mc851:
         aliases:
-          - back.localhost
+          - back.thiagoelg.com
 
   db:
     container_name: db
@@ -61,7 +61,7 @@ services:
     networks:
       mc851:
         aliases:
-          - db.localhost
+          - db.thiagoelg.com
 
   flyway-repair:
     image: boxfuse/flyway
@@ -75,7 +75,7 @@ services:
 
   flyway:
     image: boxfuse/flyway
-    command: -url=jdbc:mysql://db.localhost:3306 -schemas=ecommerce -user=root -password=P4ssword! migrate
+    command: -url=jdbc:mysql://db.thiagoelg.com:3306 -schemas=ecommerce -user=root -password=P4ssword! migrate
     volumes:
       - .:/flyway/sql
     depends_on:
@@ -96,7 +96,7 @@ services:
     labels:
       - 'traefik.backend=pma'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:pma.localhost'
+      - 'traefik.frontend.rule=Host:pma.thiagoelg.com'
     networks:
       mc851:
 

@@ -5,6 +5,7 @@ import LogisticaClient from '../service/logistica_client'
 import PaymentClient from '../service/pagamento_client'
 import EnderecoClient from '../service/endereco_client'
 import PurchaseController from './PurchaseController'
+import CheckoutMail from '../mail/CheckoutMail'
 
 import moment from 'moment'
 
@@ -367,7 +368,9 @@ export const checkout = async (token, cartId, data) => {
     
     await Database.expireCart(cartId)
     
-    // TODO enviar email
+    // SEND PURCHASE EMAIL
+    const purchase = await Database.getPurchaseById(purchaseId)
+    await CheckoutMail.sendCheckoutEmail(user.email, purchase, products, data.shipping.price)
 
     return {
         status: 200,
@@ -391,6 +394,7 @@ const getProductsTO = async (cartId) => {
 
             return {
                 id: product.id,
+                name: product.name,
                 price: product.price,
                 amount: p.amount,
                 weight: product.weight,
