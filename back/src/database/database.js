@@ -209,8 +209,8 @@ export const getPurchaseById = async (purchaseId) => {
 
     const [rows, fields] = await pool.query(
         `SELECT p.id, p.cartId, p.clientId, p.status, p.price, p.createdAt, a.shippingCode, a.deliveryTime, a.type, a.identification, a.cep,
-            a.street, a.number, a.neighborhood, a.city, a.state, a.complement,
-            pay.boleto, pay.dueDate, pay.paymentCode, pay.bankTicketText as documentRep, pay.number, pay.brand, pay.instalments FROM purchase p
+            a.street, a.number as addressNumber, a.neighborhood, a.city, a.state, a.complement,
+            pay.boleto, pay.dueDate, pay.paymentCode, pay.bankTicketText as documentRep, pay.number as payNumber, pay.brand, pay.instalments FROM purchase p
          JOIN shipping a ON a.id = p.shippingId
          JOIN payment pay ON pay.id = p.paymentId
          WHERE p.id = ?`, [purchaseId]);

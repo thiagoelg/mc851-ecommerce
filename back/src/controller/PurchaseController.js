@@ -72,7 +72,7 @@ export const getPurchases = async (token) => {
                         identification: purchase.identification,
                         cep: purchase.cep,
                         street: purchase.street,
-                        number: purchase.number,
+                        number: purchase.addressNumber,
                         neighborhood: purchase.neighborhood,
                         city: purchase.city,
                         state: purchase.state,
@@ -93,7 +93,7 @@ export const getPurchases = async (token) => {
                 }
             } else {
                 data.payment.card = {
-                    number: purchase.number,
+                    number: purchase.payNumber,
                     brand: purchase.brand,
                     instalments: purchase.instalments
                 }
@@ -171,7 +171,7 @@ export const getPurchaseById = async (token, purchaseId) => {
                 identification: purchase.identification,
                 cep: purchase.cep,
                 street: purchase.street,
-                number: purchase.number,
+                number: purchase.addressNumber,
                 neighborhood: purchase.neighborhood,
                 city: purchase.city,
                 state: purchase.state,
@@ -192,7 +192,7 @@ export const getPurchaseById = async (token, purchaseId) => {
         }
     } else {
         response.payment.card = {
-            number: purchase.number,
+            number: purchase.payNumber,
             brand: purchase.brand,
             instalments: purchase.instalments
         }
