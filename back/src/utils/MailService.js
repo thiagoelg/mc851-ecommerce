@@ -20,7 +20,9 @@ const transporter = nodemailer.createTransport({
     };
  */
 
-export const sendMail = (from, to, subject, text, html) => {
+export const sendMail = (to, subject, text, html) => {
+
+    const from = 'ktortrqnmhnyuimo@ethereal.email';
 
     let mailOptions = {
         from: from,

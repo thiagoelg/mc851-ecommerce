@@ -2,17 +2,7 @@ import express from 'express'
 
 import SacController from '../controller/SacController'
 
-import MailService from '../utils/MailService'
-
 const router = express.Router();
-
-/**
- * Todo: remover.
- */
-router.get('/mailtest', async () => {
-    MailService.sendMail();
-    return 'bla';
-});
 
 router.get('/tickets', async (req, res, next) => {
     try {
