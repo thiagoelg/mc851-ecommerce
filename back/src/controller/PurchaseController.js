@@ -4,6 +4,7 @@ import ProductClient from '../service/produtos_client'
 import Database from "../database/database"
 import AuthTokenGenerator from "../utils/AuthTokenGenerator"
 import LogisticaClient from '../service/logistica_client'
+import PaymentClient from '../service/pagamento_client'
 
 export const STATUS_PURCHASE = {
     order_ok: 1,
@@ -30,7 +31,7 @@ export const getPurchases = async (token) => {
     }
 
     let responseData = []
-    purchases.forEach(async (purchase) => {
+    for (let purchase of purchases) {
         const reserves = await Database.getProductsFromCart(purchase.cartId)
 
         const products = await Promise.all(reserves
@@ -86,7 +87,11 @@ export const getPurchases = async (token) => {
             }
         
             if (purchase.boleto) {
+                const boletoRes = await PaymentClient.getBankTicketStatus(purchase.paymentCode)
+                const status = boletoRes.data.status
+
                 data.payment.boleto = {
+                    status: status,
                     dueDate: moment(purchase.dueDate).format('DD-MM-YYYY'),
                     barCode: purchase.paymentCode,
                     documentRep: purchase.documentRep
@@ -100,7 +105,7 @@ export const getPurchases = async (token) => {
             }
         
         responseData.push(data)
-    })
+    }
 
     return {
         status: 200,
@@ -184,8 +189,13 @@ export const getPurchaseById = async (token, purchaseId) => {
         products
     }
 
+    
     if (purchase.boleto) {
+        const boletoRes = await PaymentClient.getBankTicketStatus(purchase.paymentCode)
+        const status = boletoRes.data.status
+
         response.payment.boleto = {
+            status: status,
             dueDate: moment(purchase.dueDate).format('DD-MM-YYYY'),
             barCode: purchase.paymentCode,
             documentRep: purchase.documentRep
