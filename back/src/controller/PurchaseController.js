@@ -368,7 +368,7 @@ export const handleTrackingChange = async () => {
         }
 
         const lastMessage = history[history.length-1].mensagem.toUpperCase();
-        if(lastMessage.includes("ENVIADO")) {
+        if(lastMessage.includes("ENVIADO") || lastMessage.includes("SAIU")) {
             console.log(`[tracking update] updating purchase ${purchase.id} to shipped`);
             await Database.updatePurchaseStatus(purchase.id, STATUS_PURCHASE.shipped)
         } else if(lastMessage.includes("ENTREGUE")) {
