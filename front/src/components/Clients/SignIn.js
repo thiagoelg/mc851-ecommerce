@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {withRouter} from "react-router-dom"
 import Grid from "@material-ui/core/es/Grid/Grid";
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Typography from "@material-ui/core/es/Typography/Typography";
@@ -11,6 +12,7 @@ import {cart} from "../../cart/Cart"
 import {validateEmail, validateNotEmpty} from "../../util/Validators";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
+import {treatError} from "../../util/ErrorUtils";
 
 
 class SignIn extends Component {
@@ -70,7 +72,7 @@ class SignIn extends Component {
                     });
                     return;
                 }
-                //TODO treat error
+                treatError(this.props, error);
             })
     }
 
@@ -181,4 +183,4 @@ class SignIn extends Component {
 
 }
 
-export default SignIn;
+export default withRouter(SignIn);

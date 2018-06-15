@@ -17,6 +17,7 @@ import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
 import {scrollToTop} from "../../util/ScrollUtils";
+import {treatError} from "../../util/ErrorUtils";
 
 const styles = theme => ({
     backButton: {
@@ -134,10 +135,18 @@ class Checkout extends Component {
                         break;
                     }
 
-                    case CartResult.INTERNAL_ERROR:
+                    case CartResult.INTERNAL_ERROR: {
+                        const error = {
+                            response: {
+                                status: 500
+                            }
+                        };
+                        treatError(this.props, error);
+                        return;
+                    }
                     case CartResult.ERROR:
                     default: {
-                        //TODO treat error
+                        treatError(this.props);
                     }
                 }
             });

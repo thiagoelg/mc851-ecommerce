@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 import {AppBar, Button, Grid, Toolbar} from "@material-ui/core";
 import SearchInput from '../Products/SearchInput'
 import Logo from "../Logo/Logo";
@@ -8,6 +7,8 @@ import Link from "../Link/Link";
 import UserButtons from "./UserButtons";
 import CartButton from "./CartButton";
 import {getCategories} from "../../clients/ProductsClient";
+import {withRouter} from "react-router-dom";
+import {treatError} from "../../util/ErrorUtils";
 
 const toolBarBottonHeader = {
     backgroundColor: '#F5F5F5',
@@ -46,8 +47,8 @@ class Header extends Component {
 
                 this.setState({categories: data});
             })
-            .catch(data => {
-                //TODO treat errors
+            .catch(error => {
+                //FIXME infinite redirections treatError(this.props, error)
             })
     }
 
@@ -103,4 +104,4 @@ class Header extends Component {
     }
 }
 
-export default withStyles(styles)(Header);
+export default withRouter(withStyles(styles)(Header));

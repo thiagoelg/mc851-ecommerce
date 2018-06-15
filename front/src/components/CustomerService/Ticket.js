@@ -120,7 +120,7 @@ class Ticket extends Component {
                         waitingMessage: false
                     });
 
-                    //TODO treat error
+                    treatError(this.props, error);
                 });
 
         });

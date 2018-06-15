@@ -16,6 +16,7 @@ import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import Close from "@material-ui/icons/es/Close";
 import MoneyFormatter from "../Formatters/MoneyFormatter";
 import {CartResult} from "../../cart/CartResult";
+import {treatError} from "../../util/ErrorUtils";
 
 class CartItems extends Component {
 
@@ -97,10 +98,19 @@ class CartItems extends Component {
                     break;
                 }
 
+                case CartResult.INTERNAL_ERROR: {
+                    const error = {
+                        response: {
+                            status: 500
+                        }
+                    };
+                    treatError(this.props, error);
+                    return;
+                }
                 case CartResult.ERROR:
-                case CartResult.INTERNAL_ERROR:
                 default: {
-                    //TODO treat error
+                    treatError(this.props);
+                    return;
                 }
 
             }

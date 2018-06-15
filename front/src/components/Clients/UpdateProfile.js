@@ -1,4 +1,5 @@
 import React, {Component} from "react"
+import {withRouter} from "react-router-dom"
 import ClientBasicForm from "./ClientBasicForm";
 import AddressForm from "../Address/AddressForm";
 import Grid from "@material-ui/core/es/Grid/Grid";
@@ -9,6 +10,7 @@ import {getClient, updateClient} from "../../clients/ClientClient";
 import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
+import {treatError} from "../../util/ErrorUtils";
 
 class UpdateProfile extends Component {
 
@@ -85,7 +87,7 @@ class UpdateProfile extends Component {
                 });
             })
             .catch(error => {
-                //TODO treat error
+                treatError(this.props, error);
             });
     }
 
@@ -158,8 +160,7 @@ class UpdateProfile extends Component {
                 this.props.history.push('/profile');
             })
             .catch(error => {
-                console.log(error);
-                //TODO treat error
+                treatError(this.props, error);
             });
     }
 
@@ -259,4 +260,4 @@ class UpdateProfile extends Component {
 
 }
 
-export default UpdateProfile;
+export default withRouter(UpdateProfile);

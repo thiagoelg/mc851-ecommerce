@@ -16,6 +16,7 @@ import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
 import UserProfile from "../../state/UserProfile";
 import Link from "../Link/Link";
+import {treatError} from "../../util/ErrorUtils";
 
 class Cart extends Component {
 
@@ -106,10 +107,19 @@ class Cart extends Component {
                         break;
                     }
 
+                    case CartResult.INTERNAL_ERROR: {
+                        const error = {
+                            response: {
+                                status: 500
+                            }
+                        };
+                        treatError(this.props, error);
+                        return;
+                    }
                     case CartResult.ERROR:
-                    case CartResult.INTERNAL_ERROR:
-                    default:
-                    //TODO treat error
+                    default: {
+                        treatError(this.props);
+                    }
 
                 }
             });
