@@ -27,6 +27,11 @@ class Confirmation extends Component {
         }
 
         let locationState = this.props.location.state;
+        if(!locationState) {
+            this.props.history.push("/cart");
+            return;
+        }
+
         if(locationState) {
             this.setState({
                 purchaseId: locationState.purchaseId
