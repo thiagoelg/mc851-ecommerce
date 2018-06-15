@@ -20,7 +20,7 @@ export const getProducts = async (params) => {
 export const getProductsByFullSearch = async (params) => {
 
     try {
-        const response = await axios.get(`${PRODUTOS_URL}/products/group/${GROUP_ID}/search/${params.search}`, {
+        const response = await axios.get(`${PRODUTOS_URL}/products/search/${params.search}`, {
             params
         });
 

@@ -9,39 +9,41 @@ class PurchaseStatusStepper extends Component {
     render() {
         const {status} = this.props;
 
-        const purchaseLifetime = [PURCHASE_STATUS.ORDER_REQUESTED, PURCHASE_STATUS.PAYMENT_APPROVED, PURCHASE_STATUS.SEPARING_FROM_STOCK];
-        const reprovedPurchaseLifetime = [PURCHASE_STATUS.ORDER_REQUESTED, PURCHASE_STATUS.PAYMENT_REPROVED];
+        const purchaseLifetime = [PURCHASE_STATUS.ORDER_REQUESTED,
+            PURCHASE_STATUS.PAYMENT_APPROVED,
+            PURCHASE_STATUS.SEPARING_FROM_STOCK,
+            PURCHASE_STATUS.IN_TRANSPORT,
+            PURCHASE_STATUS.DELIVERED];
+
+        const reprovedPurchaseLifetime = [PURCHASE_STATUS.ORDER_REQUESTED,
+            PURCHASE_STATUS.PAYMENT_REPROVED];
+
+        const canceledPurchaseLifetime = [PURCHASE_STATUS.ORDER_REQUESTED,
+            PURCHASE_STATUS.PAYMENT_REPROVED,
+            PURCHASE_STATUS.CANCELED];
+
+        let lifetime = purchaseLifetime;
+        if(status === PURCHASE_STATUS.PAYMENT_REPROVED) {
+            lifetime = reprovedPurchaseLifetime;
+        } else if(status === PURCHASE_STATUS.CANCELED) {
+            lifetime = canceledPurchaseLifetime;
+        }
+
 
         return (
             <div>
-
-                {status === PURCHASE_STATUS.PAYMENT_REPROVED ? (
-                    <Stepper nonLinear activeStep={status}>
-                        {reprovedPurchaseLifetime.map(step => {
-                            return (
-                                <Step key={step}
-                                      completed={step <= status}>
-                                    <StepButton disabled={true}>
-                                        {PURCHASE_STATUS_LABEL[step]}
-                                    </StepButton>
-                                </Step>
-                            );
-                        })}
-                    </Stepper>
-                ) : (
-                    <Stepper nonLinear activeStep={status}>
-                        {purchaseLifetime.map(step => {
-                            return (
-                                <Step key={step}
-                                      completed={step <= status}>
-                                    <StepButton disabled={true}>
-                                        {PURCHASE_STATUS_LABEL[step]}
-                                    </StepButton>
-                                </Step>
-                            );
-                        })}
-                    </Stepper>
-                )}
+                <Stepper nonLinear activeStep={status}>
+                    {lifetime.map(step => {
+                        return (
+                            <Step key={step}
+                                  completed={step <= status}>
+                                <StepButton disabled={true}>
+                                    {PURCHASE_STATUS_LABEL[step]}
+                                </StepButton>
+                            </Step>
+                        );
+                    })}
+                </Stepper>
             </div>
         );
     }

@@ -39,9 +39,9 @@ class Products extends Component {
         let params = Object.assign({}, props.filter);
         params.page = this.state.page;
 
-        const search = props.search;
+        params.search = props.search;
 
-        if (search) {
+        if (params.search) {
             getProductsByFullSearch(params)
                 .then(response => {
                     this.setState({

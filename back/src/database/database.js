@@ -233,6 +233,21 @@ export const getPurchasesByClientId = async (clientId) => {
     return rows;
 };
 
+export const getPurchasesBetweenStatus = async (status1, status2) => {
+    if (!pool)
+        throw 'Missing database connection!';
+
+    const [rows, fields] = await pool.query(
+        `SELECT p.id, p.cartId, p.clientId, p.status, p.price, p.createdAt, a.shippingCode, a.deliveryTime, a.type, a.identification, a.cep,
+            a.street, a.number as addressNumber, a.neighborhood, a.city, a.state, a.complement,
+            pay.boleto, pay.dueDate, pay.paymentCode, pay.bankTicketText as documentRep, pay.number as payNumber, pay.brand, pay.instalments FROM purchase p
+         JOIN shipping a ON a.id = p.shippingId
+         JOIN payment pay ON pay.id = p.paymentId
+         WHERE p.status >= ? AND p.status < ?`, [status1, status2]);
+
+    return rows;
+};
+
 export const updatePurchaseStatus = async (purchaseId, status) => {
     if (!pool)
         throw 'Missing database connection!';
@@ -290,6 +305,7 @@ export default {
     getPurchaseById,
     getPurchasesByClientId,
     updatePurchaseStatus,
+    getPurchasesBetweenStatus,
     createShipping,
     createPayment
 };

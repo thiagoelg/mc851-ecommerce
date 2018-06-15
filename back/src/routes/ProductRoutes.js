@@ -143,7 +143,21 @@ router.get('/search', async (req, res, next) => {
 
         let products = await ProductController.getProductsByFullSearch(params);
 
-        return res.json(products)
+        let filterProducts = []
+        let addProduct = true
+
+        for(let p of products) {
+            if(p.groupId !== "ad244d5d-29d4-4da4-99ff-cf62a57534ec") {
+                addProduct = false
+            }        
+
+            if(addProduct) {
+                filterProducts.push(p)
+            }
+            addProduct = true
+        }
+        
+        return res.json(filterProducts)
     } catch (e) {
         next(e)
     }

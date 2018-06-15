@@ -5,22 +5,13 @@ import Button from "@material-ui/core/es/Button";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import Link from "../Link/Link";
 import check from "../Cart/checked.png";
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepButton from "@material-ui/core/es/StepButton/StepButton";
 import Divider from '@material-ui/core/Divider';
-import {PURCHASE_STATUS, PURCHASE_STATUS_LABEL} from '../../clients/PurchaseClient'
+import {PURCHASE_STATUS} from '../../clients/PurchaseClient'
 import PurchaseStatusStepper from "../Purchase/PurchaseStatusStepper";
-
-function getSteps() {
-    return ['Pedido Recebido', 'Aguardando Pagamento', 'Produto em Transporte', 'Produto Entregue'];
-}
-
 
 class Confirmation extends Component {
 
     render() {
-        const steps = getSteps();
 
         let locationState = this.props.location.state;
         const purchaseId = locationState.purchaseId;

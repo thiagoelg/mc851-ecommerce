@@ -1,13 +1,10 @@
 import React, {Component} from "react"
 import Grid from "@material-ui/core/es/Grid/Grid";
-import {getPurchase, PURCHASE_STATUS_LABEL} from "../../clients/PurchaseClient";
+import {getPurchase} from "../../clients/PurchaseClient";
 import PurchaseDetail from "./PurchaseDetail";
 import Payment from "./Payment";
 import Shipping from "./Shipping";
 import PurchaseCustomerService from "./PurchaseCustomerService";
-import Stepper from "@material-ui/core/es/Stepper/Stepper";
-import Step from "@material-ui/core/es/Step/Step";
-import StepButton from "@material-ui/core/es/StepButton/StepButton";
 import PurchaseStatusStepper from "./PurchaseStatusStepper";
 
 class Purchase extends Component {
