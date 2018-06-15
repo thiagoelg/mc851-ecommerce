@@ -20,7 +20,7 @@ class PurchaseSummary extends Component {
 
         const numberOfProducts = products ? products.reduce((acc, p) => acc + p.amount, 0) : 0;
 
-        const freight = this.props.shipping.price / 100;
+        const freight = this.props.shipping ? this.props.shipping.price / 100 : 0;
 
         const total = freight ? freight + subTotal : subTotal;
 

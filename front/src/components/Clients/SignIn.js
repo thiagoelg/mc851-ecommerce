@@ -35,6 +35,12 @@ class SignIn extends Component {
         this.handleClose = this.handleClose.bind(this);
     }
 
+    componentWillMount() {
+        if(UserProfile.isLogged()) {
+            this.props.history.push("/");
+        }
+    }
+
     handleClose = () => {
         this.setState({open: false});
     };
