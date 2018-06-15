@@ -386,10 +386,10 @@ export const handleTrackingChange = async () => {
 export const releasePurchaseProducts = async (purchase) => {
     const reserves = await Database.getProductsFromCart(purchase.cartId);
 
-    reserves.forEach(async (product) => {
-        await ProductClient.releaseProduct(product.id, product.amount);
+    reserves.forEach(async (reservation) => {
+        await ProductClient.releaseProduct(reservation.product_id, reservation.amount);
 
-        await Database.updateProduct(cart.id, product.id, 0)
+        await Database.updateProduct(cart.id, reservation.id, 0)
     });
 };
 
