@@ -11,6 +11,9 @@ import Grid from "@material-ui/core/es/Grid";
 import {getProducts, getProductsByFullSearch} from "../../clients/ProductsClient";
 import Link from "../Link/Link";
 import MoneyFormatter from "../Formatters/MoneyFormatter";
+import {treatError} from "../../util/ErrorUtils";
+import Fade from "@material-ui/core/es/Fade/Fade";
+import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
 
 class Products extends Component {
 
@@ -22,6 +25,8 @@ class Products extends Component {
             page: 1,
             totalPages: null,
             displayedPages: 5,
+
+            loading: true
         };
 
         this.handlePageChange = this.handlePageChange.bind(this);
@@ -41,29 +46,35 @@ class Products extends Component {
 
         params.search = props.search;
 
-        if (params.search) {
-            getProductsByFullSearch(params)
-                .then(response => {
-                    this.setState({
-                        products: response.data,
-                        totalPages: 15 //FIXME ask produtos-1
+        this.setState({
+            loading: true,
+        }, () => {
+            if (params.search) {
+                getProductsByFullSearch(params)
+                    .then(response => {
+                        this.setState({
+                            products: response.data,
+                            totalPages: 15, //FIXME ask produtos-1
+                            loading: false
+                        });
+                    })
+                    .catch(error => {
+                        treatError(this.props, error);
                     });
-                })
-                .catch(error => {
-                    //TODO treat error
-                });
-        } else {
-            getProducts(params)
-                .then(response => {
-                    this.setState({
-                        products: response.data,
-                        totalPages: 15 //FIXME ask produtos-1
+            } else {
+                getProducts(params)
+                    .then(response => {
+                        this.setState({
+                            products: response.data,
+                            totalPages: 15, //FIXME ask produtos-1
+                            loading: false
+                        });
+                    })
+                    .catch(error => {
+                        treatError(this.props, error);
                     });
-                })
-                .catch(error => {
-                    //TODO treat error
-                });
-        }
+            }
+        });
     }
 
     empty() {
@@ -114,31 +125,47 @@ class Products extends Component {
 
 
         return (
-            <div className="products" justify='center'>
-                {this.empty() ? (
-                    <Typography variant="subheading" gutterBottom>
-                        Nenhum produto foi encontrado.
-                    </Typography>
+            <span>
+                {this.state.loading ? (
+                    <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
+                        <Fade
+                            in={this.state.loading}
+                            style={{
+                                transitionDelay: this.state.loading ? '800ms' : '0ms'
+                            }}
+                            unmountOnExit
+                        >
+                            <CircularProgress/>
+                        </Fade>
+                    </Grid>
                 ) : (
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <GridList cellHeight={300} cols={cols}>
-                                {products}
-                            </GridList>
-                        </Grid>
-                        {this.state.totalPages > 1 && (
-                            <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
-                                <Pagination total={this.state.totalPages}
-                                            current={this.state.page}
-                                            display={this.state.displayedPages}
-                                            onChange={this.handlePageChange}
-                                />
+                    <div className="products" justify='center'>
+                        {this.empty() ? (
+                            <Typography variant="subheading" gutterBottom>
+                                Nenhum produto foi encontrado.
+                            </Typography>
+                        ) : (
+                            <Grid container>
+                                <Grid item xs={12}>
+                                    <GridList cellHeight={300} cols={cols}>
+                                        {products}
+                                    </GridList>
+                                </Grid>
+                                {/*{this.state.totalPages > 1 && (*/}
+                                    {/*<Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>*/}
+                                        {/*<Pagination total={this.state.totalPages}*/}
+                                                    {/*current={this.state.page}*/}
+                                                    {/*display={this.state.displayedPages}*/}
+                                                    {/*onChange={this.handlePageChange}*/}
+                                        {/*/>*/}
+                                    {/*</Grid>*/}
+                                {/*)}*/}
+
                             </Grid>
                         )}
-
-                    </Grid>
+                    </div>
                 )}
-            </div>
+            </span>
         );
     }
 

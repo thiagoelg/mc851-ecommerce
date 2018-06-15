@@ -12,6 +12,7 @@ import Close from "@material-ui/icons/es/Close";
 import ClientBasicForm from "./ClientBasicForm";
 import PasswordForm from "./PasswordForm";
 import {cart} from "../../cart/Cart";
+import {treatError} from "../../util/ErrorUtils";
 
 
 class SignUp extends Component {
@@ -40,6 +41,12 @@ class SignUp extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
+    }
+
+    componentWillMount() {
+        if(UserProfile.isLogged()) {
+            this.props.history.push("/");
+        }
     }
 
     handleClick(e) {
@@ -75,7 +82,7 @@ class SignUp extends Component {
                     });
                     return;
                 }
-                //TODO treat error
+                treatError(this.props, error);
             })
     }
 

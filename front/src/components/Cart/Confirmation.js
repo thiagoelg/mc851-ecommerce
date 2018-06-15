@@ -8,13 +8,40 @@ import check from "../Cart/checked.png";
 import Divider from '@material-ui/core/Divider';
 import {PURCHASE_STATUS} from '../../clients/PurchaseClient'
 import PurchaseStatusStepper from "../Purchase/PurchaseStatusStepper";
+import UserProfile from "../../state/UserProfile";
 
 class Confirmation extends Component {
 
-    render() {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            purchaseId: undefined
+        }
+    }
+
+    componentWillMount() {
+        if(!UserProfile.isLogged()) {
+            this.props.history.push("/signIn");
+            return;
+        }
 
         let locationState = this.props.location.state;
-        const purchaseId = locationState.purchaseId;
+        if(!locationState) {
+            this.props.history.push("/cart");
+            return;
+        }
+
+        if(locationState) {
+            this.setState({
+                purchaseId: locationState.purchaseId
+            });
+        }
+    }
+
+    render() {
+
+        const purchaseId = this.state.purchaseId;
 
         return (
             <Grid container height="auto">

@@ -1,6 +1,7 @@
 import express from 'express'
 
 import ProductController from '../controller/ProductController'
+import ProdutosClient from '../service/produtos_client'
 
 const router = express.Router()
 
@@ -27,7 +28,7 @@ router.get('/categories/', async (req, res, next) => {
 
 router.get('/categories/:id', async (req, res, next) => {
 
-    try{
+    try {
         let id = req.params.id
         if (!id) {
             res.sendStatus(400)
@@ -45,30 +46,30 @@ router.get('/', async (req, res, next) => {
 
     try {
         let params = {
-            page: req.query.page                        || 1,
-            highlight: req.query.highlight              || false,
+            page: req.query.page || 1,
+            highlight: req.query.highlight || false,
         };
-        
+
         if (req.query.brands) {
             params.brand = req.query.brands
         }
-    
+
         if (req.query.category_id) {
             params.categoryId = req.query.category_id
         }
-    
+
         if (req.query.max_price) {
             params.max_price = req.query.max_price
         }
-    
+
         if (req.query.min_price) {
             params.min_price = req.query.min_price
         }
-    
+
         if (req.query.name) {
             params.name = req.query.name
         }
-    
+
         if (req.query.parent_product) {
             params.parent_product = req.query.parent_product
         }
@@ -77,57 +78,59 @@ router.get('/', async (req, res, next) => {
 
         let filterProducts = []
         let addProduct = true
-        
-        for(let p of products) {
-            if("highlight" in params){
+
+        for (let p of products) {
+            if ("highlight" in params) {
                 var isTrueSet = (params.highlight == 'true');
-                if(isTrueSet !== p.highlight) {
+                if (isTrueSet !== p.highlight) {
                     addProduct = false
-                }        
+                }
             }
-            
+
             if (addProduct && "brand" in params) {
-                if(params.brand !== p.brand) {
+                if (params.brand !== p.brand) {
                     addProduct = false
                 }
             }
-            
-            if (addProduct && "categoryId" in params) {
-                if(params.categoryId !== p.categoryId) {
+
+            if (addProduct && "categoryId" in params && params.categoryId) {
+                const categories = params.categoryId.split(",");
+
+                if (!categories.includes(p.categoryId)) {
                     addProduct = false
                 }
             }
-            
+
             if (addProduct && "max_price" in params) {
-                if(params.max_price < p.price) {
+                if (params.max_price < p.price) {
                     addProduct = false
                 }
             }
-            
+
             if (addProduct && "min_price" in params) {
-                if(params.min_price > p.price) {
+                if (params.min_price > p.price) {
                     addProduct = false
                 }
             }
-            
+
             if (addProduct && "name" in params) {
-                if(params.name !== p.name) {
+                if (params.name !== p.name) {
                     addProduct = false
                 }
             }
-            
+
             if (addProduct && "parent_product" in params) {
-                if(params.parent_product !== p.parent_product) {
+                if (params.parent_product !== p.parent_product) {
                     addProduct = false
                 }
             }
-            
-            if(addProduct) {
+
+            if (addProduct) {
                 filterProducts.push(p)
             }
             addProduct = true
         }
-    
+
         return res.json(filterProducts)
     } catch (e) {
         next(e)
@@ -146,17 +149,17 @@ router.get('/search', async (req, res, next) => {
         let filterProducts = []
         let addProduct = true
 
-        for(let p of products) {
-            if(p.groupId !== "ad244d5d-29d4-4da4-99ff-cf62a57534ec") {
+        for (let p of products) {
+            if (p.groupId !== ProdutosClient.GROUP_ID) {
                 addProduct = false
-            }        
+            }
 
-            if(addProduct) {
+            if (addProduct) {
                 filterProducts.push(p)
             }
             addProduct = true
         }
-        
+
         return res.json(filterProducts)
     } catch (e) {
         next(e)
@@ -182,8 +185,8 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/reserve/:id', async (req, res, next) => {
 
-    try{
-        if (!req.params.id  || !req.params.amount) {
+    try {
+        if (!req.params.id || !req.params.amount) {
             res.sendStatus(400)
             return
         }
@@ -196,8 +199,8 @@ router.get('/reserve/:id', async (req, res, next) => {
 })
 
 router.get('/release/:id', async (req, res, next) => {
-    
-    try{
+
+    try {
         if (!req.params.id || !req.params.amount) {
             res.sendStatus(400)
             return

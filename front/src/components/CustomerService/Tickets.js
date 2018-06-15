@@ -9,6 +9,9 @@ import ListItem from "@material-ui/core/es/ListItem/ListItem";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
 import Comment from "@material-ui/icons/es/Comment";
+import {treatError} from "../../util/ErrorUtils";
+import Fade from "@material-ui/core/es/Fade/Fade";
+import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
 
 class Tickets extends Component {
 
@@ -16,7 +19,8 @@ class Tickets extends Component {
         super(props);
 
         this.state = {
-            tickets: []
+            tickets: [],
+            loading: true
         };
 
         this.handleTicketClick = this.handleTicketClick.bind(this);
@@ -31,7 +35,7 @@ class Tickets extends Component {
 
     getTickets(purchaseId) {
 
-        if(purchaseId) {
+        if (purchaseId) {
             return getPurchaseTickets(purchaseId)
         }
 
@@ -62,17 +66,19 @@ class Tickets extends Component {
                 });
 
                 this.setState({
-                    tickets: tickets
+                    tickets: tickets,
+                    loading: false
                 });
             })
             .catch(error => {
                 if (error.response && error.response.status === 404) {
                     this.setState({
-                        tickets: []
+                        tickets: [],
+                        loading: false
                     });
                     return;
                 }
-                //TODO treat errors
+                treatError(this.props, error);
             });
     }
 
@@ -88,58 +94,74 @@ class Tickets extends Component {
                 <Typography variant="headline">
                     Meus Chamados
                 </Typography>
-                {this.state.tickets.length === 0 && (
-                    <Typography variant="subheading" gutterBottom align="center">
-                        {purchaseId ?
-                            "Você não abriu nenhum chamado para essa compra." :
-                            "Você não abriu nenhum chamado na nossa loja."}
-                    </Typography>
-                )}
-                {this.state.tickets.length > 0 && (
-                    <List>
-                        <Divider/>
-                        {this.state.tickets && this.state.tickets.map(ticket => (
-                            <div key={ticket.ticketId}>
-                                <ListItem
-                                    key={ticket.ticketId}
-                                    name={ticket.ticketId}
-                                    role={undefined}
-                                    dense
-                                    button
-                                    onClick={(e) => this.handleTicketClick(ticket.ticketId)}
-                                >
-                                    <Grid container>
-                                        <Grid item xs={1}>
-                                            <ListItemText>
-                                                <Comment/>
-                                            </ListItemText>
-                                        </Grid>
-                                        <Grid item xs={3}>
-                                            <ListItemText>
-                                                <b>Protocolo: </b>{ticket.ticketId}
-                                            </ListItemText>
-                                        </Grid>
-                                        <Grid item xs={2}>
-                                            <ListItemText>
-                                                <b>Status: </b>{TICKET_STATUS_LABELS[ticket.statusId]}
-                                            </ListItemText>
-                                        </Grid>
-                                        <Grid item xs={3}>
-                                            <ListItemText>
-                                                <b>Compra: </b>{ticket.compraId ? ticket.compraId : "Não relacionado"}
-                                            </ListItemText>
-                                        </Grid>
-                                        <Grid item xs={3}>
-                                            <ListItemText>
-                                                <b>Atendente: </b>{ticket.operator ? ticket.operator : "Não definido"}
-                                            </ListItemText>
-                                        </Grid>
-                                    </Grid>
-                                </ListItem>
+                {this.state.loading ? (
+                    <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
+                        <Fade
+                            in={this.state.loading}
+                            style={{
+                                transitionDelay: this.state.loading ? '800ms' : '0ms'
+                            }}
+                            unmountOnExit
+                        >
+                            <CircularProgress/>
+                        </Fade>
+                    </Grid>
+                ) : (
+                    <span>
+                        {this.state.tickets.length === 0 && (
+                            <Typography variant="subheading" gutterBottom align="center">
+                                {purchaseId ?
+                                    "Você não abriu nenhum chamado para essa compra." :
+                                    "Você não abriu nenhum chamado na nossa loja."}
+                            </Typography>
+                        )}
+                        {this.state.tickets.length > 0 && (
+                            <List>
                                 <Divider/>
-                            </div>
-                        ))}
-                    </List>
+                                {this.state.tickets && this.state.tickets.map(ticket => (
+                                    <div key={ticket.ticketId}>
+                                        <ListItem
+                                            key={ticket.ticketId}
+                                            name={ticket.ticketId}
+                                            role={undefined}
+                                            dense
+                                            button
+                                            onClick={(e) => this.handleTicketClick(ticket.ticketId)}
+                                        >
+                                            <Grid container>
+                                                <Grid item xs={1}>
+                                                    <ListItemText>
+                                                        <Comment/>
+                                                    </ListItemText>
+                                                </Grid>
+                                                <Grid item xs={3}>
+                                                    <ListItemText>
+                                                        <b>Protocolo: </b>{ticket.ticketId}
+                                                    </ListItemText>
+                                                </Grid>
+                                                <Grid item xs={2}>
+                                                    <ListItemText>
+                                                        <b>Status: </b>{TICKET_STATUS_LABELS[ticket.statusId]}
+                                                    </ListItemText>
+                                                </Grid>
+                                                <Grid item xs={3}>
+                                                    <ListItemText>
+                                                        <b>Compra: </b>{ticket.compraId ? ticket.compraId : "Não relacionado"}
+                                                    </ListItemText>
+                                                </Grid>
+                                                <Grid item xs={3}>
+                                                    <ListItemText>
+                                                        <b>Atendente: </b>{ticket.operator ? ticket.operator : "Não definido"}
+                                                    </ListItemText>
+                                                </Grid>
+                                            </Grid>
+                                        </ListItem>
+                                        <Divider/>
+                                    </div>
+                                ))}
+                            </List>
+                        )}
+                    </span>
                 )}
             </div>
         );

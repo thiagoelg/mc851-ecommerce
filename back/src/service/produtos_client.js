@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const PRODUTOS_URL = "https://ftt-catalog.herokuapp.com";
-const GROUP_ID = "ad244d5d-29d4-4da4-99ff-cf62a57534ec";
+const GROUP_ID = "b25534a4-a362-48f3-b9b4-944d80acafb2";
 const DEFAULT_TIMEOUT = 30000
 
 export const getProducts = async (params) => {

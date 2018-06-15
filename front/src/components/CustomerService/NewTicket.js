@@ -7,6 +7,7 @@ import Button from "@material-ui/core/es/Button/Button";
 import {registerPurchaseTicket, registerTicket} from "../../clients/CustomerServiceClient";
 import moment from "moment";
 import UserProfile from "../../state/UserProfile";
+import {treatError} from "../../util/ErrorUtils";
 
 class NewTicket extends Component {
 
@@ -51,8 +52,7 @@ class NewTicket extends Component {
                 this.props.history.push(`/customerservice/ticket/${response.data.systemMessage}`);
             })
             .catch(error => {
-                console.log(error);
-                //TODO treat errors
+                treatError(this.props, error);
             });
     }
 

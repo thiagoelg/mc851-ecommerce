@@ -1,4 +1,5 @@
 import React, {Component} from "react"
+import {withRouter} from "react-router-dom"
 import Grid from "@material-ui/core/es/Grid/Grid";
 import {getPurchase} from "../../clients/PurchaseClient";
 import PurchaseDetail from "./PurchaseDetail";
@@ -6,6 +7,9 @@ import Payment from "./Payment";
 import Shipping from "./Shipping";
 import PurchaseCustomerService from "./PurchaseCustomerService";
 import PurchaseStatusStepper from "./PurchaseStatusStepper";
+import {treatError} from "../../util/ErrorUtils";
+import Fade from "@material-ui/core/es/Fade/Fade";
+import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
 
 class Purchase extends Component {
 
@@ -14,7 +18,9 @@ class Purchase extends Component {
 
         this.state = {
             purchaseId: this.props.match.params.purchaseId,
-            purchase: null
+            purchase: null,
+
+            loading: true
         }
     }
 
@@ -22,11 +28,12 @@ class Purchase extends Component {
         getPurchase(this.state.purchaseId)
             .then(response => {
                 this.setState({
-                    purchase: response.data
+                    purchase: response.data,
+                    loading: false
                 });
             })
             .catch(error => {
-                //TODO treat errors
+                treatError(this.props, error)
             })
     }
 
@@ -34,34 +41,50 @@ class Purchase extends Component {
         let {purchase} = this.state;
 
         return (
-            <div>
-                {purchase && (
-                    <Grid container spacing={24} style={{marginBottom: 20}}>
-                        <Grid item xs={12}>
-                            <PurchaseStatusStepper status={purchase.status}/>
-                        </Grid>
-                        < Grid item xs={8}>
-                            <PurchaseDetail purchase={purchase}/>
+            <Grid container>
+                {this.state.loading ? (
+                    <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
+                        <Fade
+                            in={this.state.loading}
+                            style={{
+                                transitionDelay: this.state.loading ? '800ms' : '0ms'
+                            }}
+                            unmountOnExit
+                        >
+                            <CircularProgress/>
+                        </Fade>
+                    </Grid>
+                ) : (
+                    <Grid container>
+                        {purchase && (
+                            <Grid container spacing={24} style={{marginBottom: 20}}>
+                                <Grid item xs={12}>
+                                    <PurchaseStatusStepper status={purchase.status}/>
+                                </Grid>
+                                < Grid item xs={8}>
+                                    <PurchaseDetail purchase={purchase}/>
 
-                            <br/>
+                                    <br/>
 
-                            <Payment purchase={purchase} onClick={this.props.onPaymentClick}/>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Shipping purchase={purchase}
-                                      onClick={this.props.onShippingClick}/>
+                                    <Payment purchase={purchase} onClick={this.props.onPaymentClick}/>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Shipping purchase={purchase}
+                                              onClick={this.props.onShippingClick}/>
 
-                            <br/>
+                                    <br/>
 
-                            <PurchaseCustomerService purchase={purchase}/>
-                        </Grid>
+                                    <PurchaseCustomerService purchase={purchase}/>
+                                </Grid>
+                            </Grid>
+                        )}
                     </Grid>
                 )}
-            </div>
+            </Grid>
 
         )
     }
 
 }
 
-export default Purchase;
+export default withRouter(Purchase);

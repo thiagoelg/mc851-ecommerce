@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {withRouter} from "react-router-dom"
 import {withStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import {Drawer} from "@material-ui/core";
@@ -13,6 +14,7 @@ import {validatePositiveFloatNumber} from "../../util/Validators";
 import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
+import {treatError} from "../../util/ErrorUtils";
 
 const drawerWidth = 240;
 
@@ -62,7 +64,7 @@ class ProductFilterFields extends Component {
                 this.setState({categories: response.data});
             })
             .catch(error => {
-                //TODO treat error
+                treatError(this.props, error)
             });
 
         //TODO get brands
@@ -126,7 +128,7 @@ class ProductFilterFields extends Component {
         let filter = {};
 
         if (this.state.minPrice != null && this.state.minPrice.length > 0) {
-            if(!this.state.validMinPrice) {
+            if (!this.state.validMinPrice) {
                 this.setState({
                     open: true
                 });
@@ -136,7 +138,7 @@ class ProductFilterFields extends Component {
         }
 
         if (this.state.maxPrice != null && this.state.maxPrice.length > 0) {
-            if(!this.state.validMaxPrice) {
+            if (!this.state.validMaxPrice) {
                 this.setState({
                     open: true
                 });
@@ -178,7 +180,7 @@ class ProductFilterFields extends Component {
                                 message={
                                     <span id="message-id" color="error">
                                         {(!this.state.validMinPrice || !this.state.validMaxPrice) &&
-                                            <p>Preencha todos os campos corretamente.<br/></p>
+                                        <p>Preencha todos os campos corretamente.<br/></p>
                                         }
                                     </span>}
                                 action={[
@@ -204,13 +206,13 @@ class ProductFilterFields extends Component {
                         </Grid>
 
                         {/*<Grid item xs={12}>*/}
-                            {/*<MultiSelectionCheckboxes label="Marcas"*/}
-                                                      {/*content={this.state.brands}*/}
-                                                      {/*name="selectedBrands"*/}
-                                                      {/*value={this.state.selectedBrands}*/}
-                                                      {/*onChange={this.handleChange}/>*/}
-                            {/*<Divider/>*/}
-                            {/*<br/>*/}
+                        {/*<MultiSelectionCheckboxes label="Marcas"*/}
+                        {/*content={this.state.brands}*/}
+                        {/*name="selectedBrands"*/}
+                        {/*value={this.state.selectedBrands}*/}
+                        {/*onChange={this.handleChange}/>*/}
+                        {/*<Divider/>*/}
+                        {/*<br/>*/}
                         {/*</Grid>*/}
 
 
@@ -257,4 +259,4 @@ ProductFilterFields.propTypes = {
 };
 
 
-export default withStyles(styles)(ProductFilterFields);
+export default withRouter(withStyles(styles)(ProductFilterFields));

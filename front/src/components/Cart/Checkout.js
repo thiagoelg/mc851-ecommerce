@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import UserProfile from '../../state/UserProfile'
 import {withRouter} from "react-router-dom"
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -17,6 +18,7 @@ import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
 import {scrollToTop} from "../../util/ScrollUtils";
+import {treatError} from "../../util/ErrorUtils";
 
 const styles = theme => ({
     backButton: {
@@ -34,16 +36,16 @@ class Checkout extends Component {
         super(props);
 
         this.state = {
-            shipping: props.location.state.shipping,
+            shipping: null,
             address: null,
             validShippingInfo: false,
 
             payment: null,
             validPaymentInfo: false,
 
-            cep: props.location.state.cep,
+            cep: null,
 
-            products: props.location.state.products,
+            products: [],
             activeStep: 0,
             steps: ['Forma de Entrega', 'Forma de Pagamento', 'Resumo da Compra'],
 
@@ -68,6 +70,22 @@ class Checkout extends Component {
         this.isStepValid = this.isStepValid.bind(this);
     }
 
+    componentDidMount() {
+        if (!UserProfile.isLogged()) {
+            this.props.history.push("/signIn");
+        } else {
+            if(!this.props.location.state) {
+                this.props.history.push("/cart");
+                return;
+            }
+            this.setState({
+                shipping: this.props.location.state.shipping,
+                cep: this.props.location.state.cep,
+                products: this.props.location.state.products
+            });
+        }
+    }
+
     handleClose = () => {
         this.setState({
             open: false,
@@ -80,7 +98,7 @@ class Checkout extends Component {
 
     handleCheckout(event) {
         const subTotal = this.state.products.reduce((acc, product) => acc + product.price * product.amount, 0);
-        const freight = this.state.shipping.price / 100;
+        const freight = this.state.shipping ? this.state.shipping.price / 100 : 0;
         const total = freight ? freight + subTotal : subTotal;
 
         cart.checkout(this.state.shipping, this.state.address, this.state.payment, total)
@@ -134,10 +152,18 @@ class Checkout extends Component {
                         break;
                     }
 
-                    case CartResult.INTERNAL_ERROR:
+                    case CartResult.INTERNAL_ERROR: {
+                        const error = {
+                            response: {
+                                status: 500
+                            }
+                        };
+                        treatError(this.props, error);
+                        return;
+                    }
                     case CartResult.ERROR:
                     default: {
-                        //TODO treat error
+                        treatError(this.props);
                     }
                 }
             });
@@ -239,7 +265,7 @@ class Checkout extends Component {
         const {activeStep, steps, products, shipping, cep, address, payment} = this.state;
 
         const subTotal = products.reduce((acc, product) => acc + product.price * product.amount, 0);
-        const freight = shipping.price / 100;
+        const freight = shipping ? shipping.price / 100 : 0;
         const total = freight ? freight + subTotal : subTotal;
 
         return (

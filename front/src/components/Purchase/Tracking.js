@@ -13,6 +13,7 @@ import MoneyFormatter from "../Formatters/MoneyFormatter";
 import moment from "moment";
 import Button from "@material-ui/core/es/Button/Button";
 import {withRouter} from "react-router-dom";
+import {treatError} from "../../util/ErrorUtils";
 
 class Tracking extends Component {
 
@@ -40,7 +41,7 @@ class Tracking extends Component {
                 });
             })
             .catch(error => {
-                //TODO treat errors
+                treatError(this.props, error);
             })
     }
 
