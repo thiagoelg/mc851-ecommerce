@@ -7,8 +7,11 @@ const URL = ServerConfig.URL;
 export const PURCHASE_STATUS_LABEL = {
     1: "Pedido Realizado.",
     2: "Pagamento Aprovado.",
-    3: "Aguardando Entrega.",
-    6: "Pagamento Reprovado"
+    3: "Em Separação de Estoque.",
+    4: "Em Transporte",
+    5: "Entregue",
+    6: "Pagamento Reprovado",
+    7: "Cancelada: Falha na Entrega"
 };
 
 export const PURCHASE_STATUS = {
@@ -17,7 +20,8 @@ export const PURCHASE_STATUS = {
     SEPARING_FROM_STOCK: 3,
     IN_TRANSPORT: 4,
     DELIVERED: 5,
-    PAYMENT_REPROVED: 6
+    PAYMENT_REPROVED: 6,
+    CANCELED: 7
 };
 
 export const BOLETO_STATUS = {

@@ -235,14 +235,13 @@ class Freight extends Component {
                     const response = error.response;
                     switch (response.status) {
                         case 404:
-                        case 400: {
+                        case 400:
                             this.setState({
                                 open: true,
                                 problemCalculating: true,
                                 loading: false
                             });
-                        }
-                        break;
+                            break;
                         default: {
                             //TODO treat error
                         }

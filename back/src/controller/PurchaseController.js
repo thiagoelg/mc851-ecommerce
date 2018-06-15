@@ -12,7 +12,8 @@ export const STATUS_PURCHASE = {
     in_stock: 3,
     shipped: 4,
     delivered: 5,
-    payment_reproved: 6
+    payment_reproved: 6,
+    canceled: 7
 };
 
 export const getPurchases = async (token) => {
@@ -39,11 +40,11 @@ export const getPurchases = async (token) => {
             .map(async p => {
                 const response = await ProductClient.getProduct(p.product_id);
                 const product = response.data;
-    
+
                 if (!product || response.status !== 200) {
                     throw "couldnt find product";
                 }
-    
+
                 return {
                     id: product.id,
                     name: product.name,
@@ -79,14 +80,14 @@ export const getPurchases = async (token) => {
                         city: purchase.city,
                         state: purchase.state,
                         complement: purchase.complement
-                    }    
+                    }
                 },
                 payment: {
                     price: purchase.price,
                 },
                 products: products
             };
-        
+
             if (purchase.boleto) {
                 const boletoRes = await PaymentClient.getBankTicketStatus(purchase.paymentCode);
                 const status = boletoRes.data.status;
@@ -105,7 +106,7 @@ export const getPurchases = async (token) => {
                     instalments: purchase.instalments
                 }
             }
-        
+
         responseData.push(data)
     }
 
@@ -183,7 +184,7 @@ export const getPurchaseById = async (token, purchaseId) => {
                 city: purchase.city,
                 state: purchase.state,
                 complement: purchase.complement
-            }    
+            }
         },
         payment: {
             price: purchase.price,
@@ -191,7 +192,7 @@ export const getPurchaseById = async (token, purchaseId) => {
         products
     }
 
-    
+
     if (purchase.boleto) {
         const boletoRes = await PaymentClient.getBankTicketStatus(purchase.paymentCode)
         const status = boletoRes.data.status
@@ -285,12 +286,15 @@ export const updatePurchaseStatusThroughBoletoStatus = async (boletoRes, purchas
     switch (status) {
         case BOLETO_STATUS.OK:
             if(purchase.status === STATUS_PURCHASE.order_ok) {
+                console.log(`[payment change] updating purchase ${purchase.id} to status payment approved`);
                 purchaseStatus = STATUS_PURCHASE.payment_approved;
             }
             break;
         case BOLETO_STATUS.EXPIRED:
             if(purchase.status === STATUS_PURCHASE.order_ok) {
+                console.log(`[payment change] updating purchase ${purchase.id} to status payment repproved`);
                 purchaseStatus = STATUS_PURCHASE.payment_reproved;
+                await releasePurchaseProducts(purchase);
             }
             break;
     }
@@ -302,9 +306,79 @@ export const updatePurchaseStatusThroughBoletoStatus = async (boletoRes, purchas
     return purchaseStatus;
 };
 
+export const handlePaymentChange = async () => {
+    let purchases = await Database.getPurchasesBetweenStatus(STATUS_PURCHASE.order_ok, STATUS_PURCHASE.payment_approved);
+    purchases = purchases.filter(purchase => purchase.boleto);
+
+    for (let purchase in purchases) {
+        const boletoRes = await PaymentClient.getBankTicketStatus(purchase.paymentCode);
+
+        if(!boletoRes || !boletoRes.data || boletoRes.status !== 200) {
+            console.log(`[payment change] payment module failed to get status for purchase ${purchase.id} on payment code ${purchase.paymentCode}`);
+            continue;
+        }
+
+        await updatePurchaseStatusThroughBoletoStatus(boletoRes, purchase);
+    }
+ };
+
+export const handleTrackingChange = async () => {
+    const purchases = await Database.getPurchasesBetweenStatus(STATUS_PURCHASE.payment_approved, STATUS_PURCHASE.delivered);
+
+    for (let purchase in purchases) {
+        const trackingResponse = await LogisticaClient.getTracking(purchase.shippingCode);
+
+        if (!trackingResponse) {
+            console.log(`[tracking update] logistic answer with no response for code ${purchase.shippingCode}`);
+            continue;
+        }
+
+        if (trackingResponse.status !== 200) {
+            console.log(`[tracking update] logistic answer with ${trackingResponse.status} for code ${purchase.shippingCode}`);
+            continue;
+        }
+
+        const tracking = trackingResponse.data;
+
+        if (!tracking) {
+            console.log(`[tracking update] logistic answer with no response for code ${purchase.shippingCode}`);
+            continue;
+        }
+
+        const history = tracking.historicoRastreio;
+        if (!history || !history.length || history.length === 0) {
+            console.log(`[tracking update] logistic answer with no tracking history for code ${purchase.shippingCode}`);
+            continue;
+        }
+
+        const lastMessage = history[history.length-1].mensagem.toUpperCase();
+        if(lastMessage.includes("ENVIADO")) {
+            await Database.updatePurchaseStatus(purchase.id, STATUS_PURCHASE.shipped)
+        } else if(lastMessage.includes("ENTREGUE")) {
+            await Database.updatePurchaseStatus(purchase.id, STATUS_PURCHASE.delivered)
+        } else if(lastMessage.includes("FALHA")) {
+            await Database.updatePurchaseStatus(purchase.id, STATUS_PURCHASE.canceled)
+            await releasePurchaseProducts(purchase);
+        }
+    }
+
+};
+
+export const releasePurchaseProducts = async (purchase) => {
+    const reserves = await Database.getProductsFromCart(purchase.cartId);
+
+    reserves.forEach(async (product) => {
+        await ProductClient.releaseProduct(product.id, product.amount);
+
+        await Database.updateProduct(cart.id, product.id, 0)
+    });
+};
+
 export default {
     getPurchaseById,
     getPurchaseTrackingById,
     getPurchases,
+    handleTrackingChange,
+    handlePaymentChange,
     STATUS_PURCHASE
 }

@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import bodyParser from "body-parser"
-import { CronJob } from "cron";
+import {CronJob} from "cron";
 
 import ProductRoutes from './routes/ProductRoutes'
 import CreditRoutes from './routes/CreditRoutes'
@@ -14,8 +14,8 @@ import PurchaseRoutes from './routes/PurchaseRoutes'
 import SacRoutes from "./routes/SacRoutes"
 import PaymentRoutes from "./routes/PaymentRoutes"
 import Database from "./database/database";
-import ProductController from "./controller/ProductController";
 import CartController from './controller/CartController'
+import PurchaseController from "./controller/PurchaseController";
 
 const app = express(),
     port = process.env.PORT || 3001;
@@ -26,7 +26,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/ping', (req, res) => {
     res.send('pong\n')
@@ -37,8 +37,8 @@ app.use('/credit', CreditRoutes);
 app.use('/logistic', LogisticRoutes);
 app.use('/user', ClientRoutes);
 app.use('/address', AddressRoutes);
-app.use('/cart', CartRoutes)
-app.use('/purchase', PurchaseRoutes)
+app.use('/cart', CartRoutes);
+app.use('/purchase', PurchaseRoutes);
 app.use('/sac', SacRoutes);
 app.use('/payment', PaymentRoutes);
 //app.use('/fixtures', FixtureRoutes); // one time use only
@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-    if(err.status !== 404) {
+    if (err.status !== 404) {
         console.error(err.stack)
     }
     res.sendStatus(err.status || 500)
@@ -67,10 +67,38 @@ Database.connect(() => {
 });
 
 // job to release products from expired carts
-const job = new CronJob('*/5 * * * *', () => {
-        CartController.handleExpiredCarts()
+const jobCartExpiration = new CronJob('*/5 * * * *', async () => {
+        console.log("[cart expiration] about to run cart expiration");
+        await CartController.handleExpiredCarts()
     },
-    () => {},
+    () => {
+    },
     true, // true,
     'America/Sao_Paulo'
 );
+
+// job to update tracking
+const jobTrackingChange = new CronJob('*/5 * * * *', async () => {
+        console.log("[tracking change] about to run tracking change");
+        await PurchaseController.handleTrackingChange()
+    },
+    () => {
+    },
+    true, // true,
+    'America/Sao_Paulo'
+);
+
+// job to update payment
+const jobPaymentChange = new CronJob('*/5 * * * *', async () => {
+        console.log("[payment change] about to run payment change");
+        await PurchaseController.handlePaymentChange()
+    },
+    () => {
+    },
+    true, // true,
+    'America/Sao_Paulo'
+);
+
+jobCartExpiration.start();
+jobTrackingChange.start();
+jobPaymentChange.start();
