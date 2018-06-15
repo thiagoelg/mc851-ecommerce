@@ -41,7 +41,7 @@ class Products extends Component {
 
         const search = props.search;
 
-        if(search) {
+        if (search) {
             getProductsByFullSearch(params)
                 .then(response => {
                     this.setState({
@@ -80,14 +80,28 @@ class Products extends Component {
         let cols = this.props.cols;
         if (cols === undefined)
             cols = 3;
+
         let products = this.state.products.map(product => (
             <GridListTile cols={1} key={product.id}>
                 <Link to={`/products/${product.id}`}>
                     <img src={product.imageUrl} alt={product.name}
-                        style={{maxHeight: '100%', maxWidth: '100%', margin: '0 auto', display: 'block'}}/>
+                         style={{maxHeight: '100%', maxWidth: '100%', margin: '0 auto', display: 'block'}}/>
                     <GridListTileBar
                         title={product.name}
-                        subtitle={<span>Por <MoneyFormatter value={product.price}/></span>}
+                        subtitle={
+                            <span>
+                                {product.stock > 0 ? (
+                                    <p>
+                                        Por <MoneyFormatter value={product.price}/>
+                                    </p>
+                                ) : (
+                                    <p>
+                                        <b>ESGOTADO!</b>
+                                    </p>
+                                )}
+
+                            </span>
+                        }
                         actionIcon={
                             <IconButton>
                                 <InfoIcon/>

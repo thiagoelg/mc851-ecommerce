@@ -152,9 +152,15 @@ class Product extends Component {
                             }
                             <br/>
                             <br/>
-                            <Typography variant="caption">
-                                Apenas {product.stock} unidades em estoque.
-                            </Typography>
+                            {product.stock > 0 ? (
+                                <Typography variant="caption">
+                                    Apenas {product.stock} unidades em estoque.
+                                </Typography>
+                            ) : (
+                                <Typography variant="caption" color="error">
+                                    <b>ESGOTADO!</b>
+                                </Typography>
+                            )}
                             <p>
                                 <b>Preço:</b> <MoneyFormatter value={product.price}/>
                             </p>
@@ -191,7 +197,10 @@ class Product extends Component {
 
                     <Grid item xs={12}>
                         <br/>
-                        <Freight label="Calcular Frete e Prazo: " products={[product]} enableSelection={false}/>
+                        <Freight label="Calcular Frete e Prazo: "
+                                 products={[product]}
+                                 enableSelection={false}
+                                 disableCep={product.stock === 0}/>
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>

@@ -1607,7 +1607,7 @@ export const createIluminacao = async () => {
                 "girafa"
             ],
             highlight: false,
-            imageUrl: "/imgs/iluminacao/abajur_gatos.jpg",
+            imageUrl: "/imgs/iluminacao/abajur_girafa.jpg",
             weight: 1350,
             length: 25,
             width: 20,
