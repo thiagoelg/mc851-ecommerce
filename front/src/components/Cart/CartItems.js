@@ -160,6 +160,12 @@ class CartItems extends Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({
+            products: this.props.products
+        });
+    }
+
     componentWillReceiveProps(props) {
         this.setState({
             products: props.products

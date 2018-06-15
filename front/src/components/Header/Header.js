@@ -8,7 +8,6 @@ import UserButtons from "./UserButtons";
 import CartButton from "./CartButton";
 import {getCategories} from "../../clients/ProductsClient";
 import {withRouter} from "react-router-dom";
-import {treatError} from "../../util/ErrorUtils";
 
 const toolBarBottonHeader = {
     backgroundColor: '#F5F5F5',
