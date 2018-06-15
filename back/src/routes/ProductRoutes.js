@@ -49,33 +49,86 @@ router.get('/', async (req, res, next) => {
             highlight: req.query.highlight              || false,
         };
         
-        if (req.params.brand) {
-            params.brand = req.params.brand
+        if (req.query.brands) {
+            params.brand = req.query.brands
         }
     
-        if (req.params.category_id) {
-            params.category_id = req.params.category_id
+        if (req.query.category_id) {
+            params.categoryId = req.query.category_id
         }
     
-        if (req.params.max_price) {
-            params.max_price = req.params.max_price
+        if (req.query.max_price) {
+            params.max_price = req.query.max_price
         }
     
-        if (req.params.min_price) {
-            params.min_price = req.params.min_price
+        if (req.query.min_price) {
+            params.min_price = req.query.min_price
         }
     
-        if (req.params.name) {
-            params.name = req.params.name
+        if (req.query.name) {
+            params.name = req.query.name
         }
     
-        if (req.params.parent_product) {
-            params.parent_product = req.params.parent_product
+        if (req.query.parent_product) {
+            params.parent_product = req.query.parent_product
         }
 
         let products = await ProductController.getProducts(params);
+
+        let filterProducts = []
+        let addProduct = true
+        
+        for(let p of products) {
+            if("highlight" in params){
+                var isTrueSet = (params.highlight == 'true');
+                if(isTrueSet !== p.highlight) {
+                    addProduct = false
+                }        
+            }
+            
+            if (addProduct && "brand" in params) {
+                if(params.brand !== p.brand) {
+                    addProduct = false
+                }
+            }
+            
+            if (addProduct && "categoryId" in params) {
+                if(params.categoryId !== p.categoryId) {
+                    addProduct = false
+                }
+            }
+            
+            if (addProduct && "max_price" in params) {
+                if(params.max_price < p.price) {
+                    addProduct = false
+                }
+            }
+            
+            if (addProduct && "min_price" in params) {
+                if(params.min_price > p.price) {
+                    addProduct = false
+                }
+            }
+            
+            if (addProduct && "name" in params) {
+                if(params.name !== p.name) {
+                    addProduct = false
+                }
+            }
+            
+            if (addProduct && "parent_product" in params) {
+                if(params.parent_product !== p.parent_product) {
+                    addProduct = false
+                }
+            }
+            
+            if(addProduct) {
+                filterProducts.push(p)
+            }
+            addProduct = true
+        }
     
-        return res.json(products)
+        return res.json(filterProducts)
     } catch (e) {
         next(e)
     }
