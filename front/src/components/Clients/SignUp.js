@@ -43,6 +43,12 @@ class SignUp extends Component {
         this.handleClose = this.handleClose.bind(this);
     }
 
+    componentWillMount() {
+        if(UserProfile.isLogged()) {
+            this.props.history.push("/");
+        }
+    }
+
     handleClick(e) {
 
         if (!this.state.validBasicInfo || !this.state.password.valid) {
