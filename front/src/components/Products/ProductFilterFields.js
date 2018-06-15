@@ -203,15 +203,15 @@ class ProductFilterFields extends Component {
                             <br/>
                         </Grid>
 
-                        <Grid item xs={12}>
-                            <MultiSelectionCheckboxes label="Marcas"
-                                                      content={this.state.brands}
-                                                      name="selectedBrands"
-                                                      value={this.state.selectedBrands}
-                                                      onChange={this.handleChange}/>
-                            <Divider/>
-                            <br/>
-                        </Grid>
+                        {/*<Grid item xs={12}>*/}
+                            {/*<MultiSelectionCheckboxes label="Marcas"*/}
+                                                      {/*content={this.state.brands}*/}
+                                                      {/*name="selectedBrands"*/}
+                                                      {/*value={this.state.selectedBrands}*/}
+                                                      {/*onChange={this.handleChange}/>*/}
+                            {/*<Divider/>*/}
+                            {/*<br/>*/}
+                        {/*</Grid>*/}
 
 
                         <Grid item xs={12}>
