@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {withRouter} from "react-router-dom"
 import Grid from "@material-ui/core/es/Grid/Grid";
 import TextField from '@material-ui/core/TextField';
 import {validateBrand, validateNotEmpty} from "../../../util/Validators";
@@ -13,6 +14,7 @@ import 'react-credit-cards/es/styles-compiled.css';
 import ValidThruInput from "../../Inputs/ValidThruInput";
 import {getCreditCardInstallments} from "../../../clients/PaymentClient";
 import MoneyFormatter from "../../Formatters/MoneyFormatter";
+import {treatError} from "../../../util/ErrorUtils";
 
 class CreditCard extends Component {
 
@@ -112,7 +114,7 @@ class CreditCard extends Component {
                 });
             })
             .catch(error => {
-                //TODO treat error
+                treatError(this.props, error)
             });
 
     }
@@ -289,4 +291,4 @@ class CreditCard extends Component {
     }
 }
 
-export default CreditCard;
+export default withRouter(CreditCard);

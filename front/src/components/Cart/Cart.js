@@ -16,6 +16,9 @@ import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
 import UserProfile from "../../state/UserProfile";
 import Link from "../Link/Link";
+import {treatError} from "../../util/ErrorUtils";
+import Fade from "@material-ui/core/es/Fade/Fade";
+import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
 
 class Cart extends Component {
 
@@ -28,7 +31,9 @@ class Cart extends Component {
             cep: '',
 
             open: false,
-            missingFreight: false
+            missingFreight: false,
+
+            loading: true
         };
 
         this.handleChange = this.handleChange.bind(this)
@@ -46,14 +51,14 @@ class Cart extends Component {
     };
 
     handlePurchaseClick(event) {
-        if(!this.state.shipping.price) {
+        if (!this.state.shipping.price) {
             this.setState({
                 open: true,
                 missingFreight: true
             });
             return;
         }
-       
+
         this.props.history.push({
             pathname: "/checkout",
             state: {
@@ -96,20 +101,32 @@ class Cart extends Component {
                     case CartResult.SUCCESS: {
                         const products = cartContext.products;
                         this.setState({
-                            products: products
+                            products: products,
+                            loading: false
                         });
                         break;
                     }
 
                     case CartResult.EXPIRED: {
-
+                        this.setState({
+                            loading: false
+                        });
                         break;
                     }
 
+                    case CartResult.INTERNAL_ERROR: {
+                        const error = {
+                            response: {
+                                status: 500
+                            }
+                        };
+                        treatError(this.props, error);
+                        return;
+                    }
                     case CartResult.ERROR:
-                    case CartResult.INTERNAL_ERROR:
-                    default:
-                    //TODO treat error
+                    default: {
+                        treatError(this.props);
+                    }
 
                 }
             });
@@ -160,72 +177,85 @@ class Cart extends Component {
                         Meu Carrinho
                     </Typography>
                 </Grid>
-                <Grid item xs={12}>
-                    <CartItems name="products" products={products} onChange={this.handleCartItemsChange}/>
+                <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
+                    {this.state.loading ? (
+
+                        <Fade
+                            in={this.state.loading}
+                            style={{
+                                transitionDelay: this.state.loading ? '800ms' : '0ms'
+                            }}
+                            unmountOnExit
+                        >
+                            <CircularProgress/>
+                        </Fade>
+                    ) : (
+                        <CartItems name="products" products={products} onChange={this.handleCartItemsChange}/>
+                    )}
                 </Grid>
-                {products && products.length > 0 &&
-                <Grid container>
-                    <Grid item xs={8}>
-                        <div style={{margin: 20}}>
-                            <Freight
-                                name="shipping"
-                                label="Calcular Frete e Prazo: "
-                                products={products}
-                                onChange={this.handleFreightClick}
-                                enableSelection={true}/>
-                        </div>
-                    </Grid>
-                    <Grid item xs={4} style={{marginTop: 20}}>
-                        <Card>
-                            <CardContent>
-                                <p>subtotal ({numberOfProducts} produtos): <b><MoneyFormatter value={subTotal}/></b>
-                                </p>
-                                <p>frete:
-                                    {freight ? (
-                                        <b> <MoneyFormatter value={freight}/></b>
-                                    ) : (
-                                        <Typography variant="caption" color="error">
-                                            Informe seu CEP e selecione um método de entrega.
-                                        </Typography>
-                                    )}
-                                </p>
-                                <Divider/>
-                                <p></p>
-                                <Typography variant="subheading">
-                                    Total: <b><MoneyFormatter value={total}/></b>
-                                </Typography>
-                                <Typography variant="caption">
-                                    Em até 12x sem juros no cartão de crédito
-                                </Typography>
-                                <Typography variant="caption" color="secondary">
-                                    <MoneyFormatter value={total}/> no boleto
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Grid container
-                              direction="row"
-                              justify="flex-end"
-                              alignItems="center"
-                              style={{marginTop: 20, marginBottom: 20}}>
-                            <Grid item>
-                                {UserProfile.isLogged() ? (
-                                    <Button variant="raised" color="secondary" onClick={this.handlePurchaseClick}>
-                                        Comprar
-                                    </Button>
-                                ) : (
-                                    <Link to="/signIn">
-                                        <Button variant="raised" color="secondary" >
+                {products && products.length > 0 && (
+                    <Grid container>
+                        <Grid item xs={8}>
+                            <div style={{margin: 20}}>
+                                <Freight
+                                    name="shipping"
+                                    label="Calcular Frete e Prazo: "
+                                    products={products}
+                                    onChange={this.handleFreightClick}
+                                    enableSelection={true}/>
+                            </div>
+                        </Grid>
+                        <Grid item xs={4} style={{marginTop: 20}}>
+                            <Card>
+                                <CardContent>
+                                    <p>subtotal ({numberOfProducts} produtos): <b><MoneyFormatter value={subTotal}/></b>
+                                    </p>
+                                    <p>frete:
+                                        {freight ? (
+                                            <b> <MoneyFormatter value={freight}/></b>
+                                        ) : (
+                                            <Typography variant="caption" color="error">
+                                                Informe seu CEP e selecione um método de entrega.
+                                            </Typography>
+                                        )}
+                                    </p>
+                                    <Divider/>
+                                    <p></p>
+                                    <Typography variant="subheading">
+                                        Total: <b><MoneyFormatter value={total}/></b>
+                                    </Typography>
+                                    <Typography variant="caption">
+                                        Em até 12x sem juros no cartão de crédito
+                                    </Typography>
+                                    <Typography variant="caption" color="secondary">
+                                        <MoneyFormatter value={total}/> no boleto
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container
+                                  direction="row"
+                                  justify="flex-end"
+                                  alignItems="center"
+                                  style={{marginTop: 20, marginBottom: 20}}>
+                                <Grid item>
+                                    {UserProfile.isLogged() ? (
+                                        <Button variant="raised" color="secondary" onClick={this.handlePurchaseClick}>
                                             Comprar
                                         </Button>
-                                    </Link>
-                                )}
+                                    ) : (
+                                        <Link to="/signIn">
+                                            <Button variant="raised" color="secondary">
+                                                Comprar
+                                            </Button>
+                                        </Link>
+                                    )}
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-                }
+                )}
             </Grid>
         );
     }

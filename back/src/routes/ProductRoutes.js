@@ -1,6 +1,7 @@
 import express from 'express'
 
 import ProductController from '../controller/ProductController'
+import ProdutosClient from '../service/produtos_client'
 
 const router = express.Router()
 
@@ -147,7 +148,7 @@ router.get('/search', async (req, res, next) => {
         let addProduct = true
 
         for(let p of products) {
-            if(p.groupId !== "ad244d5d-29d4-4da4-99ff-cf62a57534ec") {
+            if(p.groupId !== ProdutosClient.GROUP_ID) {
                 addProduct = false
             }        
 

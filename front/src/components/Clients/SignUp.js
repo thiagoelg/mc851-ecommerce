@@ -12,6 +12,7 @@ import Close from "@material-ui/icons/es/Close";
 import ClientBasicForm from "./ClientBasicForm";
 import PasswordForm from "./PasswordForm";
 import {cart} from "../../cart/Cart";
+import {treatError} from "../../util/ErrorUtils";
 
 
 class SignUp extends Component {
@@ -75,7 +76,7 @@ class SignUp extends Component {
                     });
                     return;
                 }
-                //TODO treat error
+                treatError(this.props, error);
             })
     }
 

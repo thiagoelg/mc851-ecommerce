@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {withRouter} from "react-router-dom"
 import Grid from "@material-ui/core/es/Grid/Grid";
 import TextField from "@material-ui/core/es/TextField/TextField";
 import ShoppingCart from "@material-ui/icons/es/ShoppingCart";
@@ -13,6 +14,9 @@ import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
 import MoneyFormatter from "../Formatters/MoneyFormatter";
 import {CartResult} from "../../cart/CartResult";
+import Fade from "@material-ui/core/es/Fade/Fade";
+import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
+import {treatError} from "../../util/ErrorUtils";
 
 class Product extends Component {
 
@@ -25,7 +29,9 @@ class Product extends Component {
 
             open: false,
             outOfStock: false,
-            productNotFound: false
+            productNotFound: false,
+
+            loading: true
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleAddToCart = this.handleAddToCart.bind(this);
@@ -75,10 +81,18 @@ class Product extends Component {
                         break;
                     }
 
-                    case CartResult.ERROR:
-                    case CartResult.INTERNAL_ERROR:
+                    case CartResult.INTERNAL_ERROR: {
+                        const error = {
+                            response: {
+                                status: 500
+                            }
+                        };
+                        treatError(this.props, error);
+                        break;
+                    }
+
                     default: {
-                        //TODO treat error
+                        treatError(this.props);
                     }
 
                 }
@@ -91,19 +105,24 @@ class Product extends Component {
             .then(response => {
                 const product = response.data;
 
-                this.setState({product: product});
-
-                getCategory({id: product.categoryId})
-                    .then(response => {
-                        const category = response.data;
-                        this.setState({category: category});
-                    })
-                    .catch(error => {
-                        //TODO treat error
-                    })
+                this.setState({
+                    product: product
+                }, () => {
+                    getCategory({id: product.categoryId})
+                        .then(response => {
+                            const category = response.data;
+                            this.setState({
+                                category: category,
+                                loading: false
+                            });
+                        })
+                        .catch(error => {
+                            treatError(this.props, error)
+                        })
+                });
             })
             .catch(error => {
-                //TODO treat error
+                treatError(this.props, error)
             })
     }
 
@@ -138,91 +157,108 @@ class Product extends Component {
                         ]}
                     />
                 </Grid>
-                <Grid item xs={4} style={{padding: 20}}>
-                    <img src={product.imageUrl} alt={product.name}
-                         style={{maxHeight: '100%', maxWidth: '100%', margin: '0 auto', display: 'block'}}
-                    />
-                </Grid>
-                <Grid item xs={8}>
+                {this.state.loading ? (
+                    <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
+                        <Fade
+                            in={this.state.loading}
+                            style={{
+                                transitionDelay: this.state.loading ? '800ms' : '0ms'
+                            }}
+                            unmountOnExit
+                        >
+                            <CircularProgress/>
+                        </Fade>
+                    </Grid>
+                ) : (
                     <Grid container>
-                        <Grid item xs={12}>
-                            <h2>{product.name}</h2>
-                            {product.tags && product.tags.map(tag =>
-                                <Chip key={tag} label={tag} style={{marginRight: 5}}/>)
-                            }
-                            <br/>
-                            <br/>
-                            {product.stock > 0 ? (
-                                <Typography variant="caption">
-                                    Apenas {product.stock} unidades em estoque.
-                                </Typography>
-                            ) : (
-                                <Typography variant="caption" color="error">
-                                    <b>ESGOTADO!</b>
-                                </Typography>
-                            )}
-                            <p>
-                                <b>Preço:</b> <MoneyFormatter value={product.price}/>
-                            </p>
-                        </Grid>
-
-                        <Grid item xs={2}>
-                            <TextField
-                                id="amount"
-                                label="Quantidade"
-                                value={this.state.amount}
-                                name="amount"
-                                onChange={this.handleChange}
-                                type="number"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                margin="normal"
-                                fullWidth
+                        <Grid item xs={4} style={{padding: 20}}>
+                            <img src={product.imageUrl} alt={product.name}
+                                 style={{maxHeight: '100%', maxWidth: '100%', margin: '0 auto', display: 'block'}}
                             />
                         </Grid>
-                        <Grid item xs={1}/>
-                        <Grid item xs={9}>
-                            <Button variant="raised"
-                                    color="secondary"
-                                    style={{marginTop: '5%'}}
-                                    disabled={product.stock === 0}
-                                    onClick={this.handleAddToCart}>
-                                <ShoppingCart style={{marginRight: '10'}}/>
-                                Adicionar ao Carrinho
-                            </Button>
+                        <Grid item xs={8}>
+                            <Grid container>
+                                <Grid item xs={12}>
+                                    <h2>{product.name}</h2>
+                                    {product.tags && product.tags.map(tag =>
+                                        <Chip key={tag} label={tag} style={{marginRight: 5}}/>)
+                                    }
+                                    <br/>
+                                    <br/>
+                                    {product.stock > 0 ? (
+                                        <Typography variant="caption">
+                                            Apenas {product.stock} unidades em estoque.
+                                        </Typography>
+                                    ) : (
+                                        <Typography variant="caption" color="error">
+                                            <b>ESGOTADO!</b>
+                                        </Typography>
+                                    )}
+                                    <p>
+                                        <b>Preço:</b> <MoneyFormatter value={product.price}/>
+                                    </p>
+                                </Grid>
+
+                                <Grid item xs={2}>
+                                    <TextField
+                                        id="amount"
+                                        label="Quantidade"
+                                        value={this.state.amount}
+                                        name="amount"
+                                        onChange={this.handleChange}
+                                        type="number"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        margin="normal"
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid item xs={1}/>
+                                <Grid item xs={9}>
+                                    <Button variant="raised"
+                                            color="secondary"
+                                            style={{marginTop: '5%'}}
+                                            disabled={product.stock === 0}
+                                            onClick={this.handleAddToCart}>
+                                        <ShoppingCart style={{marginRight: '10'}}/>
+                                        Adicionar ao Carrinho
+                                    </Button>
+                                </Grid>
+
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <br/>
+                                <Freight label="Calcular Frete e Prazo: "
+                                         products={[product]}
+                                         enableSelection={false}
+                                         disableCep={product.stock === 0}/>
+                            </Grid>
                         </Grid>
-
+                        <Grid item xs={12}>
+                            <h2>Detalhes:</h2>
+                            <p>{product.description}</p>
+                            <p>
+                                <b>Marca:</b> {product.brand}
+                            </p>
+                            <p>
+                                <b>Categoria:</b> {category.name}
+                            </p>
+                            <p>
+                                <b>Dimensões do Pacote:</b> {product.height} cm x {product.width} cm
+                                x {product.length} cm
+                            </p>
+                            <p>
+                                <b>Peso do
+                                    Pacote:</b> {product.weight < 1000 ? `${product.weight}g` : `${parseFloat(product.weight / 1000).toFixed(2)}kg`}
+                            </p>
+                        </Grid>
                     </Grid>
-
-                    <Grid item xs={12}>
-                        <br/>
-                        <Freight label="Calcular Frete e Prazo: "
-                                 products={[product]}
-                                 enableSelection={false}
-                                 disableCep={product.stock === 0}/>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <h2>Detalhes:</h2>
-                    <p>{product.description}</p>
-                    <p>
-                        <b>Marca:</b> {product.brand}
-                    </p>
-                    <p>
-                        <b>Categoria:</b> {category.name}
-                    </p>
-                    <p>
-                        <b>Dimensões do Pacote:</b> {product.height} cm x {product.width} cm x {product.length} cm
-                    </p>
-                    <p>
-                        <b>Peso do
-                            Pacote:</b> {product.weight < 1000 ? `${product.weight}g` : `${parseFloat(product.weight / 1000).toFixed(2)}kg`}
-                    </p>
-                </Grid>
+                )}
             </Grid>
         );
     }
 }
 
-export default Product;
+export default withRouter(Product);

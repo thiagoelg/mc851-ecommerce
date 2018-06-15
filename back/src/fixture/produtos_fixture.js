@@ -11,8 +11,8 @@ const insertProducts = async product => {
 export const createEletrodomesticos = async () => {
 
     let eletrodomesticos = {
-        name: "Eletrodomésticos",
-        description: "Eletrodomésticos indispensáveis para sua casa.",
+        name: "Eletrodomesticos",
+        description: "Eletrodomesticos indispensaveis para sua casa.",
         status: "ACTIVE",
         groupId: groupId
     };
@@ -24,7 +24,7 @@ export const createEletrodomesticos = async () => {
         // ELETRODOMESTICOS
         {
             name: "Geladeira em blocos electrolux",
-            description: "Sua cozinha ficará muito mais bonita! Contar com o que há de melhor na cozinha é o seu desejo? Então esse é o refrigerador certo pra você. Visual bonito deixará sua cozinha ainda mais elegante.",
+            description: "Sua cozinha ficara muito mais bonita! Contar com o que ha de melhor na cozinha e o seu desejo? Entao esse e o refrigerador certo pra voce. Visual bonito deixara sua cozinha ainda mais elegante.",
             price: 2455.99,
             stock: 50,
             brand: "electrolux",
@@ -44,7 +44,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Geladeira Coca Cola",
-            description: "Sua cozinha ficará muito mais bonita! Contar com o que há de melhor na cozinha é o seu desejo? Então esse é o refrigerador certo pra você. Visual bonito deixará sua cozinha ainda mais elegante.",
+            description: "Sua cozinha ficara muito mais bonita! Contar com o que ha de melhor na cozinha e o seu desejo? Entao esse e o refrigerador certo pra voce. Visual bonito deixara sua cozinha ainda mais elegante.",
             price: 3549.99,
             stock: 50,
             brand: "geladeireira",
@@ -64,7 +64,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Geladeira Oval Google",
-            description: "Sua cozinha ficará muito mais bonita! Contar com o que há de melhor na cozinha é o seu desejo? Então esse é o refrigerador certo pra você. Visual bonito deixará sua cozinha ainda mais elegante.",
+            description: "Sua cozinha ficara muito mais bonita! Contar com o que ha de melhor na cozinha e o seu desejo? Entao esse e o refrigerador certo pra voce. Visual bonito deixara sua cozinha ainda mais elegante.",
             price: 4500.47,
             stock: 50,
             brand: "geladeireira",
@@ -84,7 +84,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Geladeira Kombi",
-            description: "Sua cozinha ficará muito mais bonita! Contar com o que há de melhor na cozinha é o seu desejo? Então esse é o refrigerador certo pra você. Visual bonito deixará sua cozinha ainda mais elegante.",
+            description: "Sua cozinha ficara muito mais bonita! Contar com o que ha de melhor na cozinha e o seu desejo? Entao esse e o refrigerador certo pra voce. Visual bonito deixara sua cozinha ainda mais elegante.",
             price: 5000.00,
             stock: 50,
             brand: "geladeireira",
@@ -104,7 +104,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Geladeira com torneiras externas philco",
-            description: "Sua cozinha ficará muito mais bonita! Contar com o que há de melhor na cozinha é o seu desejo? Então esse é o refrigerador certo pra você. Visual bonito deixará sua cozinha ainda mais elegante.",
+            description: "Sua cozinha ficara muito mais bonita! Contar com o que ha de melhor na cozinha e o seu desejo? Entao esse e o refrigerador certo pra voce. Visual bonito deixara sua cozinha ainda mais elegante.",
             price: 3800.41,
             stock: 50,
             brand: "philco",
@@ -124,7 +124,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Mini geladeira USB prateada com capacidade para 800ml",
-            description: "Mini Geladeira / aquecedor de bebidas para conectar no PC, Notebook ou Laptop. Possui Dupla Função de Aquecimento e Refrigeração, com Temperatura de 8°C a 10°C e Aquecimento 60°C a 80°C.",
+            description: "Mini Geladeira / aquecedor de bebidas para conectar no PC, Notebook ou Laptop. Possui Dupla Funcao de Aquecimento e Refrigeracao, com Temperatura de 8°C a 10°C e Aquecimento 60°C a 80°C.",
             price: 150.99,
             stock: 30,
             brand: "geladeireira",
@@ -144,7 +144,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Mini geladeira USB vermelha com capacidade para 400ml",
-            description: "Mini Geladeira / aquecedor de bebidas para conectar no PC, Notebook ou Laptop. Possui Dupla Função de Aquecimento e Refrigeração, com Temperatura de 8°C a 10°C e Aquecimento 60°C a 80°C.",
+            description: "Mini Geladeira / aquecedor de bebidas para conectar no PC, Notebook ou Laptop. Possui Dupla Funcao de Aquecimento e Refrigeracao, com Temperatura de 8°C a 10°C e Aquecimento 60°C a 80°C.",
             price: 95.00,
             stock: 30,
             brand: "geladeireira",
@@ -163,8 +163,8 @@ export const createEletrodomesticos = async () => {
             groupId: groupId
         },
         {
-            name: "Máquina de lavar para banheiro",
-            description: "Essa lavadora tem tudo o que você precisa pra não ter mais trabalho na hora de lavar suas roupas. Com a lavagem econômica, você reaproveita a água da máquina pra outros usos na sua casa.",
+            name: "Maquina de lavar para banheiro",
+            description: "Essa lavadora tem tudo o que voce precisa pra nao ter mais trabalho na hora de lavar suas roupas. Com a lavagem economica, voce reaproveita a agua da maquina pra outros usos na sua casa.",
             price: 1800.00,
             stock: 100,
             brand: "geladeireira",
@@ -183,8 +183,8 @@ export const createEletrodomesticos = async () => {
             groupId: groupId
         },
         {
-            name: "Máquina de lavar fliperama",
-            description: "Essa lavadora tem tudo o que você precisa pra não ter mais trabalho na hora de lavar suas roupas. Com a lavagem econômica, você reaproveita a água da máquina pra outros usos na sua casa.",
+            name: "Maquina de lavar fliperama",
+            description: "Essa lavadora tem tudo o que voce precisa pra nao ter mais trabalho na hora de lavar suas roupas. Com a lavagem economica, voce reaproveita a agua da maquina pra outros usos na sua casa.",
             price: 3500.00,
             stock: 100,
             brand: "geladeireira",
@@ -203,8 +203,8 @@ export const createEletrodomesticos = async () => {
             groupId: groupId
         },
         {
-            name: "Máquina de lavar orbital",
-            description: "Essa lavadora tem tudo o que você precisa pra não ter mais trabalho na hora de lavar suas roupas. Com a lavagem econômica, você reaproveita a água da máquina pra outros usos na sua casa.",
+            name: "Maquina de lavar orbital",
+            description: "Essa lavadora tem tudo o que voce precisa pra nao ter mais trabalho na hora de lavar suas roupas. Com a lavagem economica, voce reaproveita a agua da maquina pra outros usos na sua casa.",
             price: 4000.00,
             stock: 100,
             brand: "geladeireira",
@@ -223,8 +223,8 @@ export const createEletrodomesticos = async () => {
             groupId: groupId
         },
         {
-            name: "Máquina de lavar orbital mini",
-            description: "Essa lavadora tem tudo o que você precisa pra não ter mais trabalho na hora de lavar suas roupas. Com a lavagem econômica, você reaproveita a água da máquina pra outros usos na sua casa.",
+            name: "Maquina de lavar orbital mini",
+            description: "Essa lavadora tem tudo o que voce precisa pra nao ter mais trabalho na hora de lavar suas roupas. Com a lavagem economica, voce reaproveita a agua da maquina pra outros usos na sua casa.",
             price: 4000.00,
             stock: 100,
             brand: "geladeireira",
@@ -244,7 +244,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Microondas para levar no carro",
-            description: "Esse microondas vai ajudar a fazer pratos deliciosos e comidas sempre fresquinha. E tudo com apenas um toque, com painel digital ele tem receitas pré programadas, que vão te auxiliar no dia a dia.",
+            description: "Esse microondas vai ajudar a fazer pratos deliciosos e comidas sempre fresquinha. E tudo com apenas um toque, com painel digital ele tem receitas pre programadas, que vao te auxiliar no dia a dia.",
             price: 450.00,
             stock: 100,
             brand: "geladeireira",
@@ -263,7 +263,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Microondas com bandeija de pizza embutida",
-            description: "Esse microondas vai ajudar a fazer pratos deliciosos e comidas sempre fresquinha. E tudo com apenas um toque, com painel digital ele tem receitas pré programadas, que vão te auxiliar no dia a dia.",
+            description: "Esse microondas vai ajudar a fazer pratos deliciosos e comidas sempre fresquinha. E tudo com apenas um toque, com painel digital ele tem receitas pre programadas, que vao te auxiliar no dia a dia.",
             price: 800.00,
             stock: 100,
             brand: "geladeireira",
@@ -283,7 +283,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Microondas com torradeira embutida",
-            description: "Esse microondas vai ajudar a fazer pratos deliciosos e comidas sempre fresquinha. E tudo com apenas um toque, com painel digital ele tem receitas pré programadas, que vão te auxiliar no dia a dia.",
+            description: "Esse microondas vai ajudar a fazer pratos deliciosos e comidas sempre fresquinha. E tudo com apenas um toque, com painel digital ele tem receitas pre programadas, que vao te auxiliar no dia a dia.",
             price: 700.00,
             stock: 100,
             brand: "geladeireira",
@@ -304,7 +304,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Microondas USB Heinz",
-            description: "Esse microondas vai ajudar a fazer pratos deliciosos e comidas sempre fresquinha. E tudo com apenas um toque, com painel digital ele tem receitas pré programadas, que vão te auxiliar no dia a dia.",
+            description: "Esse microondas vai ajudar a fazer pratos deliciosos e comidas sempre fresquinha. E tudo com apenas um toque, com painel digital ele tem receitas pre programadas, que vao te auxiliar no dia a dia.",
             price: 300.00,
             stock: 100,
             brand: "geladeireira",
@@ -325,7 +325,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Ventilador de Alce",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 87.00,
             stock: 100,
             brand: "geladeireira",
@@ -346,7 +346,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Ventilador de Cachorro",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 85.00,
             stock: 100,
             brand: "geladeireira",
@@ -367,7 +367,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Ventilador de Caranguejo",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 79.00,
             stock: 100,
             brand: "geladeireira",
@@ -388,7 +388,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Ventilador de Cavalo",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 85.00,
             stock: 100,
             brand: "geladeireira",
@@ -409,7 +409,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Ventilador de Guaxinim",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 95.00,
             stock: 100,
             brand: "geladeireira",
@@ -430,7 +430,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Ventilador de Passaro",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 95.00,
             stock: 100,
             brand: "geladeireira",
@@ -450,8 +450,8 @@ export const createEletrodomesticos = async () => {
             groupId: groupId
         },
         {
-            name: "Ventilador de Pavão",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            name: "Ventilador de Pavao",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 95.00,
             stock: 100,
             brand: "geladeireira",
@@ -472,7 +472,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Ventilador de Peixe",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 95.00,
             stock: 100,
             brand: "geladeireira",
@@ -493,7 +493,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Ventilador de Tigre",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 95.00,
             stock: 100,
             brand: "geladeireira",
@@ -514,7 +514,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Ventilador de Urso",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 95.00,
             stock: 100,
             brand: "geladeireira",
@@ -535,7 +535,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Ventilador de Urso",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 95.00,
             stock: 100,
             brand: "geladeireira",
@@ -556,7 +556,7 @@ export const createEletrodomesticos = async () => {
         },
         {
             name: "Ventilador de Veado",
-            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O único com Power Zone, uma área concentrada de vento máximo!",
+            description: "Design exclusivo e tecnologia patenteada tornam esse ventilador o modelo mais forte e silencioso do mercado brasileiro. O unico com Power Zone, uma area concentrada de vento maximo!",
             price: 95.00,
             stock: 100,
             brand: "geladeireira",
@@ -583,8 +583,8 @@ export const createEletrodomesticos = async () => {
 export const createMobilia = async () => {
 
     let mobilia = {
-        name: "Mobília",
-        description: "Mobília indispensável para sua casa.",
+        name: "Mobilia",
+        description: "Mobilia indispensavel para sua casa.",
         status: "ACTIVE",
         groupId: groupId
     };
@@ -595,14 +595,14 @@ export const createMobilia = async () => {
     const produtos = [
         // MOBILIA
         {
-            name: "Sofá com estampa abstrata",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa com estampa abstrata",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 599.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá"
+                "sofa"
             ],
             highlight: false,
             imageUrl: "/imgs/mobilia/sofa_abstrato.jpg",
@@ -613,14 +613,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá Cacto",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa Cacto",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 499.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá"
+                "sofa"
             ],
             highlight: false,
             imageUrl: "/imgs/mobilia/sofa_cactos.jpg",
@@ -631,14 +631,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá Carro Rosa",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa Carro Rosa",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 699.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá"
+                "sofa"
             ],
             highlight: false,
             imageUrl: "/imgs/mobilia/sofa_carro_rosa.jpg",
@@ -649,14 +649,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá Carro Vermelho",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa Carro Vermelho",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 699.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá"
+                "sofa"
             ],
             highlight: false,
             imageUrl: "/imgs/mobilia/sofa_carro_vermelho.jpg",
@@ -667,14 +667,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá Coliseum de Roma",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa Coliseum de Roma",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 799.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá"
+                "sofa"
             ],
             highlight: false,
             imageUrl: "/imgs/mobilia/sofa_coliseum.jpg",
@@ -685,14 +685,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá Hipopótamo",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa Hipopotamo",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 899.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá",
+                "sofa",
                 "animal",
                 "hipopotamo"
             ],
@@ -705,14 +705,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá Leão Marinho",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa Leao Marinho",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 899.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá",
+                "sofa",
                 "animal",
                 "leao",
                 "marinho"
@@ -726,14 +726,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá com Estampa do Nicolas Kage",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa com Estampa do Nicolas Kage",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 599.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá",
+                "sofa",
             ],
             highlight: true,
             imageUrl: "/imgs/mobilia/sofa_nicolas_kage.jpg",
@@ -744,14 +744,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá Peixe",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa Peixe",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 399.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá",
+                "sofa",
             ],
             highlight: false,
             imageUrl: "/imgs/mobilia/sofa_peixe.jpg",
@@ -762,14 +762,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá de Garrafa Pete Curvo",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa de Garrafa Pete Curvo",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 499.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá",
+                "sofa",
             ],
             highlight: false,
             imageUrl: "/imgs/mobilia/sofa_pet.jpg",
@@ -780,14 +780,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá Polvo",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa Polvo",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 799.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá",
+                "sofa",
             ],
             highlight: false,
             imageUrl: "/imgs/mobilia/sofa_polvo.jpg",
@@ -798,14 +798,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá Tapete",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa Tapete",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 599.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá",
+                "sofa",
             ],
             highlight: false,
             imageUrl: "/imgs/mobilia/sofa_tapete.jpg",
@@ -816,14 +816,14 @@ export const createMobilia = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá Vacas",
-            description: "O estofado possui os assentos retráteis (que se estendem) e o encosto reclinável. Conta com assento em espuma ortopédica D45 e encosto misto Flocos de Espuma, além de braços em espuma D-23.",
+            name: "Sofa Vacas",
+            description: "O estofado possui os assentos retrateis (que se estendem) e o encosto reclinavel. Conta com assento em espuma ortopedica D45 e encosto misto Flocos de Espuma, alem de bracos em espuma D-23.",
             price: 599.90,
             stock: 100,
             brand: "mobiliazeira",
             categoryId: mobilia.id,
             tags: [
-                "sofá",
+                "sofa",
                 "animal",
                 "vaca"
             ],
@@ -844,8 +844,8 @@ export const createMobilia = async () => {
 export const createEletronicos = async () => {
 
     let eletronicos = {
-        name: "Eletrônicos",
-        description: "Eletrônicos para facilitar seu dia-a-dia.",
+        name: "Eletronicos",
+        description: "Eletronicos para facilitar seu dia-a-dia.",
         status: "ACTIVE",
         groupId: groupId
     };
@@ -857,7 +857,7 @@ export const createEletronicos = async () => {
         //ELETRONICOS
         {
             name: "Notebook Dell Dual Screen",
-            description: "Fique o tempo todo conectado com esse notebook. Perfeito para usuários que passam o dia em movimento, o Stilo Colors oferece conectividade e desempenho aonde estiver.",
+            description: "Fique o tempo todo conectado com esse notebook. Perfeito para usuarios que passam o dia em movimento, o Stilo Colors oferece conectividade e desempenho aonde estiver.",
             price: 4800.00,
             stock: 100,
             brand: "dell",
@@ -876,8 +876,8 @@ export const createEletronicos = async () => {
             groupId: groupId
         },
         {
-            name: "Notebook Dell com Botão para Emergências",
-            description: "Fique o tempo todo conectado com esse notebook. Perfeito para usuários que passam o dia em movimento, o Stilo Colors oferece conectividade e desempenho aonde estiver.",
+            name: "Notebook Dell com Botao para Emergencias",
+            description: "Fique o tempo todo conectado com esse notebook. Perfeito para usuarios que passam o dia em movimento, o Stilo Colors oferece conectividade e desempenho aonde estiver.",
             price: 4500.00,
             stock: 100,
             brand: "dell",
@@ -897,7 +897,7 @@ export const createEletronicos = async () => {
         },
         {
             name: "Notebook Dell que Enrola",
-            description: "Fique o tempo todo conectado com esse notebook. Perfeito para usuários que passam o dia em movimento, o Stilo Colors oferece conectividade e desempenho aonde estiver.",
+            description: "Fique o tempo todo conectado com esse notebook. Perfeito para usuarios que passam o dia em movimento, o Stilo Colors oferece conectividade e desempenho aonde estiver.",
             price: 5000.00,
             stock: 100,
             brand: "dell",
@@ -916,8 +916,8 @@ export const createEletronicos = async () => {
             groupId: groupId
         },
         {
-            name: "Notebook Dell Ergonômico Dual Screen",
-            description: "Fique o tempo todo conectado com esse notebook. Perfeito para usuários que passam o dia em movimento, o Stilo Colors oferece conectividade e desempenho aonde estiver.",
+            name: "Notebook Dell Ergonomico Dual Screen",
+            description: "Fique o tempo todo conectado com esse notebook. Perfeito para usuarios que passam o dia em movimento, o Stilo Colors oferece conectividade e desempenho aonde estiver.",
             price: 4750.00,
             stock: 100,
             brand: "dell",
@@ -937,8 +937,8 @@ export const createEletronicos = async () => {
             groupId: groupId
         },
         {
-            name: "Notebook Dell com Máquina de Escrever",
-            description: "Fique o tempo todo conectado com esse notebook. Perfeito para usuários que passam o dia em movimento, o Stilo Colors oferece conectividade e desempenho aonde estiver.",
+            name: "Notebook Dell com Maquina de Escrever",
+            description: "Fique o tempo todo conectado com esse notebook. Perfeito para usuarios que passam o dia em movimento, o Stilo Colors oferece conectividade e desempenho aonde estiver.",
             price: 3750.00,
             stock: 100,
             brand: "dell",
@@ -964,7 +964,7 @@ export const createJardim = async () => {
 
     let jardim = {
         name: "Jardim",
-        description: "Acessórios magníficos para seu jardim.",
+        description: "Acessorios magnificos para seu jardim.",
         status: "ACTIVE",
         groupId: groupId
     };
@@ -976,7 +976,7 @@ export const createJardim = async () => {
         //JARDIM
         {
             name: "Cadeira de Jardim Cubo",
-            description: "Essa cadeira é bonita, confortável e anatômica. Você vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design é feito para não pressionar as costas nem as articulações.",
+            description: "Essa cadeira e bonita, confortavel e anatomica. Voce vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design e feito para nao pressionar as costas nem as articulacoes.",
             price: 50.00,
             stock: 100,
             brand: "jardineira fiel",
@@ -996,7 +996,7 @@ export const createJardim = async () => {
         },
         {
             name: "Cadeira de Jardim Caveira",
-            description: "Essa cadeira é bonita, confortável e anatômica. Você vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design é feito para não pressionar as costas nem as articulações.",
+            description: "Essa cadeira e bonita, confortavel e anatomica. Voce vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design e feito para nao pressionar as costas nem as articulacoes.",
             price: 70.00,
             stock: 100,
             brand: "jardineira fiel",
@@ -1016,7 +1016,7 @@ export const createJardim = async () => {
         },
         {
             name: "Cadeira de Jardim Caveira Feminina",
-            description: "Essa cadeira é bonita, confortável e anatômica. Você vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design é feito para não pressionar as costas nem as articulações.",
+            description: "Essa cadeira e bonita, confortavel e anatomica. Voce vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design e feito para nao pressionar as costas nem as articulacoes.",
             price: 70.00,
             stock: 100,
             brand: "jardineira fiel",
@@ -1037,7 +1037,7 @@ export const createJardim = async () => {
         },
         {
             name: "Cadeira de Jardim de Tronco de Árvore",
-            description: "Essa cadeira é bonita, confortável e anatômica. Você vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design é feito para não pressionar as costas nem as articulações.",
+            description: "Essa cadeira e bonita, confortavel e anatomica. Voce vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design e feito para nao pressionar as costas nem as articulacoes.",
             price: 70.00,
             stock: 100,
             brand: "jardineira fiel",
@@ -1058,7 +1058,7 @@ export const createJardim = async () => {
         },
         {
             name: "Cadeira de Jardim Punisher",
-            description: "Essa cadeira é bonita, confortável e anatômica. Você vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design é feito para não pressionar as costas nem as articulações.",
+            description: "Essa cadeira e bonita, confortavel e anatomica. Voce vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design e feito para nao pressionar as costas nem as articulacoes.",
             price: 80.00,
             stock: 100,
             brand: "jardineira fiel",
@@ -1079,7 +1079,7 @@ export const createJardim = async () => {
         },
         {
             name: "Cadeira de Jardim Verde",
-            description: "Essa cadeira é bonita, confortável e anatômica. Você vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design é feito para não pressionar as costas nem as articulações.",
+            description: "Essa cadeira e bonita, confortavel e anatomica. Voce vai se surpreender com ela quando for curtir todos os prazeres do sol. Seu design e feito para nao pressionar as costas nem as articulacoes.",
             price: 75.00,
             stock: 100,
             brand: "jardineira fiel",
@@ -1097,8 +1097,8 @@ export const createJardim = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá de Jardim 3 Lugares Cinza",
-            description: "Esse sofá de jardim é bastante versátil e elegante, o produto proporciona conforto de sobra. Possui braços reclináveis, permitindo que ele seja ajustado em três diferentes posições.",
+            name: "Sofa de Jardim 3 Lugares Cinza",
+            description: "Esse sofa de jardim e bastante versatil e elegante, o produto proporciona conforto de sobra. Possui bracos reclinaveis, permitindo que ele seja ajustado em tres diferentes posicoes.",
             price: 999.90,
             stock: 100,
             brand: "jardineira fiel",
@@ -1116,8 +1116,8 @@ export const createJardim = async () => {
             groupId: groupId
         },
         {
-            name: "Sofá de Jardim de Madeira",
-            description: "Esse sofá de jardim é bastante versátil e elegante, o produto proporciona conforto de sobra. Possui braços reclináveis, permitindo que ele seja ajustado em três diferentes posições.",
+            name: "Sofa de Jardim de Madeira",
+            description: "Esse sofa de jardim e bastante versatil e elegante, o produto proporciona conforto de sobra. Possui bracos reclinaveis, permitindo que ele seja ajustado em tres diferentes posicoes.",
             price: 1499.90,
             stock: 100,
             brand: "jardineira fiel",
@@ -1154,7 +1154,7 @@ export const createLivros = async () => {
         // LIVROS
         {
             name: "A Sutil Arte de Ligar o Foda-Se",
-            description: "Chega de tentar buscar um sucesso que só existe na sua cabeça. Chega de se torturar para pensar positivo enquanto sua vida vai ladeira abaixo.",
+            description: "Chega de tentar buscar um sucesso que so existe na sua cabeca. Chega de se torturar para pensar positivo enquanto sua vida vai ladeira abaixo.",
             price: 23.90,
             stock: 100,
             brand: "intrinseca",
@@ -1172,8 +1172,8 @@ export const createLivros = async () => {
             groupId: groupId
         },
         {
-            name: "Culpando o Usuário",
-            description: "Está na hora de começar a tirar a culpa de cima de você e jogá-la no usuário! Usuários não sabem o que fazem, certamente qualquer problema no sistema é culpa deles.",
+            name: "Culpando o Usuario",
+            description: "Esta na hora de comecar a tirar a culpa de cima de voce e joga-la no usuario! Usuarios nao sabem o que fazem, certamente qualquer problema no sistema e culpa deles.",
             price: 20.90,
             stock: 100,
             brand: "intrinseca",
@@ -1192,8 +1192,8 @@ export const createLivros = async () => {
             groupId: groupId
         },
         {
-            name: "Como se tornar um esquizofrênico",
-            description: "Este trabalho bem pesquisado, mas legível, ultiliza as idéias de Harry Stack Sullivan, Theodore Lidz, Gregory Bateson e outras teorias que explicam como e por que as pessoas se tornam esquizofrênicas.",
+            name: "Como se tornar um esquizofrenico",
+            description: "Este trabalho bem pesquisado, mas legivel, ultiliza as ideias de Harry Stack Sullivan, Theodore Lidz, Gregory Bateson e outras teorias que explicam como e por que as pessoas se tornam esquizofrenicas.",
             price: 44.90,
             stock: 100,
             brand: "intrinseca",
@@ -1212,7 +1212,7 @@ export const createLivros = async () => {
         },
         {
             name: "E se?",
-            description: "Um guia dos curiosos para os tempos de internet, feito por uma das maiores personalidades da era digital Garoto prodígio da NASA, Randall Munroe tornou-se conhecido com a série em quadrinhos XKCD.",
+            description: "Um guia dos curiosos para os tempos de internet, feito por uma das maiores personalidades da era digital Garoto prodigio da NASA, Randall Munroe tornou-se conhecido com a serie em quadrinhos XKCD.",
             price: 39.50,
             stock: 100,
             brand: "intrinseca",
@@ -1230,8 +1230,8 @@ export const createLivros = async () => {
             groupId: groupId
         },
         {
-            name: "O Guia do Mochileiro das Galáxias Vol. 1",
-            description: "Considerado um dos maiores clássicos da literatura de ficção científica, O guia do mochileiro das galáxias vem encantando gerações de leitores ao redor do mundo com seu humor afiado.",
+            name: "O Guia do Mochileiro das Galaxias Vol. 1",
+            description: "Considerado um dos maiores classicos da literatura de ficcao cientifica, O guia do mochileiro das galaxias vem encantando geracoes de leitores ao redor do mundo com seu humor afiado.",
             price: 17.90,
             stock: 100,
             brand: "intrinseca",
@@ -1251,8 +1251,8 @@ export const createLivros = async () => {
             groupId: groupId
         },
         {
-            name: "O Guia do Mochileiro das Galáxias Vol. 2: O Restaurante no Fim do Universo",
-            description: "O que você pretende fazer quando chegar ao Restaurante do Fim do Universo? Devorar o suculento bife de um boi que se oferece como jantar ou apenas se embriagar com a poderosa Dinamite Pangaláctica?",
+            name: "O Guia do Mochileiro das Galaxias Vol. 2: O Restaurante no Fim do Universo",
+            description: "O que voce pretende fazer quando chegar ao Restaurante do Fim do Universo? Devorar o suculento bife de um boi que se oferece como jantar ou apenas se embriagar com a poderosa Dinamite Pangalactica?",
             price: 17.90,
             stock: 100,
             brand: "intrinseca",
@@ -1272,8 +1272,8 @@ export const createLivros = async () => {
             groupId: groupId
         },
         {
-            name: "O Guia do Mochileiro das Galáxias Vol. 3: A vida o universo e tudo mais",
-            description: "Após as loucas aventuras vividas com seus estranhos amigos em O guia do mochileiro das galáxias e O restaurante no fim do universo, Arthur Dent ficou cinco anos abandonado na Terra pré-histórica.",
+            name: "O Guia do Mochileiro das Galaxias Vol. 3: A vida o universo e tudo mais",
+            description: "Apos as loucas aventuras vividas com seus estranhos amigos em O guia do mochileiro das galaxias e O restaurante no fim do universo, Arthur Dent ficou cinco anos abandonado na Terra pre-historica.",
             price: 17.90,
             stock: 100,
             brand: "intrinseca",
@@ -1293,8 +1293,8 @@ export const createLivros = async () => {
             groupId: groupId
         },
         {
-            name: "O Guia do Mochileiro das Galáxias Vol. 4: Até mais e obrigado pelos peixes",
-            description: "Depois de viajar pelo Universo, ver o aniquilamento da Terra, participar de guerras interestelares e conhecer as mais extraordinárias criaturas, Arthur está de volta ao seu planeta.",
+            name: "O Guia do Mochileiro das Galaxias Vol. 4: Ate mais e obrigado pelos peixes",
+            description: "Depois de viajar pelo Universo, ver o aniquilamento da Terra, participar de guerras interestelares e conhecer as mais extraordinarias criaturas, Arthur esta de volta ao seu planeta.",
             price: 17.90,
             stock: 100,
             brand: "intrinseca",
@@ -1314,8 +1314,8 @@ export const createLivros = async () => {
             groupId: groupId
         },
         {
-            name: "O Guia do Mochileiro das Galáxias Vol. 5: Praticamente inofensiva",
-            description: "As inúmeras mudanças políticas, culturais e, principalmente, tecnológicas que aconteceram nesse período influenciaram os rumos da narrativa e tornaram Praticamente inofensiva uma obra singular.",
+            name: "O Guia do Mochileiro das Galaxias Vol. 5: Praticamente inofensiva",
+            description: "As inumeras mudancas politicas, culturais e, principalmente, tecnologicas que aconteceram nesse periodo influenciaram os rumos da narrativa e tornaram Praticamente inofensiva uma obra singular.",
             price: 18.90,
             stock: 100,
             brand: "intrinseca",
@@ -1335,8 +1335,8 @@ export const createLivros = async () => {
             groupId: groupId
         },
         {
-            name: "O Guia do Mochileiro das Galáxias Vol. 6: E tem outra coisa",
-            description: "Fãs de todo o mundo estavam órfãos de novas aventuras dos personagens mais loucos da ficção científica desde que o último livro da série O Mochileiro das Galáxias foi escrito, em 1992.",
+            name: "O Guia do Mochileiro das Galaxias Vol. 6: E tem outra coisa",
+            description: "Fas de todo o mundo estavam orfaos de novas aventuras dos personagens mais loucos da ficcao cientifica desde que o ultimo livro da serie O Mochileiro das Galaxias foi escrito, em 1992.",
             price: 18.90,
             stock: 100,
             brand: "intrinseca",
@@ -1354,8 +1354,8 @@ export const createLivros = async () => {
             groupId: groupId
         },
         {
-            name: "Ignorando Avisos de Descontinuação",
-            description: "Dar atençap a avisos de descontinuação pra quê? Só da trabalho.",
+            name: "Ignorando Avisos de Descontinuacao",
+            description: "Dar atencap a avisos de descontinuacao pra que? So da trabalho.",
             price: 18.90,
             stock: 100,
             brand: "intrinseca",
@@ -1378,8 +1378,8 @@ export const createLivros = async () => {
 
 export const createIluminacao = async () => {
     let iluminacao = {
-        name: "Iluminação",
-        description: "Abajures e lâmpadas com iluminação perfeita para sua casa.",
+        name: "Iluminacao",
+        description: "Abajures e lampadas com iluminacao perfeita para sua casa.",
         status: "ACTIVE",
         groupId: groupId
     };
@@ -1391,7 +1391,7 @@ export const createIluminacao = async () => {
         // ILUMINACAO
         {
             name: "Abajur com base de lhama",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 108.35,
             stock: 100,
             brand: "skylux",
@@ -1411,7 +1411,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de baleia",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 104.61,
             stock: 100,
             brand: "skylux",
@@ -1431,7 +1431,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de basset",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 100.88,
             stock: 100,
             brand: "skylux",
@@ -1453,7 +1453,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de bulldog",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 50.38,
             stock: 100,
             brand: "skylux",
@@ -1474,7 +1474,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de cavalo",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 100.88,
             stock: 100,
             brand: "skylux",
@@ -1494,7 +1494,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de coelho",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 50.99,
             stock: 100,
             brand: "skylux",
@@ -1514,7 +1514,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de elefante de circo",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 50.99,
             stock: 100,
             brand: "skylux",
@@ -1535,7 +1535,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de elefante indiano",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 104.61,
             stock: 100,
             brand: "skylux",
@@ -1556,7 +1556,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de esquilo",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 150.70,
             stock: 100,
             brand: "skylux",
@@ -1576,7 +1576,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de gatos",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 95.52,
             stock: 100,
             brand: "lux",
@@ -1596,7 +1596,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de girafa",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 80.00,
             stock: 100,
             brand: "lux",
@@ -1616,7 +1616,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de passaro",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 186.84,
             stock: 100,
             brand: "skylux",
@@ -1636,7 +1636,7 @@ export const createIluminacao = async () => {
         },
         {
             name: "Abajur com base de rinoceronte",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 186.84,
             stock: 100,
             brand: "skylux",
@@ -1655,8 +1655,8 @@ export const createIluminacao = async () => {
             groupId: groupId
         },
         {
-            name: "Abajur de abdução de vaca",
-            description: "Tenha uma iluminação que valorize a decoração do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de ótima qualidade.",
+            name: "Abajur de abducao de vaca",
+            description: "Tenha uma iluminacao que valorize a decoracao do seu lar! Conte com esse abajur para criar um ambiente ainda mais moderno e elegante. Confeccionado com materiais de otima qualidade.",
             price: 186.84,
             stock: 100,
             brand: "lux",
@@ -1665,8 +1665,8 @@ export const createIluminacao = async () => {
                 "abajur",
                 "animais",
                 "vaca",
-                "abdução",
-                "alienígena"
+                "abducao",
+                "alienigena"
             ],
             highlight: true,
             imageUrl: "/imgs/iluminacao/abajur_vaca.jpg",

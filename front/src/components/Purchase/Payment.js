@@ -53,7 +53,7 @@ class Payment extends Component {
                             {isCard && (
                                 <Typography variant="body1">
                                     <br/>
-                                    <b>Número do Cartão: </b>{payment.card.number}
+                                    <b>Número do Cartão: </b>xxxx xxxx xxxx {payment.card.number.substr(payment.card.number.length - 4)}
                                     <br/>
                                     <b>Bandeira: </b>{payment.card.brand}
                                     <br/>
