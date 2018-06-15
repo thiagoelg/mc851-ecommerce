@@ -22,12 +22,6 @@ class PasswordForm extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount() {
-        if (!UserProfile.isLogged()) {
-            this.props.history.push("/signIn");
-            return;
-        }
-    }
 
     handleChange(e) {
         const target = e.target;
