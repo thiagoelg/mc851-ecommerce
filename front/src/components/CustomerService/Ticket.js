@@ -1,4 +1,5 @@
 import React, {Component} from "react"
+import {withRouter} from "react-router-dom"
 import {
     changeTicketStatus,
     getTicket,
@@ -20,6 +21,8 @@ import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
 import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
+import {treatError} from "../../util/ErrorUtils";
+import Fade from "@material-ui/core/es/Fade/Fade";
 
 class Ticket extends Component {
 
@@ -31,7 +34,9 @@ class Ticket extends Component {
             message: '',
 
             messageSent: false,
-            waitingMessage: false
+            waitingMessage: false,
+
+            loading: true
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -43,7 +48,7 @@ class Ticket extends Component {
     }
 
     componentDidMount() {
-        if(!UserProfile.isLogged()) {
+        if (!UserProfile.isLogged()) {
             this.props.history.push('/signIn');
             return;
         }
@@ -69,11 +74,13 @@ class Ticket extends Component {
                         messageSize: ticket.messageSize,
                         messagesList: ticket.messagesList,
                         operator: operator
-                    }
+                    },
+
+                    loading: false,
                 });
             })
             .catch(error => {
-                //TODO treat error
+                treatError(this.props, error);
             });
     }
 
@@ -179,102 +186,118 @@ class Ticket extends Component {
                         ]}
                     />
                 </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="headline">
-                        <b>Chamado de protocolo: </b>{ticket.ticketId}
-                    </Typography>
-                    <Typography variant="body1">
-                        <b>Compra: </b>{ticket.compraId ? ticket.compraId : "Não relacionado"}
-                    </Typography>
-                    <Typography variant="body1">
-                        <b>Status: </b>{TICKET_STATUS_LABELS[ticket.statusId]}
-                    </Typography>
-                    <Typography variant="body1">
-                        <b>Atendente: </b>{ticket.operator ? ticket.operator : "Não definido"}
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} style={{marginTop: 10}}>
-                    <Typography variant="subheading">
-                        Mensagens
-                    </Typography>
-                    {ticket.messagesList && (
-                        <List>
-                            <Divider/>
-                            {ticket.messagesList.map(message => {
-                                let dateTime = moment(message.timestamp, 'YYYY-MM-DDTHH:mm');
-                                return (
-                                    <div key={message.timestamp}>
-                                        <ListItem button>
-                                            <ListItemText>
-                                                {message.sender === UserProfile.getId() ? (
-                                                    <Typography variant="subheading">
-                                                        {UserProfile.getName()} disse:
-                                                    </Typography>
-                                                ) : (
-                                                    <Typography variant="subheading">
-                                                        {message.sender} respondeu:
-                                                    </Typography>
-                                                )}
-                                                <Typography variant="caption">
-                                                    {dateTime.format('DD/MM/YYYY')} às {dateTime.format('HH:mm')}
-                                                </Typography>
-                                                <Typography variant="body2">
-                                                    {message.message}
-                                                </Typography>
-                                            </ListItemText>
-                                        </ListItem>
-                                        <Divider/>
-                                    </div>
-                                )
-                            })}
-                        </List>
-                    )}
-                </Grid>
-                <Grid item xs={12} style={{marginTop: 20}}>
+                {this.state.loading ? (
+                    <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
+                        <Fade
+                            in={this.state.loading}
+                            style={{
+                                transitionDelay: this.state.loading ? '800ms' : '0ms'
+                            }}
+                            unmountOnExit
+                        >
+                            <CircularProgress/>
+                        </Fade>
+                    </Grid>
+                ) : (
                     <Grid container>
-                        <Grid item xs={6}>
-                            <TextField
-                                placeholder="Escreva nova mensagem..."
-                                name="message"
-                                value={this.state.message}
-                                onChange={this.handleChange}
-                                multiline={true}
-                                rows={2}
-                                fullWidth
-                            />
+                        <Grid item xs={12}>
+                            <Typography variant="headline">
+                                <b>Chamado de protocolo: </b>{ticket.ticketId}
+                            </Typography>
+                            <Typography variant="body1">
+                                <b>Compra: </b>{ticket.compraId ? ticket.compraId : "Não relacionado"}
+                            </Typography>
+                            <Typography variant="body1">
+                                <b>Status: </b>{TICKET_STATUS_LABELS[ticket.statusId]}
+                            </Typography>
+                            <Typography variant="body1">
+                                <b>Atendente: </b>{ticket.operator ? ticket.operator : "Não definido"}
+                            </Typography>
                         </Grid>
-                        <Grid item xs={1}/>
-                        <Grid item xs={4}>
-                            <Button variant="raised"
-                                    color="secondary"
-                                    onClick={(e) => this.handleClick("send")}
-                                    disabled={this.state.waitingMessage}
-                                    style={{marginRight: 5}}>
-                                Enviar
-                            </Button>
-                            <Button variant="raised"
-                                    color="secondary"
-                                    onClick={(e) => this.handleClick("close")}
-                                    disabled={this.state.waitingMessage}
-                                    style={{marginRight: 5}}>
-                                Fechar
-                            </Button>
-                            <Button variant="raised"
-                                    color="secondary"
-                                    onClick={(e) => this.handleClick("cancel")}
-                                    disabled={this.state.waitingMessage}>
-                                Cancelar
-                            </Button>
+                        <Grid item xs={12} style={{marginTop: 10}}>
+                            <Typography variant="subheading">
+                                Mensagens
+                            </Typography>
+                            {ticket.messagesList && (
+                                <List>
+                                    <Divider/>
+                                    {ticket.messagesList.map(message => {
+                                        let dateTime = moment(message.timestamp, 'YYYY-MM-DDTHH:mm');
+                                        return (
+                                            <div key={message.timestamp}>
+                                                <ListItem button>
+                                                    <ListItemText>
+                                                        {message.sender === UserProfile.getId() ? (
+                                                            <Typography variant="subheading">
+                                                                {UserProfile.getName()} disse:
+                                                            </Typography>
+                                                        ) : (
+                                                            <Typography variant="subheading">
+                                                                {message.sender} respondeu:
+                                                            </Typography>
+                                                        )}
+                                                        <Typography variant="caption">
+                                                            {dateTime.format('DD/MM/YYYY')} às {dateTime.format('HH:mm')}
+                                                        </Typography>
+                                                        <Typography variant="body2">
+                                                            {message.message}
+                                                        </Typography>
+                                                    </ListItemText>
+                                                </ListItem>
+                                                <Divider/>
+                                            </div>
+                                        )
+                                    })}
+                                </List>
+                            )}
                         </Grid>
-                        <Grid item xs={1}>
-                            {this.state.waitingMessage && (<CircularProgress/>)}
+                        <Grid item xs={12} style={{marginTop: 20}}>
+                            <Grid container>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        placeholder="Escreva nova mensagem..."
+                                        name="message"
+                                        value={this.state.message}
+                                        onChange={this.handleChange}
+                                        multiline={true}
+                                        rows={2}
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid item xs={1}/>
+                                <Grid item xs={4}>
+                                    <Button variant="raised"
+                                            color="secondary"
+                                            onClick={(e) => this.handleClick("send")}
+                                            disabled={this.state.waitingMessage}
+                                            style={{marginRight: 5}}>
+                                        Enviar
+                                    </Button>
+                                    <Button variant="raised"
+                                            color="secondary"
+                                            onClick={(e) => this.handleClick("close")}
+                                            disabled={this.state.waitingMessage}
+                                            style={{marginRight: 5}}>
+                                        Fechar
+                                    </Button>
+                                    <Button variant="raised"
+                                            color="secondary"
+                                            onClick={(e) => this.handleClick("cancel")}
+                                            disabled={this.state.waitingMessage}>
+                                        Cancelar
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={1}>
+                                    {this.state.waitingMessage && (<CircularProgress/>)}
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
+                )}
             </Grid>
         );
     }
 
 }
 
-export default Ticket;
+export default withRouter(Ticket);
