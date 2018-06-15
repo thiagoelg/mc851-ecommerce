@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = "http://node.thiagoelg.com"
+const URL = "http://172.23.0.5:7777"
 const headers = {"x-api-key": "717423f2-73ff-4bc1-a00f-f1d593c81fca"};
 
 export const getCEP = async (cep) => {
