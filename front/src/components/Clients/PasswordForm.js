@@ -1,7 +1,9 @@
 import React, {Component} from "react"
+import {withRouter} from "react-router-dom";
 import {validatePassword, validateSamePass} from "../../util/Validators";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import TextField from "@material-ui/core/es/TextField/TextField";
+import UserProfile from "../../state/UserProfile";
 
 class PasswordForm extends Component {
 
@@ -18,6 +20,13 @@ class PasswordForm extends Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount() {
+        if (!UserProfile.isLogged()) {
+            this.props.history.push("/signIn");
+            return;
+        }
     }
 
     handleChange(e) {
@@ -97,4 +106,4 @@ class PasswordForm extends Component {
 
 }
 
-export default PasswordForm;
+export default withRouter(PasswordForm);

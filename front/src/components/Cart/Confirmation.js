@@ -13,12 +13,6 @@ import UserProfile from "../../state/UserProfile";
 
 class Confirmation extends Component {
 
-    componentWillMount() {
-        if (!UserProfile.isLogged()) {
-            this.props.history.push("/signIn");
-          }
-    }
-
     render() {
 
         let locationState = this.props.location.state;
