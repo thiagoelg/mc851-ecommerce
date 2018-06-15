@@ -310,7 +310,15 @@ export const handlePaymentChange = async () => {
     let purchases = await Database.getPurchasesBetweenStatus(STATUS_PURCHASE.order_ok, STATUS_PURCHASE.payment_approved);
     purchases = purchases.filter(purchase => purchase.boleto);
 
-    for (let purchase in purchases) {
+    if(!purchases || !purchases.length) {
+        console.log("[payment change] no purchases to update");
+        return;
+    }
+
+    for (let i = 0; i < purchases.length; i++) {
+        const purchase = purchases[i];
+        console.log("[payment change] updating purchase", purchase.id);
+
         const boletoRes = await PaymentClient.getBankTicketStatus(purchase.paymentCode);
 
         if(!boletoRes || !boletoRes.data || boletoRes.status !== 200) {
@@ -325,7 +333,15 @@ export const handlePaymentChange = async () => {
 export const handleTrackingChange = async () => {
     const purchases = await Database.getPurchasesBetweenStatus(STATUS_PURCHASE.payment_approved, STATUS_PURCHASE.delivered);
 
-    for (let purchase in purchases) {
+    if(!purchases || !purchases.length) {
+        console.log("[tracking update] no purchases to update");
+        return;
+    }
+
+    for (let i = 0; i < purchases.length; i++) {
+        const purchase = purchases[i];
+        console.log("[tracking update] updating purchase", purchase.id);
+
         const trackingResponse = await LogisticaClient.getTracking(purchase.shippingCode);
 
         if (!trackingResponse) {
@@ -353,11 +369,14 @@ export const handleTrackingChange = async () => {
 
         const lastMessage = history[history.length-1].mensagem.toUpperCase();
         if(lastMessage.includes("ENVIADO")) {
+            console.log(`[tracking update] updating purchase ${purchase.id} to shipped`);
             await Database.updatePurchaseStatus(purchase.id, STATUS_PURCHASE.shipped)
         } else if(lastMessage.includes("ENTREGUE")) {
+            console.log(`[tracking update] updating purchase ${purchase.id} to delivered`);
             await Database.updatePurchaseStatus(purchase.id, STATUS_PURCHASE.delivered)
         } else if(lastMessage.includes("FALHA")) {
-            await Database.updatePurchaseStatus(purchase.id, STATUS_PURCHASE.canceled)
+            console.log(`[tracking update] updating purchase ${purchase.id} to canceled`);
+            await Database.updatePurchaseStatus(purchase.id, STATUS_PURCHASE.canceled);
             await releasePurchaseProducts(purchase);
         }
     }
