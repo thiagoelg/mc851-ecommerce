@@ -23,7 +23,8 @@ export const getShipments = async (params) => {
 
         return {data : response.data, status: response.status}
     } catch (e) {
-        //console.log(e)
+        const response = e.response;
+        return {data : response.data, status: response.status}
     }
 };
 

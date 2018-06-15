@@ -27,6 +27,7 @@ class Freight extends Component {
             shipping: {},
             valid: true,
             open: false,
+            problemCalculating: false,
 
             loading: false,
             shippingOptions: [],
@@ -128,16 +129,16 @@ class Freight extends Component {
 
     selectCepAndShippingParameters(callback) {
 
-            this.setState({
-                cep: this.props.cep,
-                valid: validateCep(this.props.cep),
-                shippingOptions: [],
-                shipping: {},
-            }, () => {
-                if (this.state.valid) {
-                    this.getShippingOptions(callback);
-                }
-            });
+        this.setState({
+            cep: this.props.cep,
+            valid: validateCep(this.props.cep),
+            shippingOptions: [],
+            shipping: {},
+        }, () => {
+            if (this.state.valid) {
+                this.getShippingOptions(callback);
+            }
+        });
 
     }
 
@@ -169,7 +170,8 @@ class Freight extends Component {
 
     handleClose = () => {
         this.setState({
-            open: false
+            open: false,
+            problemCalculating: false
         });
     };
 
@@ -229,7 +231,22 @@ class Freight extends Component {
                     }, () => callback && callback())
                 })
                 .catch(error => {
-                    //TODO treat error
+                    console.log(error);
+                    const response = error.response;
+                    switch (response.status) {
+                        case 404:
+                        case 400: {
+                            this.setState({
+                                open: true,
+                                problemCalculating: true,
+                                loading: false
+                            });
+                        }
+                        break;
+                        default: {
+                            //TODO treat error
+                        }
+                    }
                 });
         });
 
@@ -250,7 +267,11 @@ class Freight extends Component {
                                 {(!this.state.valid) &&
                                 <p>Preencha o CEP corretamente.<br/></p>
                                 }
-                                </span>}
+                                {this.state.problemCalculating &&
+                                <p>CEP inexistente ou não realizamos entregas nesse CEP.</p>
+                                }
+                            </span>
+                        }
                         action={[
                             <IconButton
                                 key="close"

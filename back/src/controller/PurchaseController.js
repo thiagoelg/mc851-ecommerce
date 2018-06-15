@@ -1,18 +1,19 @@
 import moment from 'moment'
 
 import ProductClient from '../service/produtos_client'
-import Database from "../database/database"
+import Database, {updatePurchaseStatus} from "../database/database"
 import AuthTokenGenerator from "../utils/AuthTokenGenerator"
 import LogisticaClient from '../service/logistica_client'
-import PaymentClient from '../service/pagamento_client'
+import PaymentClient, {BOLETO_STATUS} from '../service/pagamento_client'
 
 export const STATUS_PURCHASE = {
     order_ok: 1,
     payment_approved: 2,
     in_stock: 3,
     shipped: 4,
-    delivered: 5
-}
+    delivered: 5,
+    payment_reproved: 6
+};
 
 export const getPurchases = async (token) => {
     const user = AuthTokenGenerator.verify(token)
@@ -84,12 +85,13 @@ export const getPurchases = async (token) => {
                     price: purchase.price,
                 },
                 products: products
-            }
+            };
         
             if (purchase.boleto) {
-                const boletoRes = await PaymentClient.getBankTicketStatus(purchase.paymentCode)
-                const status = boletoRes.data.status
+                const boletoRes = await PaymentClient.getBankTicketStatus(purchase.paymentCode);
+                const status = boletoRes.data.status;
 
+                data.status = await updatePurchaseStatusThroughBoletoStatus(boletoRes, purchase);
                 data.payment.boleto = {
                     status: status,
                     dueDate: moment(purchase.dueDate).format('DD-MM-YYYY'),
@@ -194,6 +196,7 @@ export const getPurchaseById = async (token, purchaseId) => {
         const boletoRes = await PaymentClient.getBankTicketStatus(purchase.paymentCode)
         const status = boletoRes.data.status
 
+        response.status = await updatePurchaseStatusThroughBoletoStatus(boletoRes, purchase);
         response.payment.boleto = {
             status: status,
             dueDate: moment(purchase.dueDate).format('DD-MM-YYYY'),
@@ -274,6 +277,30 @@ export const getPurchaseTrackingById = async (token, purchaseId) => {
         data: response
     }
 }
+
+export const updatePurchaseStatusThroughBoletoStatus = async (boletoRes, purchase) => {
+    const status = boletoRes.data.status;
+    let purchaseStatus = purchase.status;
+
+    switch (status) {
+        case BOLETO_STATUS.OK:
+            if(purchase.status === STATUS_PURCHASE.order_ok) {
+                purchaseStatus = STATUS_PURCHASE.payment_approved;
+            }
+            break;
+        case BOLETO_STATUS.EXPIRED:
+            if(purchase.status === STATUS_PURCHASE.order_ok) {
+                purchaseStatus = STATUS_PURCHASE.payment_reproved;
+            }
+            break;
+    }
+
+    if(purchase.status !== purchaseStatus) {
+        await Database.updatePurchaseStatus(purchase.id, purchaseStatus)
+    }
+
+    return purchaseStatus;
+};
 
 export default {
     getPurchaseById,

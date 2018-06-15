@@ -7,6 +7,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Link from "../Link/Link";
 import UserButtons from "./UserButtons";
 import CartButton from "./CartButton";
+import {getCategories} from "../../clients/ProductsClient";
 
 const toolBarBottonHeader = {
     backgroundColor: '#F5F5F5',
@@ -39,13 +40,14 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        fetch('http://back.localhost/products/categories')
-            .then(results => {
-                //TODO check if status ok
-                return results.json();
-            })
-            .then(data => {
+        getCategories()
+            .then(response => {
+                const data = response.data;
+
                 this.setState({categories: data});
+            })
+            .catch(data => {
+                //TODO treat errors
             })
     }
 

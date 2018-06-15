@@ -9,7 +9,8 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from "@material-ui/core/es/StepButton/StepButton";
 import Divider from '@material-ui/core/Divider';
-import {PURCHASE_STATUS_LABEL} from '../../clients/PurchaseClient'
+import {PURCHASE_STATUS, PURCHASE_STATUS_LABEL} from '../../clients/PurchaseClient'
+import PurchaseStatusStepper from "../Purchase/PurchaseStatusStepper";
 
 function getSteps() {
     return ['Pedido Recebido', 'Aguardando Pagamento', 'Produto em Transporte', 'Produto Entregue'];
@@ -47,17 +48,7 @@ class Confirmation extends Component {
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Stepper nonLinear activeStep={0}>
-                        {Object.values(PURCHASE_STATUS_LABEL).map((label, index) => {
-                            return (
-                                <Step key={label}>
-                                    <StepButton disabled="true" >
-                                        {label}
-                                    </StepButton>
-                                </Step>
-                            );
-                        })}
-                    </Stepper>
+                    <PurchaseStatusStepper status={PURCHASE_STATUS.ORDER_REQUESTED}/>
                 </Grid>
                 <Grid item xs={12}>
                     <p></p>

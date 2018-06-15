@@ -233,6 +233,16 @@ export const getPurchasesByClientId = async (clientId) => {
     return rows;
 };
 
+export const updatePurchaseStatus = async (purchaseId, status) => {
+    if (!pool)
+        throw 'Missing database connection!';
+
+    const [rows, fields] = await pool.query(
+        `UPDATE purchase SET status = ?, createdAt = createdAt
+         WHERE id = ?`, [status, purchaseId]);
+
+};
+
 export const createShipping = async (address, shippingCode) => {
     if (!pool)
         throw 'Missing database connection!'
@@ -279,6 +289,7 @@ export default {
     createPurchase,
     getPurchaseById,
     getPurchasesByClientId,
+    updatePurchaseStatus,
     createShipping,
     createPayment
 };

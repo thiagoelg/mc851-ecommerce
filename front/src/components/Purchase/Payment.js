@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/es/Grid/Grid";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import Divider from "@material-ui/core/es/Divider/Divider";
 import Button from "@material-ui/core/es/Button/Button";
+import {BOLETO_STATUS} from "../../clients/PurchaseClient";
 
 class Payment extends Component {
 
@@ -56,7 +57,7 @@ class Payment extends Component {
                                     <br/>
                                     <b>Bandeira: </b>{payment.card.brand}
                                     <br/>
-                                    <b>Parcelas: </b>{payment.card.installments}x
+                                    <b>Parcelas: </b>{payment.card.instalments}x
                                 </Typography>
                             )}
 
@@ -77,7 +78,7 @@ class Payment extends Component {
                                 </div>
                             )}
                         </Grid>
-                        {isBoleto && (
+                        {isBoleto && payment.boleto.status === BOLETO_STATUS.PENDING && (
                             <Grid item xs={12}>
                                 <br/>
                                 <Divider/>
@@ -91,6 +92,26 @@ class Payment extends Component {
                                         onClick={this.handleClick}>
                                     GERAR BOLETO
                                 </Button>
+                            </Grid>
+                        )}
+                        {isBoleto && payment.boleto.status === BOLETO_STATUS.OK && (
+                            <Grid item xs={12}>
+                                <br/>
+                                <Divider/>
+                                <br/>
+                                <Typography variant="caption">
+                                    Recebemos seu pagamento! Agora é só esperar para receber seu pedido.
+                                </Typography>
+                            </Grid>
+                        )}
+                        {isBoleto && payment.boleto.status === BOLETO_STATUS.EXPIRED && (
+                            <Grid item xs={12}>
+                                <br/>
+                                <Divider/>
+                                <br/>
+                                <Typography variant="caption">
+                                    Oops... Seu boleto venceu, infelizmente sua compra foi cancelada!
+                                </Typography>
                             </Grid>
                         )}
                     </Grid>

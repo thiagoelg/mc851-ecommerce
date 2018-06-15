@@ -31,15 +31,15 @@ router.get('/shipping', async (req, res, next) => {
         let shipping = await LogisticController.getShipments(params);
 
         let formated_shipping = []
-        Object.keys(shipping).forEach(function(key) {
+        Object.keys(shipping.data).forEach(function(key) {
             formated_shipping.push({
                 type: key,
-                price: shipping[key].preco,
-                deliveryTime: shipping[key].prazo
+                price: shipping.data[key].preco,
+                deliveryTime: shipping.data[key].prazo
             })
         });
 
-        return res.json(formated_shipping)
+        return res.status(shipping.status).json(formated_shipping)
 
     } catch(e) {
         next(e)

@@ -259,7 +259,7 @@ class Checkout extends Component {
                                     <p>O CEP informado é inválido, favor alterá-lo.</p>
                                 )}
                                 {this.state.unauthorizedPayment && (
-                                    <p>O pagamento foi rejeitado, favor tentar outra forma de pagamento.</p>
+                                    <p>O pagamento foi rejeitado.</p>
                                 )}
                                 {this.state.expiredCart && (
                                     <p>O seu carrinho expirou, você vai precisar montá-lo novamente.</p>

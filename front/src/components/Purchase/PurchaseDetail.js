@@ -1,4 +1,5 @@
 import React, {Component} from "react"
+import {withRouter} from "react-router-dom"
 import Card from "@material-ui/core/es/Card/Card";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import Typography from "@material-ui/core/es/Typography/Typography";
@@ -10,8 +11,19 @@ import TableCell from "@material-ui/core/es/TableCell/TableCell";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import MoneyFormatter from "../Formatters/MoneyFormatter";
 import {PURCHASE_STATUS_LABEL} from "../../clients/PurchaseClient";
+import TableHead from "@material-ui/core/es/TableHead/TableHead";
 
 class PurchaseDetail extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.handleProductClick = this.handleProductClick.bind(this);
+    }
+
+    handleProductClick(productId) {
+        this.props.history.push(`/products/${productId}`);
+    }
 
     render() {
         let purchase = this.props.purchase;
@@ -48,10 +60,25 @@ class PurchaseDetail extends Component {
                             </Typography>
                             <br/>
                             <Table width="auto">
+                                <TableHead>
+                                    <TableCell>
+                                        Produto
+                                    </TableCell>
+                                    <TableCell/>
+                                    <TableCell>
+                                        Qtd
+                                    </TableCell>
+                                    <TableCell>
+                                        Preço
+                                    </TableCell>
+                                </TableHead>
                                 <TableBody>
                                     {products.map(product => {
                                         return (
-                                            <TableRow key={product.id}>
+                                            <TableRow key={product.id}
+                                                      hover
+                                                      style={{cursor: "pointer"}}
+                                                      onClick={e => this.handleProductClick(product.id)}>
                                                 <TableCell component="th" scope="row">
                                                     <div>
                                                         <img height={50}
@@ -113,4 +140,4 @@ class PurchaseDetail extends Component {
 
 }
 
-export default PurchaseDetail;
+export default withRouter(PurchaseDetail);

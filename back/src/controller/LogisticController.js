@@ -6,8 +6,11 @@ export const getShipments = async (params) => {
 
     if (!response) {
         console.error("getShipments Error");
-        return {}
+        return {
+            status: 400
+        }
     }
+
     else if(response.status !== 200) {
         console.error("getShipments Error with status " + response.status);
         return {
@@ -16,7 +19,10 @@ export const getShipments = async (params) => {
         };
     }
 
-    return response.data
+    return {
+        status: 200,
+        data: response.data
+    }
 }
 
 export const getTracking = async (codRastreio) => {
@@ -25,7 +31,9 @@ export const getTracking = async (codRastreio) => {
 
     if (!response) {
         console.error("getTracking Error");
-        return {}
+        return {
+            status: 500
+        }
     }
     else if(response.status !== 200) {
         console.error("getTracking Error with status " + response.status);
@@ -44,7 +52,9 @@ export const postShipment = async (info) => {
 
     if (!response) {
         console.error("postShipment Error");
-        return {}
+        return {
+            status: 500
+        }
     }
     else if(response.status !== 200) {
         console.error("postShipment Error with status " + response.status);

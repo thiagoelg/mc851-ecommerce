@@ -8,6 +8,7 @@ import MoneyFormatter from "../Formatters/MoneyFormatter";
 import Divider from "@material-ui/core/es/Divider/Divider";
 import Card from "@material-ui/core/es/Card/Card";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
+import moment from "moment";
 
 class Purchases extends Component {
 
@@ -34,67 +35,8 @@ class Purchases extends Component {
     render() {
         let {purchases} = this.state;
 
-        //FIXME remove this
-        const purchase = {
-            "id": 15244,
-            "status": 1,
-            "createdAt": "05/08/2018",
-            "shipping": {
-                "trackingCode": "RN625161646435464BR",
-                "deliveryTime": 4,
-                "price": "77286",
-                "type": "PAC",
-                "address": {
-                    "identification": "Minha Casa",
-                    "cep": "13070717",
-                    "street": "Rua Luis Gama",
-                    "number": "737",
-                    "neighborhood": "Bonfim",
-                    "city": "Campinas",
-                    "state": "SP",
-                    "complement": "Casa dos fundos"
-                }
-            },
-            "payment": {
-                "price": 500000,
-                "boleto": {
-                    "dueDate": "25/08/2018",
-                    "barCode": "42297115040000218611260804028227",
-                    "documentRep": "oxra9jn8lfk"
-                },
-                "card": {
-                    "number": "444444xxxxx4444",
-                    "brand": "MASTER_CARD",
-                    "installments": 10
-                }
-            },
-            "products": [
-                {
-                    "id": "284dc734-6b2e-460e-bca6-facb274ec970",
-                    "name": "GELADEIRA KOMBI",
-                    "description": "Sua cozinha ficará muito mais bonita! Contar com o que há de melhor na cozinha é o seu desejo? Então esse é o refrigerador certo pra você. Visual bonito deixará sua cozinha ainda mais elegante.",
-                    "price": 5000,
-                    "brand": "geladeireira",
-                    "tags": [
-                        "geladeireira",
-                        "geladeira",
-                        "kombi"
-                    ],
-                    "categoryId": "157ac3ce-a792-43de-aada-e744effdbe53",
-                    "imageUrl": "/imgs/eletrodomesticos/geladeira_kombi.jpg",
-                    "weight": 44000,
-                    "length": 61,
-                    "width": 60,
-                    "height": 161,
-                    "amount": 1
-                }
-            ]
-        };
-
-        purchases = [1, 2, 3].map(i => purchase);
-
         return (
-            <Card>
+            <Card style={{marginBottom: 20}}>
                 <CardContent>
                     <Grid container style={{marginBottom: 20}}>
                         <Grid item xs={12}>
@@ -124,7 +66,7 @@ class Purchases extends Component {
                                                             </Typography>
                                                             {purchase.payment.card && (
                                                                 <Typography variant="caption">
-                                                                    {purchase.payment.card.brand} {purchase.payment.card.installments}x
+                                                                    {purchase.payment.card.brand} {purchase.payment.card.instalments}x
                                                                 </Typography>
                                                             )}
                                                             {purchase.payment.boleto && (
@@ -139,7 +81,7 @@ class Purchases extends Component {
                                                                 <b>{PURCHASE_STATUS_LABEL[purchase.status]}</b>
                                                             </Typography>
                                                             <Typography variant="body1">
-                                                                Realizada em {purchase.createdAt}
+                                                                Realizada em {moment(purchase.createdAt, "DD-MM-YYYY").format("DD/MM/YYYY")}
                                                             </Typography>
                                                         </Grid>
                                                     </Grid>

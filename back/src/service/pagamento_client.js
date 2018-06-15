@@ -3,6 +3,13 @@ import axios from 'axios'
 const REQUEST_TIMEOUT = 30000
 const PAGAMENTO_URL = "https://payment-server-mc851.herokuapp.com"
 
+export const BOLETO_STATUS = {
+    PENDING: "PENDING_PAYMENT",
+    OK: "OK",
+    EXPIRED: "EXPIRED",
+    NOT_FOUND: "NOT_FOUND"
+};
+
 export const paymentByCreditCard = async (payment) => {
     try {
         const response = await axios.post(`${PAGAMENTO_URL}/payments/creditCard`, payment)
@@ -60,5 +67,6 @@ export default {
     getCreditCardInstallments,
     paymentByBankTicket,
     getBankTicketStatus,
-    generateInvoice
+    generateInvoice,
+    BOLETO_STATUS
 }

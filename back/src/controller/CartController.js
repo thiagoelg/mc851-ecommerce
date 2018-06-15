@@ -249,6 +249,12 @@ export const checkout = async (token, cartId, data) => {
     }
 
     const products = await getProductsTO(cartId)
+    if(products.length === 0) {
+        return {
+            status: 404
+        }
+    }
+
     const price = parseInt(data.payment.price)
     const product_sum = await getTotalPrice(products)
 
@@ -307,7 +313,6 @@ export const checkout = async (token, cartId, data) => {
             paymentCode: paymentResponse.data.operationHash,
             cpf: user.cpf,
             name: data.payment.card.name,
-            cpf: data.payment.cpf,
             number: data.payment.card.number,
             expiryMonth: data.payment.card.expiryMonth,
             expiryYear: data.payment.card.expiryYear,

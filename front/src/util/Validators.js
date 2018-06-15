@@ -56,7 +56,15 @@ export const validateCreditCardNumber = (number) => {
 
 export const validateValidThruDate = (validTru) => {
     const date = moment(validTru, 'MM/YYYY');
-    return validTru && validTru.length === 7 && date.isValid() && moment().diff(date) <= 0;
+
+    const splitted = validTru.split("/");
+
+    return validTru &&
+        splitted.length === 2 &&
+        !isNaN(splitted[0]) &&
+        !isNaN(splitted[1]) &&
+        date.isValid() &&
+        moment().diff(date) <= 0;
 };
 
 export const validateBrand = (brand) => {
