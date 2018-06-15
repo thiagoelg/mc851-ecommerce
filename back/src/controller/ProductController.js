@@ -6,7 +6,7 @@ export const getProducts = async (params) => {
 
     if (!response) {
         console.error("getProducts Error");
-        return {}
+        return []
     }
     else if(response.status !== 200) {
         console.error("getProducts Error with status " + response.status);
@@ -25,7 +25,7 @@ export const getProductsByFullSearch = async (params) => {
 
     if (!response) {
         console.error("getProductsByFullSearch Error");
-        return {}
+        return []
     }
     else if(response.status !== 200) {
         console.error("getProductsByFullSearch Error with status " + response.status);
@@ -43,7 +43,7 @@ export const getCategories = async (params) => {
 
     if (!response) {
         console.error("getCategories Error");
-        return {}
+        return []
     }
     else if(response.status !== 200) {
         console.error("getCategories Error with status " + response.status);
