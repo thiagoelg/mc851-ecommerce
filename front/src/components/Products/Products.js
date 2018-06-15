@@ -151,15 +151,15 @@ class Products extends Component {
                                         {products}
                                     </GridList>
                                 </Grid>
-                                {this.state.totalPages > 1 && (
-                                    <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
-                                        <Pagination total={this.state.totalPages}
-                                                    current={this.state.page}
-                                                    display={this.state.displayedPages}
-                                                    onChange={this.handlePageChange}
-                                        />
-                                    </Grid>
-                                )}
+                                {/*{this.state.totalPages > 1 && (*/}
+                                    {/*<Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>*/}
+                                        {/*<Pagination total={this.state.totalPages}*/}
+                                                    {/*current={this.state.page}*/}
+                                                    {/*display={this.state.displayedPages}*/}
+                                                    {/*onChange={this.handlePageChange}*/}
+                                        {/*/>*/}
+                                    {/*</Grid>*/}
+                                {/*)}*/}
 
                             </Grid>
                         )}
