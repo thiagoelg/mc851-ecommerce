@@ -81,7 +81,7 @@ class Purchases extends Component {
                                                                 </Typography>
                                                                 <Typography variant="body1">
                                                                     Valor total: <MoneyFormatter
-                                                                    value={purchase.payment.price}/>
+                                                                    value={purchase.payment.price/100}/>
                                                                 </Typography>
                                                                 {purchase.payment.card && (
                                                                     <Typography variant="caption">
