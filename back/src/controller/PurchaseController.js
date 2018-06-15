@@ -388,8 +388,6 @@ export const releasePurchaseProducts = async (purchase) => {
 
     reserves.forEach(async (reservation) => {
         await ProductClient.releaseProduct(reservation.product_id, reservation.amount);
-
-        await Database.updateProduct(cart.id, reservation.id, 0)
     });
 };
 
