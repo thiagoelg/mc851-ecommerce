@@ -434,12 +434,12 @@ export const handleExpiredCarts = async () => {
     const expiredCarts = await Database.getExpiredCarts()
 
     expiredCarts.forEach(async (cart) => {
-        const expiredProducts = await Database.getProductsFromCart(cart.id)
+        const reserves = await Database.getProductsFromCart(cart.id)
 
-        expiredProducts.forEach(async (product) => {
-            await ProductClient.releaseProduct(product.id, product.amount)
+        reserves.forEach(async (reservation) => {
+            await ProductClient.releaseProduct(reservation.product_id, reservation.amount)
 
-            await Database.updateProduct(cart.id, product.id, 0)
+            await Database.updateProduct(cart.id, reservation.id, 0)
         });
 
         await Database.expireCart(cart.id)
