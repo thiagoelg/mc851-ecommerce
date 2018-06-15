@@ -28,6 +28,11 @@ class Profile extends Component {
     }
 
     componentDidMount() {
+        if (!UserProfile.isLogged()) {
+            this.props.history.push("/signIn");
+            return;
+        }
+
         const token = UserProfile.getToken();
 
         getClient(token)

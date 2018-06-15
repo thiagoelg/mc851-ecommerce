@@ -258,15 +258,17 @@ export const updatePurchaseStatus = async (purchaseId, status) => {
 
 };
 
-export const createShipping = async (address, shippingCode) => {
+export const createShipping = async (shipping, shippingCode) => {
     if (!pool)
         throw 'Missing database connection!'
+
+    const address = shipping.address;
 
     const [rows, field] = await pool.query(
         `INSERT INTO shipping(cep, identification, street, number, neighborhood, city, state, complement, deliveryTime, type, shippingCode)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-         [address.cep, address.identification, address.street, address.number, address.neighborhood, address.city, 
-            address.state, address.complement, address.deliveryTime, address.type, shippingCode])
+         [address.cep, address.identification, address.street, address.number, address.neighborhood, address.city,
+            address.state, address.complement, shipping.deliveryTime, address.type, shippingCode])
 
     return rows.insertId
 };
