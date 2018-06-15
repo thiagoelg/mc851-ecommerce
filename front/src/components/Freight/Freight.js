@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {withRouter} from "react-router-dom"
 import CepInput from "./CepInput";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import Button from "@material-ui/core/es/Button/Button";
@@ -16,6 +17,7 @@ import Close from "@material-ui/icons/es/Close";
 import Radio from "@material-ui/core/es/Radio/Radio";
 import MoneyFormatter from "../Formatters/MoneyFormatter";
 import {validateCep} from "../../util/Validators";
+import {treatError} from "../../util/ErrorUtils";
 
 class Freight extends Component {
 
@@ -231,21 +233,23 @@ class Freight extends Component {
                     }, () => callback && callback())
                 })
                 .catch(error => {
-                    console.log(error);
-                    const response = error.response;
-                    switch (response.status) {
-                        case 404:
-                        case 400:
-                            this.setState({
-                                open: true,
-                                problemCalculating: true,
-                                loading: false
-                            });
-                            break;
-                        default: {
-                            //TODO treat error
+                    this.setState({
+                        loading: false
+                    }, () => {
+                        const response = error.response;
+                        switch (response && response.status) {
+                            case 404:
+                            case 400:
+                                this.setState({
+                                    open: true,
+                                    problemCalculating: true
+                                });
+                                return;
+                            default:
                         }
-                    }
+
+                        treatError(this.props, error);
+                    });
                 });
         });
 
@@ -365,4 +369,4 @@ class Freight extends Component {
     }
 }
 
-export default Freight;
+export default withRouter(Freight);

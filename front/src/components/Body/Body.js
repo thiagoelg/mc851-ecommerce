@@ -18,6 +18,9 @@ import Purchases from "../Purchase/Purchases";
 import Purchase from "../Purchase/Purchase";
 import Tracking from "../Purchase/Tracking";
 import Confirmation from "../Cart/Confirmation";
+import InternalError from "../Common/InternalError";
+import Forbidden from "../Common/Forbidden";
+import UnexpectedError from "../Common/UnexpectedError";
 
 
 // Para <ProductFilter /> dentro do grid, tirar o style do grid:
@@ -50,6 +53,10 @@ class Body extends Component {
                     <Route path='/customerservice/purchase/:purchaseId' component={CustomerService}/>
                     <Route path='/customerservice/ticket/:id' component={Ticket}/>
                     <Route path='/confirmation/:purchaseId' component={Confirmation}/>
+                    <Route exact path='/404' component={NotFound}/>
+                    <Route exact path='/403' component={Forbidden}/>
+                    <Route exact path='/500' component={InternalError}/>
+                    <Route exact path='/error' component={UnexpectedError}/>
                     <Route component={NotFound}/>
                 </Switch>
                 </Grid>
