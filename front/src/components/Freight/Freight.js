@@ -145,12 +145,16 @@ class Freight extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        if(!prevProps) {
+            return;
+        }
+
         if (this.props.cep && this.props.cep !== prevProps.cep) {
             this.selectCepAndShippingParameters(this.selectShippingCallback)
         }
-
+        
         if (!prevProps.products ||
-            Object.keys(prevProps.products[0]).length === 0 ||
+            Object.keys(prevProps.products).length === 0 ||
             !prevState.shippingOptions ||
             prevState.shippingOptions.length === 0) {
             return;
