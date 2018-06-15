@@ -17,12 +17,9 @@ import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Close from "@material-ui/icons/es/Close";
 import {scrollToTop} from "../../util/ScrollUtils";
-<<<<<<< HEAD
 import UserProfile from "../../state/UserProfile";
 import Link from "../Link/Link";
-=======
 import {treatError} from "../../util/ErrorUtils";
->>>>>>> 88e2bfd86e7233eca79caac9fbb27e264c1ad740
 
 const styles = theme => ({
     backButton: {
@@ -72,14 +69,6 @@ class Checkout extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.getStepContent = this.getStepContent.bind(this);
         this.isStepValid = this.isStepValid.bind(this);
-    }
-
-    componentWillMount() {
-        if (!UserProfile.isLogged()) {
-            this.props.history.push({
-                pathname: "/signIn",
-            });
-          }
     }
 
     handleClose = () => {

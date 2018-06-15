@@ -8,8 +8,16 @@ import check from "../Cart/checked.png";
 import Divider from '@material-ui/core/Divider';
 import {PURCHASE_STATUS} from '../../clients/PurchaseClient'
 import PurchaseStatusStepper from "../Purchase/PurchaseStatusStepper";
+import UserProfile from "../../state/UserProfile";
+
 
 class Confirmation extends Component {
+
+    componentWillMount() {
+        if (!UserProfile.isLogged()) {
+            this.props.history.push("/signIn");
+          }
+    }
 
     render() {
 
