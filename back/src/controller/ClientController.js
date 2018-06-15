@@ -33,7 +33,13 @@ export const register = async (params) => {
         samePass: "private"
     });
 
-    if (!response || response.status !== 200) {
+    if(!response || response === null || !response.status) {
+        return {
+            status: 500
+        }
+    }
+
+    if (response.status !== 200) {
         console.error("register error - status: ", response.status);
         return {
             status: response ? response.status : 500
