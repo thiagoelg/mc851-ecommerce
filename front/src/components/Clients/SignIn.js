@@ -72,7 +72,7 @@ class SignIn extends Component {
                     });
             })
             .catch(error => {
-                if (error.response && error.response.status === 401) {
+                if (error.response && (error.response.status === 401 || error.response.status === 400)) {
                     this.setState({
                         open: true
                     });
