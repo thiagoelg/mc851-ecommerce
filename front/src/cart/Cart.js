@@ -315,7 +315,7 @@ class Cart {
                 }
             },
             payment: {
-                price: price,
+                price: price * 100,
                 card: card,
                 boleto: payment.isBoleto
             }

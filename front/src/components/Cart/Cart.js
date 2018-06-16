@@ -92,6 +92,7 @@ class Cart extends Component {
         });
     }
 
+
     componentDidMount() {
 
         cart.getContext()

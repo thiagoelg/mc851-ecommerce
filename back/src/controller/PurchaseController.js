@@ -62,6 +62,10 @@ export const getPurchases = async (token) => {
                 }
             }));
 
+        const productsValue = products.reduce((acc, p) => p.price + acc, 0) * 100;
+
+        const freight = purchase.price - productsValue;
+
         let data =  {
                 id: purchase.id,
                 status: purchase.status,
@@ -69,7 +73,7 @@ export const getPurchases = async (token) => {
                 shipping: {
                     trackingCode: purchase.shippingCode,
                     deliverytime: purchase.deliveryTime,
-                    price: purchase.price,
+                    price: freight,
                     type: purchase.type,
                     address: {
                         identification: purchase.identification,
@@ -166,6 +170,10 @@ export const getPurchaseById = async (token, purchaseId) => {
             }
         }));
 
+    const productsValue = products.reduce((acc, p) => p.price + acc, 0) * 100;
+
+    const freight = purchase.price - productsValue;
+
     const response =  {
         id: purchase.id,
         status: purchase.status,
@@ -173,7 +181,7 @@ export const getPurchaseById = async (token, purchaseId) => {
         shipping: {
             trackingCode: purchase.shippingCode,
             deliverytime: purchase.deliveryTime,
-            price: purchase.price,
+            price: freight,
             type: purchase.type,
             address: {
                 identification: purchase.identification,

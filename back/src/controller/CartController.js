@@ -216,7 +216,6 @@ export const getCartById = async (token, cartId) => {
     }
 };
 
-// TODO
 export const checkout = async (token, cartId, data) => {
     const user = AuthTokenGenerator.verify(token)
 
@@ -362,7 +361,7 @@ export const checkout = async (token, cartId, data) => {
     }
 
     // CREATE PURCHASE
-    const shipping = data.shipping.address
+    const shipping = data.shipping
     shipping.type = data.shipping.type
     shipping.deliveryTime = data.shipping.deliveryTime
 
