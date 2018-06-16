@@ -58,7 +58,7 @@ class ShippingSummary extends Component {
                             </Typography>
                             <Typography variant="body1">
                                 <br/>
-                                <b>Valor: </b><MoneyFormatter value={shipping.price}/>
+                                <b>Valor: </b><MoneyFormatter value={shipping.price/100}/>
                                 <br/>
                                 <b>Prazo: </b>{shipping.deliveryTime} dias úteis
                             </Typography>

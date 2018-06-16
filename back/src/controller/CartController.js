@@ -335,7 +335,7 @@ export const checkout = async (token, cartId, data) => {
         return {
             status: 400,
             data: {
-                code: 1
+                code: 3
             }
         }
     }
