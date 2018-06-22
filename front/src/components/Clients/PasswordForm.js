@@ -1,9 +1,7 @@
 import React, {Component} from "react"
-import {withRouter} from "react-router-dom";
 import {validatePassword, validateSamePass} from "../../util/Validators";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import TextField from "@material-ui/core/es/TextField/TextField";
-import UserProfile from "../../state/UserProfile";
 
 class PasswordForm extends Component {
 
@@ -100,4 +98,4 @@ class PasswordForm extends Component {
 
 }
 
-export default withRouter(PasswordForm);
+export default PasswordForm;

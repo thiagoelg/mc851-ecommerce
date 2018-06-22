@@ -251,47 +251,50 @@ class Ticket extends Component {
                                 </List>
                             )}
                         </Grid>
-                        <Grid item xs={12} style={{marginTop: 20}}>
-                            <Grid container>
-                                <Grid item xs={6}>
-                                    <TextField
-                                        placeholder="Escreva nova mensagem..."
-                                        name="message"
-                                        value={this.state.message}
-                                        onChange={this.handleChange}
-                                        multiline={true}
-                                        rows={2}
-                                        fullWidth
-                                    />
-                                </Grid>
-                                <Grid item xs={1}/>
-                                <Grid item xs={4}>
-                                    <Button variant="raised"
-                                            color="secondary"
-                                            onClick={(e) => this.handleClick("send")}
-                                            disabled={this.state.waitingMessage}
-                                            style={{marginRight: 5}}>
-                                        Enviar
-                                    </Button>
-                                    <Button variant="raised"
-                                            color="secondary"
-                                            onClick={(e) => this.handleClick("close")}
-                                            disabled={this.state.waitingMessage}
-                                            style={{marginRight: 5}}>
-                                        Fechar
-                                    </Button>
-                                    <Button variant="raised"
-                                            color="secondary"
-                                            onClick={(e) => this.handleClick("cancel")}
-                                            disabled={this.state.waitingMessage}>
-                                        Cancelar
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={1}>
-                                    {this.state.waitingMessage && (<CircularProgress/>)}
+                        {ticket.statusId === TICKET_STATUS.OPEN && (
+                            <Grid item xs={12} style={{marginTop: 20}}>
+                                <Grid container>
+                                    <Grid item xs={6}>
+                                        <TextField
+                                            placeholder="Escreva nova mensagem..."
+                                            name="message"
+                                            value={this.state.message}
+                                            onChange={this.handleChange}
+                                            multiline={true}
+                                            rows={2}
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                    <Grid item xs={1}/>
+                                    <Grid item xs={4}>
+                                        <Button variant="raised"
+                                                color="secondary"
+                                                onClick={(e) => this.handleClick("send")}
+                                                disabled={this.state.waitingMessage}
+                                                style={{marginRight: 5}}>
+                                            Enviar
+                                        </Button>
+                                        <Button variant="raised"
+                                                color="secondary"
+                                                onClick={(e) => this.handleClick("close")}
+                                                disabled={this.state.waitingMessage}
+                                                style={{marginRight: 5}}>
+                                            Fechar
+                                        </Button>
+                                        <Button variant="raised"
+                                                color="secondary"
+                                                onClick={(e) => this.handleClick("cancel")}
+                                                disabled={this.state.waitingMessage}>
+                                            Cancelar
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={1}>
+                                        {this.state.waitingMessage && (<CircularProgress/>)}
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
+                        )}
+
                     </Grid>
                 )}
             </Grid>
